@@ -253,6 +253,58 @@ export default function AdminPanelPage() {
     message.success('CSV file downloaded successfully!');
   };
 
+  const handleDownloadOrgStats = () => {
+    if (orgStats.length === 0) {
+      message.warning('No organization data to download');
+      return;
+    }
+
+    const csvContent = [
+      [
+        'Organization',
+        'Username',
+        'Quota',
+        'Entries',
+        'Remaining',
+        'Usage %',
+        'Ex-1',
+        'Ex-2',
+        'Interactive',
+        'Plenary',
+        'Passes Generated',
+        'Status',
+      ],
+      ...orgStats.map((stat) => [
+        `"${stat.organization}"`,
+        stat.username,
+        stat.quota,
+        stat.entries,
+        stat.remaining,
+        `${stat.usagePercent.toFixed(1)}%`,
+        stat.ex1,
+        stat.ex2,
+        stat.interactive,
+        stat.plenary,
+        stat.passesGenerated,
+        stat.isActive ? 'Active' : 'Inactive',
+      ]),
+    ]
+      .map((row) => row.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `swavlamban2025_org_report_${timestamp}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    message.success('Organization report downloaded successfully!');
+  };
+
   // Handle Exhibitor CSV Upload
   const handleExhibitorCSVUpload = async (csvText: string) => {
     try {
@@ -993,6 +1045,19 @@ export default function AdminPanelPage() {
         <Tabs defaultActiveKey="1" size="large">
           {/* Organization Statistics Tab */}
           <TabPane tab="📊 Organization Statistics" key="1">
+            <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                type="primary"
+                icon={<DownloadOutlined />}
+                onClick={handleDownloadOrgStats}
+                style={{
+                  background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                  border: 'none',
+                }}
+              >
+                📥 Download Organization Report (CSV)
+              </Button>
+            </div>
             <Table
               columns={orgColumns}
               dataSource={orgStats}
