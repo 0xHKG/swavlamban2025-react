@@ -18,6 +18,7 @@ import {
   Alert,
   Table,
   Statistic,
+  Modal,
 } from 'antd';
 import {
   UserAddOutlined,
@@ -97,7 +98,7 @@ export default function AddEntryPage() {
     message.success('CSV template downloaded successfully!');
   };
 
-  // Parse CSV File
+  // Parse CSV File with better handling of quoted fields
   const parseCSV = (text: string) => {
     const lines = text.split('\n');
     const headers = lines[0].split(',').map(h => h.trim());
@@ -105,10 +106,27 @@ export default function AddEntryPage() {
 
     for (let i = 1; i < lines.length; i++) {
       if (!lines[i].trim()) continue;
-      const values = lines[i].split(',').map(v => v.trim());
+
+      // Handle quoted fields that may contain commas
+      const values: string[] = [];
+      let currentValue = '';
+      let insideQuotes = false;
+
+      for (let char of lines[i]) {
+        if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === ',' && !insideQuotes) {
+          values.push(currentValue.trim().replace(/^"|"$/g, ''));
+          currentValue = '';
+        } else {
+          currentValue += char;
+        }
+      }
+      values.push(currentValue.trim().replace(/^"|"$/g, ''));
+
       const row: any = {};
       headers.forEach((header, index) => {
-        row[header] = values[index];
+        row[header] = values[index] || '';
       });
       data.push(row);
     }
@@ -134,10 +152,21 @@ export default function AddEntryPage() {
     showUploadList: false,
   };
 
-  // Process Bulk Upload
+  // Process Bulk Upload with comprehensive validation
   const handleBulkUpload = async () => {
     if (csvData.length === 0) {
       message.error('No CSV data to upload');
+      return;
+    }
+
+    // Check remaining quota
+    if (!stats) {
+      message.error('Unable to load quota information');
+      return;
+    }
+
+    if (csvData.length > stats.remaining_quota) {
+      message.error(`Cannot upload ${csvData.length} entries. You only have ${stats.remaining_quota} slots remaining.`);
       return;
     }
 
@@ -151,23 +180,80 @@ export default function AddEntryPage() {
       setUploadProgress(((i + 1) / csvData.length) * 100);
 
       try {
-        // Validate and create entry
-        const entry = {
-          name: row.Name,
-          email: row.Email,
-          phone: row.Phone,
-          id_type: row.ID_Type,
-          id_number: row.ID_Number,
-          exhibition_day1: row.Exhibition_Day_1?.toLowerCase() === 'yes',
-          exhibition_day2: row.Exhibition_Day_2?.toLowerCase() === 'yes',
-          interactive_sessions: row.Interactive_Sessions?.toLowerCase() === 'yes',
-          plenary: row.Plenary?.toLowerCase() === 'yes',
-        };
+        // Validate row data
+        const name = String(row.Name || '').trim();
+        const email = String(row.Email || '').trim();
+        const phone = String(row.Phone || '').trim();
+        const id_type = String(row.ID_Type || '').trim();
+        const id_number = String(row.ID_Number || '').trim();
 
-        // Basic validation
-        if (!entry.name || !entry.email || !entry.phone) {
-          throw new Error('Missing required fields');
+        // Validate required fields
+        if (!name || name === 'nan') {
+          throw new Error('Missing name');
         }
+
+        if (!email || email === 'nan' || !email.includes('@')) {
+          throw new Error(`Invalid email: ${email}`);
+        }
+
+        const phoneClean = phone.replace(/\D/g, '');
+        if (!phoneClean || phoneClean.length !== 10) {
+          throw new Error(`Invalid phone (must be 10 digits): ${phone}`);
+        }
+
+        // Validate ID type
+        const validIdTypes = ['Aadhaar', 'PAN', 'Passport', 'Driving License', 'Voter ID'];
+        if (!validIdTypes.includes(id_type)) {
+          throw new Error(`Invalid ID type: ${id_type}`);
+        }
+
+        if (!id_number || id_number === 'nan') {
+          throw new Error('Missing ID number');
+        }
+
+        // Parse pass selections
+        const exhibition_day1 = String(row.Exhibition_Day_1 || '').trim().toLowerCase() === 'yes';
+        const exhibition_day2 = String(row.Exhibition_Day_2 || '').trim().toLowerCase() === 'yes';
+        const interactive_sessions = String(row.Interactive_Sessions || '').trim().toLowerCase() === 'yes';
+        const plenary = String(row.Plenary || '').trim().toLowerCase() === 'yes';
+
+        // Check if at least one pass is selected
+        if (!exhibition_day1 && !exhibition_day2 && !interactive_sessions && !plenary) {
+          throw new Error('No passes selected');
+        }
+
+        // Get user's allowed passes
+        const allowed_passes = user?.allowed_passes || {};
+
+        // Check permissions
+        if (exhibition_day1 && !allowed_passes.exhibition_day1) {
+          throw new Error('Not allowed to create Exhibition Day 1 passes');
+        }
+
+        if (exhibition_day2 && !allowed_passes.exhibition_day2) {
+          throw new Error('Not allowed to create Exhibition Day 2 passes');
+        }
+
+        if (interactive_sessions && !allowed_passes.interactive_sessions) {
+          throw new Error('Not allowed to create Interactive Sessions passes');
+        }
+
+        if (plenary && !allowed_passes.plenary) {
+          throw new Error('Not allowed to create Plenary passes');
+        }
+
+        // Create entry
+        const entry = {
+          name,
+          email,
+          phone: phoneClean.startsWith('+91') ? phoneClean : `+91-${phoneClean}`,
+          id_type,
+          id_number,
+          exhibition_day1,
+          exhibition_day2,
+          interactive_sessions,
+          plenary,
+        };
 
         await mockApiService.createEntry(entry);
         successCount++;
@@ -181,15 +267,35 @@ export default function AddEntryPage() {
     setUploadProgress(0);
     setCsvData([]);
 
-    message.success(
-      `Bulk upload completed! Success: ${successCount}, Failed: ${failedCount}`
-    );
-
-    if (failedRows.length > 0) {
-      console.error('Failed rows:', failedRows);
+    if (successCount > 0) {
+      message.success(`✅ Successfully uploaded ${successCount} entries!`);
     }
 
-    setTimeout(() => navigate('/my-entries'), 2000);
+    if (failedCount > 0) {
+      message.error(`❌ Failed to upload ${failedCount} entries`);
+      console.log('Failed rows:', failedRows);
+
+      // Show detailed error modal
+      Modal.error({
+        title: 'Upload Errors',
+        content: (
+          <div style={{ maxHeight: 400, overflow: 'auto' }}>
+            <p><strong>Failed rows:</strong></p>
+            {failedRows.map((item, idx) => (
+              <div key={idx} style={{ marginBottom: 8, fontSize: 13 }}>
+                <strong>Row {item.row}:</strong> {item.reason}
+              </div>
+            ))}
+          </div>
+        ),
+        width: 600,
+      });
+    }
+
+    if (successCount > 0) {
+      await loadStats(); // Reload stats
+      setTimeout(() => navigate('/my-entries'), 2000);
+    }
   };
 
   return (
@@ -691,16 +797,46 @@ export default function AddEntryPage() {
               {csvData.length > 0 && (
                 <>
                   <Alert
-                    message={`${csvData.length} entries loaded from CSV`}
+                    message={`📊 ${csvData.length} entries loaded | ${stats?.remaining_quota || 0} slots remaining`}
                     type="success"
                     style={{ marginTop: 16 }}
                   />
+
+                  {/* Preview table - first 5 rows */}
+                  <div style={{ marginTop: 16 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500, marginBottom: 8, display: 'block' }}>
+                      Preview (First 5 rows):
+                    </Text>
+                    <Table
+                      dataSource={csvData.slice(0, 5)}
+                      columns={[
+                        { title: 'Name', dataIndex: 'Name', key: 'Name', width: 150, ellipsis: true },
+                        { title: 'Email', dataIndex: 'Email', key: 'Email', width: 150, ellipsis: true },
+                        { title: 'Phone', dataIndex: 'Phone', key: 'Phone', width: 100 },
+                        { title: 'ID Type', dataIndex: 'ID_Type', key: 'ID_Type', width: 80 },
+                      ]}
+                      pagination={false}
+                      size="small"
+                      scroll={{ x: true }}
+                      style={{ marginTop: 8 }}
+                    />
+                  </div>
+
+                  {csvData.length > (stats?.remaining_quota || 0) && (
+                    <Alert
+                      message={`⚠️ Cannot upload ${csvData.length} entries. You only have ${stats?.remaining_quota || 0} slots remaining.`}
+                      type="error"
+                      showIcon
+                      style={{ marginTop: 16 }}
+                    />
+                  )}
 
                   <Button
                     type="primary"
                     icon={<SaveOutlined />}
                     onClick={handleBulkUpload}
                     loading={uploading}
+                    disabled={csvData.length > (stats?.remaining_quota || 0)}
                     size="large"
                     block
                     style={{
@@ -710,7 +846,7 @@ export default function AddEntryPage() {
                       height: 48,
                     }}
                   >
-                    {uploading ? 'Processing...' : 'Process & Upload Entries'}
+                    {uploading ? 'Processing...' : '🚀 Process & Upload Entries'}
                   </Button>
 
                   {uploading && (
