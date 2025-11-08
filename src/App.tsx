@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import LoginPage from './pages/LoginPage';
@@ -8,6 +9,8 @@ import AddEntryPage from './pages/AddEntryPage';
 import MyEntriesPage from './pages/MyEntriesPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import EventInfoPage from './pages/EventInfoPage';
+import GeneratePassesPage from './pages/GeneratePassesPage';
+import SettingsPage from './pages/SettingsPage';
 
 // Indian Navy theme
 const theme = createTheme({
@@ -135,6 +138,22 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/generate-passes"
+        element={
+          <ProtectedRoute>
+            <GeneratePassesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/admin"
         element={
           <AdminRoute>
@@ -152,11 +171,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </BrowserRouter>
+      <Box sx={{ width: '100vw', overflowX: 'hidden' }}>
+        <BrowserRouter>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </BrowserRouter>
+      </Box>
     </ThemeProvider>
   );
 }

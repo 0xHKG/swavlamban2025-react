@@ -45,7 +45,7 @@ export default function LoginPage() {
       {/* Left Side - Login Form */}
       <Box
         sx={{
-          flex: 1,
+          flex: 0.6,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -132,12 +132,15 @@ export default function LoginPage() {
       {/* Right Side - Banner Image */}
       <Box
         sx={{
-          flex: 1,
+          flex: 1.4,
           display: { xs: 'none', md: 'flex' },
           alignItems: 'center',
           justifyContent: 'center',
-          bgcolor: '#F5F7FA',
-          p: 4,
+          backgroundImage: 'url(/login-bkg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          p: 2,
         }}
       >
         <Box
@@ -145,11 +148,10 @@ export default function LoginPage() {
           src="/banner.png"
           alt="Swavlamban 2025 Event"
           sx={{
-            maxWidth: '100%',
-            maxHeight: '90vh',
+            width: '100%',
+            height: '100vh',
             objectFit: 'contain',
-            borderRadius: 2,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            borderRadius: 0,
           }}
         />
       </Box>
