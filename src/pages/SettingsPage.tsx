@@ -373,7 +373,7 @@ export default function SettingsPage() {
         )}
       </Card>
 
-      {/* Security Section */}
+      {/* Security Section - Change Password */}
       <Card
         style={{
           background: 'rgba(30, 41, 59, 0.5)',
@@ -382,19 +382,92 @@ export default function SettingsPage() {
         }}
       >
         <Title level={4} style={{ color: '#e2e8f0', marginBottom: 16 }}>
-          🔒 Security
+          🔒 Change Password
         </Title>
 
-        <div
-          style={{
-            padding: 16,
-            borderRadius: 8,
-            background: 'rgba(79, 172, 254, 0.1)',
-            border: '1px solid rgba(79, 172, 254, 0.3)',
-          }}
-        >
-          <Text style={{ color: '#4facfe', fontSize: 15 }}>🔐 Password change functionality - Contact TDAC to reset password</Text>
-        </div>
+        <Form form={form} layout="vertical" onFinish={handlePasswordChange} style={{ maxWidth: 500 }}>
+          <Form.Item
+            label={<span style={{ color: '#e2e8f0' }}>Current Password</span>}
+            name="current_password"
+            rules={[{ required: true, message: 'Please enter current password' }]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ color: '#94a3b8' }} />}
+              placeholder="Enter current password"
+              size="large"
+              style={{
+                background: 'rgba(15, 23, 42, 0.5)',
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: '#e2e8f0',
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label={<span style={{ color: '#e2e8f0' }}>New Password</span>}
+            name="new_password"
+            rules={[
+              { required: true, message: 'Please enter new password' },
+              { min: 8, message: 'Password must be at least 8 characters' },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ color: '#94a3b8' }} />}
+              placeholder="Enter new password (min 8 characters)"
+              size="large"
+              style={{
+                background: 'rgba(15, 23, 42, 0.5)',
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: '#e2e8f0',
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label={<span style={{ color: '#e2e8f0' }}>Confirm New Password</span>}
+            name="confirm_password"
+            dependencies={['new_password']}
+            rules={[
+              { required: true, message: 'Please confirm new password' },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('new_password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Passwords do not match'));
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined style={{ color: '#94a3b8' }} />}
+              placeholder="Confirm new password"
+              size="large"
+              style={{
+                background: 'rgba(15, 23, 42, 0.5)',
+                borderColor: 'rgba(255,255,255,0.2)',
+                color: '#e2e8f0',
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              icon={<SaveOutlined />}
+              htmlType="submit"
+              loading={loading}
+              size="large"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                border: 'none',
+                minWidth: 200,
+              }}
+            >
+              Update Password
+            </Button>
+          </Form.Item>
+        </Form>
       </Card>
     </Layout>
   );
