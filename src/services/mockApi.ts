@@ -16,6 +16,10 @@ let mockUsers: User[] = [
     organization: 'TDAC',
     role: 'admin',
     max_entries: 999,
+    quota_ex_day1: 999,
+    quota_ex_day2: 999,
+    quota_interactive: 999,
+    quota_plenary: 999,
     allowed_passes: {
       exhibition_day1: true,
       exhibition_day2: true,
@@ -31,6 +35,10 @@ let mockUsers: User[] = [
     organization: 'IIT Delhi',
     role: 'user',
     max_entries: 50,
+    quota_ex_day1: 30,
+    quota_ex_day2: 25,
+    quota_interactive: 15,
+    quota_plenary: 10,
     allowed_passes: {
       exhibition_day1: true,
       exhibition_day2: true,
@@ -224,6 +232,10 @@ class MockApiService {
       organization: userData.organization || '',
       role: userData.role || 'user',
       max_entries: userData.max_entries || 50,
+      quota_ex_day1: userData.quota_ex_day1 || 0,
+      quota_ex_day2: userData.quota_ex_day2 || 0,
+      quota_interactive: userData.quota_interactive || 0,
+      quota_plenary: userData.quota_plenary || 0,
       allowed_passes: userData.allowed_passes || {
         exhibition_day1: true,
         exhibition_day2: true,

@@ -4,7 +4,11 @@ export interface User {
   username: string;
   organization: string;
   role: 'admin' | 'user';
-  max_entries: number;
+  max_entries: number; // For bulk upload exhibitors
+  quota_ex_day1: number; // Individual quota for Exhibition Day 1
+  quota_ex_day2: number; // Individual quota for Exhibition Day 2
+  quota_interactive: number; // Individual quota for Interactive Sessions
+  quota_plenary: number; // Individual quota for Plenary
   allowed_passes: {
     exhibition_day1: boolean;
     exhibition_day2: boolean;

@@ -125,12 +125,14 @@ export default function AdminPanelPage() {
     form.setFieldsValue({
       role: 'user',
       max_entries: 50,
-      allowed_passes: {
-        exhibition_day1: true,
-        exhibition_day2: true,
-        interactive_sessions: false,
-        plenary: false,
-      },
+      quota_ex_day1: 0,
+      quota_ex_day2: 0,
+      quota_interactive: 0,
+      quota_plenary: 0,
+      exhibition_day1: true,
+      exhibition_day2: true,
+      interactive_sessions: false,
+      plenary: false,
     });
     setUserModalVisible(true);
   };
@@ -142,6 +144,10 @@ export default function AdminPanelPage() {
       organization: user.organization,
       role: user.role,
       max_entries: user.max_entries,
+      quota_ex_day1: user.quota_ex_day1,
+      quota_ex_day2: user.quota_ex_day2,
+      quota_interactive: user.quota_interactive,
+      quota_plenary: user.quota_plenary,
       ...user.allowed_passes,
     });
     setUserModalVisible(true);
@@ -166,6 +172,10 @@ export default function AdminPanelPage() {
         organization: values.organization,
         role: values.role,
         max_entries: values.max_entries,
+        quota_ex_day1: values.quota_ex_day1,
+        quota_ex_day2: values.quota_ex_day2,
+        quota_interactive: values.quota_interactive,
+        quota_plenary: values.quota_plenary,
         allowed_passes: {
           exhibition_day1: values.exhibition_day1 || false,
           exhibition_day2: values.exhibition_day2 || false,
@@ -933,11 +943,59 @@ export default function AdminPanelPage() {
 
             <Col span={12}>
               <Form.Item
-                label="Max Entries"
+                label="Max Entries (Bulk Upload)"
                 name="max_entries"
                 rules={[{ required: true, message: 'Please enter max entries' }]}
               >
                 <InputNumber min={1} max={999} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Title level={6} style={{ marginTop: 16, marginBottom: 12 }}>
+            Pass Quotas (per type)
+          </Title>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label="Exhibition Day 1 Quota"
+                name="quota_ex_day1"
+                rules={[{ required: true, message: 'Please enter quota' }]}
+              >
+                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Exhibition Day 2 Quota"
+                name="quota_ex_day2"
+                rules={[{ required: true, message: 'Please enter quota' }]}
+              >
+                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                label="Interactive Sessions Quota"
+                name="quota_interactive"
+                rules={[{ required: true, message: 'Please enter quota' }]}
+              >
+                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Plenary Session Quota"
+                name="quota_plenary"
+                rules={[{ required: true, message: 'Please enter quota' }]}
+              >
+                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
               </Form.Item>
             </Col>
           </Row>
