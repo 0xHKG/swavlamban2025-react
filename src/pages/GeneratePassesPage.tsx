@@ -18,7 +18,7 @@ import {
   DownloadOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import type { Entry } from '../types';
 import Layout from '../components/Layout';
 import { useAuth } from '../hooks/useAuth';
@@ -57,7 +57,7 @@ export default function GeneratePassesPage() {
 
   const loadEntries = async () => {
     try {
-      const data = await mockApiService.getMyEntries();
+      const data = await apiService.getMyEntries();
       // Sort entries by ID descending (most recent first)
       const sortedData = data.sort((a, b) => b.id - a.id);
       setEntries(sortedData);
@@ -79,7 +79,7 @@ export default function GeneratePassesPage() {
 
     try {
       setEmailProgress(true);
-      const passes = await mockApiService.generatePasses(selectedEntry.id, false);
+      const passes = await apiService.generatePasses(selectedEntry.id, false);
       setGeneratedPasses(passes.map((p) => p.filename));
       message.success(`✅ Generated ${passes.length} pass${passes.length === 1 ? '' : 'es'}!`);
       loadEntries();
@@ -99,7 +99,7 @@ export default function GeneratePassesPage() {
       // Stage 1: Generating passes
       setEmailStage(1);
       await new Promise((resolve) => setTimeout(resolve, 500));
-      await mockApiService.generatePasses(selectedEntry.id, false);
+      await apiService.generatePasses(selectedEntry.id, false);
 
       // Stage 2: Updating database
       setEmailStage(2);
@@ -107,7 +107,7 @@ export default function GeneratePassesPage() {
 
       // Stage 3: Sending email
       setEmailStage(3);
-      await mockApiService.generatePasses(selectedEntry.id, true);
+      await apiService.generatePasses(selectedEntry.id, true);
 
       setEmailStage(0);
       message.success(`✅ Email sent successfully to ${selectedEntry.email}!`);
@@ -142,7 +142,7 @@ export default function GeneratePassesPage() {
         setBulkProgress({ current: i + 1, total });
         setBulkStats({ elapsed, avgTime, remaining });
 
-        await mockApiService.generatePasses(entry.id, true);
+        await apiService.generatePasses(entry.id, true);
       }
 
       message.success(`✅ Sent emails to ${total} attendees!`);
@@ -297,13 +297,20 @@ export default function GeneratePassesPage() {
                   </Title>
                   <Space direction="vertical" size={8}>
                     <Text style={{ color: '#94a3b8' }}>
-                      <strong style={{ color: '#e2e8f0' }}>Pass Type:</strong> 👤 Visitor Pass
+                      <strong style={{ color: '#e2e8f0' }}>Pass Type:</strong>{' '}
+                      {selectedEntry.is_exhibitor_pass ? '🏢 Exhibitor Pass' : '👤 Visitor Pass'}
                     </Text>
-                    {selectedEntry.exhibition_day1 && (
-                      <Text style={{ color: '#43e97b' }}>✅ Exhibition Day 1</Text>
-                    )}
-                    {selectedEntry.exhibition_day2 && (
-                      <Text style={{ color: '#43e97b' }}>✅ Exhibition Day 2</Text>
+                    {selectedEntry.is_exhibitor_pass ? (
+                      <Text style={{ color: '#43e97b' }}>✅ Exhibitor Pass (25-26 Nov)</Text>
+                    ) : (
+                      <>
+                        {selectedEntry.exhibition_day1 && (
+                          <Text style={{ color: '#43e97b' }}>✅ Exhibition Day 1</Text>
+                        )}
+                        {selectedEntry.exhibition_day2 && (
+                          <Text style={{ color: '#43e97b' }}>✅ Exhibition Day 2</Text>
+                        )}
+                      </>
                     )}
                     {selectedEntry.interactive_sessions && (
                       <Text style={{ color: '#43e97b' }}>✅ Interactive Sessions</Text>

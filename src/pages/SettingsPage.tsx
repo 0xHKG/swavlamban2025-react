@@ -9,7 +9,7 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../hooks/useAuth';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import Layout from '../components/Layout';
 
 const { Title, Text } = Typography;
@@ -27,8 +27,8 @@ export default function SettingsPage() {
   const loadStats = async () => {
     try {
       const [entries, dashStats] = await Promise.all([
-        mockApiService.getMyEntries(),
-        mockApiService.getDashboardStats(),
+        apiService.getMyEntries(),
+        apiService.getDashboardStats(),
       ]);
 
       // Count passes generated (number of entries with at least one pass)

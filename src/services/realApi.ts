@@ -62,15 +62,10 @@ class RealApiService {
   // Authentication
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
-      // FastAPI expects form data for OAuth2 password flow
-      const formData = new URLSearchParams();
-      formData.append('username', credentials.username);
-      formData.append('password', credentials.password);
-
-      const response = await this.api.post<LoginResponse>('/api/auth/login', formData, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+      // FastAPI expects JSON with username and password
+      const response = await this.api.post<LoginResponse>('/api/v1/auth/login', {
+        username: credentials.username,
+        password: credentials.password,
       });
 
       return response.data;
@@ -86,34 +81,34 @@ class RealApiService {
 
   // Entries
   async getMyEntries(): Promise<Entry[]> {
-    const response = await this.api.get<Entry[]>('/api/entries/my');
+    const response = await this.api.get<Entry[]>('/api/v1/entries/my');
     return response.data;
   }
 
   async createEntry(entry: CreateEntryRequest): Promise<Entry> {
-    const response = await this.api.post<Entry>('/api/entries', entry);
+    const response = await this.api.post<Entry>('/api/v1/entries', entry);
     return response.data;
   }
 
   async updateEntry(id: number, entry: Partial<CreateEntryRequest>): Promise<Entry> {
-    const response = await this.api.put<Entry>(`/api/entries/${id}`, entry);
+    const response = await this.api.put<Entry>(`/api/v1/entries/${id}`, entry);
     return response.data;
   }
 
   async deleteEntry(id: number): Promise<void> {
-    await this.api.delete(`/api/entries/${id}`);
+    await this.api.delete(`/api/v1/entries/${id}`);
   }
 
   // Dashboard Stats
   async getDashboardStats(): Promise<DashboardStats> {
-    const response = await this.api.get<DashboardStats>('/api/entries/stats');
+    const response = await this.api.get<DashboardStats>('/api/v1/entries/stats');
     return response.data;
   }
 
   // Pass Generation
   async generatePasses(entryId: number, sendEmail: boolean = false): Promise<PassGenerationResponse> {
     const response = await this.api.post<PassGenerationResponse>(
-      `/api/passes/generate/${entryId}`,
+      `/api/v1/passes/generate/${entryId}`,
       { send_email: sendEmail },
       { timeout: 120000 } // 2 minute timeout for pass generation + email
     );
@@ -122,33 +117,33 @@ class RealApiService {
 
   // Admin endpoints
   async getAllUsers(): Promise<User[]> {
-    const response = await this.api.get<User[]>('/api/admin/users');
+    const response = await this.api.get<User[]>('/api/v1/admin/users');
     return response.data;
   }
 
   async getAllEntries(): Promise<Entry[]> {
-    const response = await this.api.get<Entry[]>('/api/admin/entries');
+    const response = await this.api.get<Entry[]>('/api/v1/admin/entries');
     return response.data;
   }
 
   async createUser(userData: Partial<User> & { password: string }): Promise<User> {
-    const response = await this.api.post<User>('/api/admin/users', userData);
+    const response = await this.api.post<User>('/api/v1/admin/users', userData);
     return response.data;
   }
 
   async updateUser(username: string, userData: Partial<User>): Promise<User> {
-    const response = await this.api.put<User>(`/api/admin/users/${username}`, userData);
+    const response = await this.api.put<User>(`/api/v1/admin/users/${username}`, userData);
     return response.data;
   }
 
   async deleteUser(username: string): Promise<void> {
-    await this.api.delete(`/api/admin/users/${username}`);
+    await this.api.delete(`/api/v1/admin/users/${username}`);
   }
 
   // Bulk email
   async sendBulkEmail(entryIds: number[]): Promise<{ success: number; failed: number; }> {
     const response = await this.api.post<{ success: number; failed: number; }>(
-      '/api/admin/bulk-email',
+      '/api/v1/admin/bulk-email',
       { entry_ids: entryIds },
       { timeout: 600000 } // 10 minute timeout for bulk email
     );
@@ -157,7 +152,7 @@ class RealApiService {
 
   // Health check
   async healthCheck(): Promise<{ status: string; database: string; }> {
-    const response = await this.api.get<{ status: string; database: string; }>('/api/health');
+    const response = await this.api.get<{ status: string; database: string; }>('/health');
     return response.data;
   }
 }

@@ -274,6 +274,68 @@ Delete user (admin only)
 #### POST `/api/v1/admin/bulk-email`
 Send bulk emails (admin only)
 
+**Request:**
+```json
+{
+  "entry_ids": [1, 2, 3, 4, 5]
+}
+```
+
+**Response:**
+```json
+{
+  "success": 5,
+  "failed": 0,
+  "message": "Bulk email initiated for 5 entries"
+}
+```
+
+### Pass Generation
+
+#### POST `/api/v1/passes/generate/{entryId}`
+Generate passes for an entry and optionally send email
+
+**Request:**
+```json
+{
+  "send_email": true
+}
+```
+
+**Response:**
+```json
+{
+  "pass_files": ["EP-25.png", "EP-26.png"],
+  "email_sent": true,
+  "message": "Generated 2 pass(es) successfully and email sent to john@example.com"
+}
+```
+
+#### GET `/api/v1/passes/check/{entryId}`
+Check pass generation status for an entry
+
+**Response:**
+```json
+{
+  "entry_id": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "passes_allocated": {
+    "exhibition_day1": true,
+    "exhibition_day2": true,
+    "interactive_sessions": false,
+    "plenary": false
+  },
+  "passes_generated": {
+    "exhibition_day1": true,
+    "exhibition_day2": true,
+    "interactive_sessions": false,
+    "plenary": false
+  },
+  "all_generated": true
+}
+```
+
 ---
 
 ## 🔐 Authentication Flow
@@ -426,9 +488,22 @@ VITE_USE_REAL_API=true
 - [x] realApi.ts service created
 - [x] Environment variables configured
 - [x] API switcher implemented
-- [ ] Full integration testing
+- [x] **ALL BACKEND API ENDPOINTS CREATED**
+  - [x] `entries.py` - Entries CRUD + stats endpoints
+  - [x] `admin.py` - User management + bulk email
+  - [x] `passes.py` - Pass generation + email
+  - [x] All routers registered in main.py
+- [x] **ALL FRONTEND PAGES UPDATED TO USE REAL API**
+  - [x] useAuth.tsx - Authentication hook
+  - [x] DashboardPage.tsx
+  - [x] MyEntriesPage.tsx
+  - [x] AddEntryPage.tsx
+  - [x] GeneratePassesPage.tsx
+  - [x] SettingsPage.tsx
+  - [x] AdminPanelPage.tsx
+- [x] Full integration testing (endpoints responding)
 - [ ] Production backend deployment
-- [ ] Frontend environment update
+- [ ] Frontend environment update (production)
 
 ---
 

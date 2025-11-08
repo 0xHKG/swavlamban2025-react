@@ -22,7 +22,7 @@ import {
   EditOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import type { Entry } from '../types';
 import Layout from '../components/Layout';
 import { useAuth } from '../hooks/useAuth';
@@ -46,8 +46,8 @@ export default function MyEntriesPage() {
   const loadData = async () => {
     try {
       const [entriesData, statsData] = await Promise.all([
-        mockApiService.getMyEntries(),
-        mockApiService.getDashboardStats(),
+        apiService.getMyEntries(),
+        apiService.getDashboardStats(),
       ]);
       // Sort entries by ID descending (most recent first)
       setEntries(entriesData.sort((a, b) => b.id - a.id));
@@ -63,7 +63,7 @@ export default function MyEntriesPage() {
     if (!editingId) return;
 
     try {
-      await mockApiService.updateEntry(editingId, values);
+      await apiService.updateEntry(editingId, values);
       message.success('Entry updated successfully!');
       setEditingId(null);
       form.resetFields();
@@ -75,7 +75,7 @@ export default function MyEntriesPage() {
 
   const handleDelete = async (id: number) => {
     try {
-      await mockApiService.deleteEntry(id);
+      await apiService.deleteEntry(id);
       message.success('Entry deleted successfully!');
       setConfirmDeleteId(null);
       loadData();
@@ -87,7 +87,7 @@ export default function MyEntriesPage() {
   const handleGeneratePasses = async (entry: Entry) => {
     try {
       message.loading('Generating passes and sending email...', 0);
-      await mockApiService.generatePasses(entry.id, true);
+      await apiService.generatePasses(entry.id, true);
       message.destroy();
       message.success(`Passes generated and emailed to ${entry.email}!`);
       loadData();
@@ -257,16 +257,23 @@ export default function MyEntriesPage() {
                 <Col xs={24} md={12}>
                   <Space direction="vertical" size={8} style={{ width: '100%' }}>
                     <Text style={{ color: '#94a3b8' }}>
-                      <strong style={{ color: '#e2e8f0' }}>Pass Type:</strong> 👤 Visitor Pass
+                      <strong style={{ color: '#e2e8f0' }}>Pass Type:</strong>{' '}
+                      {entry.is_exhibitor_pass ? '🏢 Exhibitor Pass' : '👤 Visitor Pass'}
                     </Text>
                     <div>
                       <Text style={{ color: '#e2e8f0', fontWeight: 600 }}>Passes Selected:</Text>
                       <div style={{ marginTop: 8 }}>
-                        {entry.exhibition_day1 && (
-                          <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Exhibition Day 1</div>
-                        )}
-                        {entry.exhibition_day2 && (
-                          <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Exhibition Day 2</div>
+                        {entry.is_exhibitor_pass ? (
+                          <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Exhibition Day 1 & 2 (Combined)</div>
+                        ) : (
+                          <>
+                            {entry.exhibition_day1 && (
+                              <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Exhibition Day 1</div>
+                            )}
+                            {entry.exhibition_day2 && (
+                              <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Exhibition Day 2</div>
+                            )}
+                          </>
                         )}
                         {entry.interactive_sessions && (
                           <div style={{ color: '#43e97b', marginBottom: 4 }}>✅ Interactive Sessions</div>

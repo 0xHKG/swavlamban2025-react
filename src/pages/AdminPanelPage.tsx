@@ -35,7 +35,7 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import type { User, Entry } from '../types';
 import Layout from '../components/Layout';
 
@@ -51,6 +51,11 @@ export default function AdminPanelPage() {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [form] = Form.useForm();
 
+  // Pagination state
+  const [entriesPageSize, setEntriesPageSize] = useState(10);
+  const [orgPageSize, setOrgPageSize] = useState(10);
+  const [usersPageSize, setUsersPageSize] = useState(10);
+
   useEffect(() => {
     loadData();
   }, []);
@@ -58,8 +63,8 @@ export default function AdminPanelPage() {
   const loadData = async () => {
     try {
       const [usersData, entriesData] = await Promise.all([
-        mockApiService.getAllUsers(),
-        mockApiService.getAllEntries(),
+        apiService.getAllUsers(),
+        apiService.getAllEntries(),
       ]);
       setUsers(usersData);
       // Sort entries by ID descending (most recent first)
@@ -163,7 +168,7 @@ export default function AdminPanelPage() {
 
   const handleDeleteUser = async (username: string) => {
     try {
-      await mockApiService.deleteUser(username);
+      await apiService.deleteUser(username);
       message.success('User deleted successfully');
       loadData();
     } catch (error) {
@@ -194,10 +199,10 @@ export default function AdminPanelPage() {
       };
 
       if (editingUser) {
-        await mockApiService.updateUser(editingUser.username, userData);
+        await apiService.updateUser(editingUser.username, userData);
         message.success('User updated successfully');
       } else {
-        await mockApiService.createUser(userData);
+        await apiService.createUser(userData);
         message.success('User created successfully');
       }
 
@@ -434,7 +439,7 @@ export default function AdminPanelPage() {
               // Create entries for each attendee
               for (const attendee of exhibitor.attendees) {
                 try {
-                  await mockApiService.createEntry({
+                  await apiService.createEntry({
                     name: attendee.name,
                     email: exhibitor.email,
                     phone: `+91-${exhibitor.mobile}`,
@@ -1000,10 +1005,20 @@ export default function AdminPanelPage() {
                 key: 'passes',
                 render: (_, record) => {
                   const passes: string[] = [];
-                  if (record.exhibition_day1) passes.push('Ex-1');
-                  if (record.exhibition_day2) passes.push('Ex-2');
+
+                  // Check exhibitor pass first
+                  if (record.is_exhibitor_pass) {
+                    passes.push('Ex-1, Ex-2');
+                  } else {
+                    // Individual passes for visitors
+                    if (record.exhibition_day1) passes.push('Ex-1');
+                    if (record.exhibition_day2) passes.push('Ex-2');
+                  }
+
+                  // Additional passes (same for both exhibitors and visitors)
                   if (record.interactive_sessions) passes.push('Interactive');
                   if (record.plenary) passes.push('Plenary');
+
                   return passes.join(', ') || 'None';
                 },
               },
@@ -1017,7 +1032,17 @@ export default function AdminPanelPage() {
             ]}
             dataSource={entries}
             rowKey="id"
-            pagination={{ pageSize: 10 }}
+            pagination={{
+              pageSize: entriesPageSize,
+              showSizeChanger: true,
+              pageSizeOptions: ['10', '20', '50', '100', '200'],
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} entries`,
+              onChange: (page, pageSize) => {
+                if (pageSize !== entriesPageSize) {
+                  setEntriesPageSize(pageSize);
+                }
+              },
+            }}
             scroll={{ x: 1200 }}
           />
         ) : (
@@ -1065,7 +1090,17 @@ export default function AdminPanelPage() {
               dataSource={orgStats}
               loading={loading}
               rowKey="username"
-              pagination={{ pageSize: 10 }}
+              pagination={{
+                pageSize: orgPageSize,
+                showSizeChanger: true,
+                pageSizeOptions: ['10', '20', '50', '100'],
+                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} organizations`,
+                onChange: (page, pageSize) => {
+                  if (pageSize !== orgPageSize) {
+                    setOrgPageSize(pageSize);
+                  }
+                },
+              }}
               style={{ background: 'transparent' }}
             />
           </TabPane>
@@ -1091,7 +1126,17 @@ export default function AdminPanelPage() {
               dataSource={users}
               loading={loading}
               rowKey="username"
-              pagination={{ pageSize: 10 }}
+              pagination={{
+                pageSize: usersPageSize,
+                showSizeChanger: true,
+                pageSizeOptions: ['10', '20', '50', '100'],
+                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} users`,
+                onChange: (page, pageSize) => {
+                  if (pageSize !== usersPageSize) {
+                    setUsersPageSize(pageSize);
+                  }
+                },
+              }}
               style={{ background: 'transparent' }}
             />
           </TabPane>

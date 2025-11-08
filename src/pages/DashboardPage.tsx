@@ -10,7 +10,7 @@ import {
   ClockCircleOutlined,
   TrophyOutlined,
 } from '@ant-design/icons';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import type { DashboardStats } from '../types';
 import Layout from '../components/Layout';
 
@@ -27,7 +27,7 @@ export default function DashboardPage() {
 
   const loadStats = async () => {
     try {
-      const data = await mockApiService.getDashboardStats();
+      const data = await apiService.getDashboardStats();
       setStats(data);
     } catch (error) {
       console.error('Failed to load stats:', error);

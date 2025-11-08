@@ -31,7 +31,7 @@ import {
   ClockCircleOutlined,
 } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { mockApiService } from '../services/mockApi';
+import { apiService } from '../services';
 import { useAuth } from '../hooks/useAuth';
 import Layout from '../components/Layout';
 
@@ -54,7 +54,7 @@ export default function AddEntryPage() {
 
   const loadStats = async () => {
     try {
-      const data = await mockApiService.getDashboardStats();
+      const data = await apiService.getDashboardStats();
       setStats(data);
     } catch (error) {
       console.error('Failed to load stats:', error);
@@ -64,7 +64,7 @@ export default function AddEntryPage() {
   const handleSubmit = async (values: any) => {
     setLoading(true);
     try {
-      await mockApiService.createEntry(values);
+      await apiService.createEntry(values);
       message.success('Entry created successfully!');
       setTimeout(() => navigate('/my-entries'), 1500);
     } catch (err: any) {
@@ -255,7 +255,7 @@ export default function AddEntryPage() {
           plenary,
         };
 
-        await mockApiService.createEntry(entry);
+        await apiService.createEntry(entry);
         successCount++;
       } catch (error: any) {
         failedCount++;
