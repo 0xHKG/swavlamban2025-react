@@ -13,6 +13,7 @@ import {
   Divider,
   Spin,
   Select,
+  Collapse,
 } from 'antd';
 import {
   DeleteOutlined,
@@ -212,22 +213,27 @@ export default function MyEntriesPage() {
           <Spin size="large" />
         </Card>
       ) : (
-        <Space direction="vertical" size={16} style={{ width: '100%' }}>
-          {entries.map((entry) => (
-            <Card
-              key={entry.id}
-              style={{
-                borderRadius: 16,
-                border: '1px solid rgba(255,255,255,0.1)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                background: 'rgba(30, 41, 59, 0.5)',
-              }}
-              title={
-                <span style={{ color: '#e2e8f0', fontSize: 16 }}>
-                  👤 {entry.name} - ID: {entry.id}
-                </span>
-              }
-            >
+        <Collapse
+          style={{
+            background: 'transparent',
+            border: 'none',
+          }}
+          items={entries.map((entry) => ({
+            key: entry.id.toString(),
+            label: (
+              <span style={{ color: '#e2e8f0', fontSize: 16 }}>
+                👤 {entry.name} - ID: {entry.id}
+              </span>
+            ),
+            style: {
+              marginBottom: 16,
+              borderRadius: 16,
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              background: 'rgba(30, 41, 59, 0.5)',
+            },
+            children: (
+              <div>
               {/* Two Column Layout - Matching Streamlit */}
               <Row gutter={24}>
                 <Col xs={24} md={12}>
@@ -458,9 +464,10 @@ export default function MyEntriesPage() {
                   </Form>
                 </div>
               )}
-            </Card>
-          ))}
-        </Space>
+              </div>
+            ),
+          }))}
+        />
       )}
     </Layout>
   );

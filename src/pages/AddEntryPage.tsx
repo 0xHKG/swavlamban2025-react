@@ -221,8 +221,16 @@ export default function AddEntryPage() {
 
         <Row gutter={24}>
           <Col xs={12} sm={6}>
-            <div style={{ textAlign: 'center' }}>
-              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(79, 172, 254, 0.1)',
+                border: '1px solid rgba(79, 172, 254, 0.3)',
+                textAlign: 'center',
+              }}
+            >
+              <Text style={{ color: '#4facfe', display: 'block', marginBottom: 8, fontWeight: 500 }}>
                 Ex Day 1
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
@@ -235,8 +243,16 @@ export default function AddEntryPage() {
           </Col>
 
           <Col xs={12} sm={6}>
-            <div style={{ textAlign: 'center' }}>
-              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(102, 126, 234, 0.1)',
+                border: '1px solid rgba(102, 126, 234, 0.3)',
+                textAlign: 'center',
+              }}
+            >
+              <Text style={{ color: '#667eea', display: 'block', marginBottom: 8, fontWeight: 500 }}>
                 Ex Day 2
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
@@ -249,8 +265,16 @@ export default function AddEntryPage() {
           </Col>
 
           <Col xs={12} sm={6}>
-            <div style={{ textAlign: 'center' }}>
-              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(67, 233, 123, 0.1)',
+                border: '1px solid rgba(67, 233, 123, 0.3)',
+                textAlign: 'center',
+              }}
+            >
+              <Text style={{ color: '#43e97b', display: 'block', marginBottom: 8, fontWeight: 500 }}>
                 Interactive
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
@@ -263,8 +287,16 @@ export default function AddEntryPage() {
           </Col>
 
           <Col xs={12} sm={6}>
-            <div style={{ textAlign: 'center' }}>
-              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(245, 87, 108, 0.1)',
+                border: '1px solid rgba(245, 87, 108, 0.3)',
+                textAlign: 'center',
+              }}
+            >
+              <Text style={{ color: '#f5576c', display: 'block', marginBottom: 8, fontWeight: 500 }}>
                 Plenary
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>

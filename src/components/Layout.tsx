@@ -72,12 +72,18 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   return (
-    <AntLayout style={{ minHeight: '100vh' }}>
+    <AntLayout hasSider style={{ minHeight: '100vh' }}>
       <Sider
         width={280}
         style={{
           background: 'linear-gradient(180deg, #1e3a8a 0%, #1e293b 100%)',
           boxShadow: '4px 0 24px rgba(0,0,0,0.3)',
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
         }}
       >
         {/* Logo */}
@@ -205,7 +211,7 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </Sider>
 
-      <AntLayout>
+      <AntLayout style={{ marginLeft: 280 }}>
         <Content
           style={{
             padding: 32,

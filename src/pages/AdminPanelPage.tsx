@@ -963,7 +963,13 @@ export default function AdminPanelPage() {
                 name="quota_ex_day1"
                 rules={[{ required: true, message: 'Please enter quota' }]}
               >
-                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+                <InputNumber
+                  min={0}
+                  max={999}
+                  style={{ width: '100%' }}
+                  placeholder="0"
+                  disabled={!Form.useWatch('exhibition_day1', form)}
+                />
               </Form.Item>
             </Col>
 
@@ -973,7 +979,13 @@ export default function AdminPanelPage() {
                 name="quota_ex_day2"
                 rules={[{ required: true, message: 'Please enter quota' }]}
               >
-                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+                <InputNumber
+                  min={0}
+                  max={999}
+                  style={{ width: '100%' }}
+                  placeholder="0"
+                  disabled={!Form.useWatch('exhibition_day2', form)}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -985,7 +997,13 @@ export default function AdminPanelPage() {
                 name="quota_interactive"
                 rules={[{ required: true, message: 'Please enter quota' }]}
               >
-                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+                <InputNumber
+                  min={0}
+                  max={999}
+                  style={{ width: '100%' }}
+                  placeholder="0"
+                  disabled={!Form.useWatch('interactive_sessions', form)}
+                />
               </Form.Item>
             </Col>
 
@@ -995,7 +1013,13 @@ export default function AdminPanelPage() {
                 name="quota_plenary"
                 rules={[{ required: true, message: 'Please enter quota' }]}
               >
-                <InputNumber min={0} max={999} style={{ width: '100%' }} placeholder="0" />
+                <InputNumber
+                  min={0}
+                  max={999}
+                  style={{ width: '100%' }}
+                  placeholder="0"
+                  disabled={!Form.useWatch('plenary', form)}
+                />
               </Form.Item>
             </Col>
           </Row>
