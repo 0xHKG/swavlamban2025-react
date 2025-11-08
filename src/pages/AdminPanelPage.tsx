@@ -189,6 +189,51 @@ export default function AdminPanelPage() {
     }
   };
 
+  const handleDownloadAllEntries = () => {
+    if (entries.length === 0) {
+      message.warning('No entries to download');
+      return;
+    }
+
+    const csvContent = [
+      ['ID', 'Name', 'Organization', 'Email', 'Phone', 'ID Type', 'Entry Type', 'Passes', 'Created'],
+      ...entries.map((entry) => {
+        const user = users.find((u) => u.username === entry.username);
+        const passes: string[] = [];
+        if (entry.exhibition_day1) passes.push('Ex-1');
+        if (entry.exhibition_day2) passes.push('Ex-2');
+        if (entry.interactive_sessions) passes.push('Interactive');
+        if (entry.plenary) passes.push('Plenary');
+
+        return [
+          entry.id,
+          `"${entry.name}"`,
+          `"${user?.organization || 'N/A'}"`,
+          `"${entry.email}"`,
+          `"${entry.phone}"`,
+          `"${entry.id_type}"`,
+          '👤 Visitor',
+          `"${passes.join(', ')}"`,
+          new Date(entry.created_at).toLocaleDateString(),
+        ];
+      }),
+    ]
+      .map((row) => row.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
+    link.setAttribute('href', url);
+    link.setAttribute('download', `swavlamban2025_all_entries_${timestamp}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    message.success('CSV file downloaded successfully!');
+  };
+
   // Organization Statistics Table Columns
   const orgColumns: ColumnsType<any> = [
     {
@@ -590,6 +635,167 @@ export default function AdminPanelPage() {
             </div>
           </Col>
         </Row>
+      </Card>
+
+      {/* Server IP Info */}
+      <Card
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}
+      >
+        <Title level={4} style={{ color: '#e2e8f0', marginBottom: 16 }}>
+          🌐 Server IP Information
+        </Title>
+        <Row gutter={24}>
+          <Col xs={24} md={18}>
+            <div
+              style={{
+                padding: 16,
+                borderRadius: 8,
+                background: 'rgba(79, 172, 254, 0.1)',
+                border: '1px solid rgba(79, 172, 254, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 12, fontSize: 16 }}>
+                <strong>Current Server IP Address:</strong>{' '}
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    padding: '4px 8px',
+                    background: 'rgba(0,0,0,0.3)',
+                    borderRadius: 4,
+                    marginLeft: 8,
+                  }}
+                >
+                  {window.location.hostname === 'localhost' ? '127.0.0.1 (Local)' : 'Check production deployment'}
+                </span>
+              </Text>
+            </div>
+          </Col>
+          <Col xs={24} md={6}>
+            <Button
+              type="primary"
+              icon={<ReloadOutlined />}
+              onClick={() => window.location.reload()}
+              block
+              style={{ height: 48 }}
+            >
+              🔄 Refresh
+            </Button>
+          </Col>
+        </Row>
+      </Card>
+
+      {/* All Entries Table */}
+      <Card
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.1)',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <Title level={4} style={{ color: '#e2e8f0', margin: 0 }}>
+            📋 All Registered Entries
+          </Title>
+          <Button
+            type="primary"
+            icon={<DownloadOutlined />}
+            onClick={handleDownloadAllEntries}
+            style={{
+              background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+              border: 'none',
+            }}
+          >
+            📥 Download All Entries (CSV)
+          </Button>
+        </div>
+
+        {entries.length > 0 ? (
+          <Table
+            columns={[
+              {
+                title: 'ID',
+                dataIndex: 'id',
+                key: 'id',
+                width: 80,
+                sorter: (a, b) => a.id - b.id,
+              },
+              {
+                title: 'Name',
+                dataIndex: 'name',
+                key: 'name',
+                sorter: (a, b) => a.name.localeCompare(b.name),
+              },
+              {
+                title: 'Organization',
+                dataIndex: 'organization',
+                key: 'organization',
+                render: (_, record) => {
+                  const user = users.find((u) => u.username === record.username);
+                  return user?.organization || 'N/A';
+                },
+              },
+              {
+                title: 'Email',
+                dataIndex: 'email',
+                key: 'email',
+              },
+              {
+                title: 'Phone',
+                dataIndex: 'phone',
+                key: 'phone',
+              },
+              {
+                title: 'ID Type',
+                dataIndex: 'id_type',
+                key: 'id_type',
+              },
+              {
+                title: 'Entry Type',
+                key: 'entry_type',
+                render: () => '👤 Visitor',
+              },
+              {
+                title: 'Passes',
+                key: 'passes',
+                render: (_, record) => {
+                  const passes: string[] = [];
+                  if (record.exhibition_day1) passes.push('Ex-1');
+                  if (record.exhibition_day2) passes.push('Ex-2');
+                  if (record.interactive_sessions) passes.push('Interactive');
+                  if (record.plenary) passes.push('Plenary');
+                  return passes.join(', ') || 'None';
+                },
+              },
+              {
+                title: 'Created',
+                dataIndex: 'created_at',
+                key: 'created_at',
+                render: (date: string) => new Date(date).toLocaleDateString(),
+                sorter: (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+              },
+            ]}
+            dataSource={entries}
+            rowKey="id"
+            pagination={{ pageSize: 10 }}
+            scroll={{ x: 1200 }}
+          />
+        ) : (
+          <div
+            style={{
+              padding: 40,
+              textAlign: 'center',
+              background: 'rgba(79, 172, 254, 0.1)',
+              borderRadius: 8,
+              border: '1px solid rgba(79, 172, 254, 0.3)',
+            }}
+          >
+            <Text style={{ color: '#4facfe', fontSize: 16 }}>No entries created yet</Text>
+          </div>
+        )}
       </Card>
 
       {/* Main Content Tabs */}
