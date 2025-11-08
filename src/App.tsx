@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
+import { ConfigProvider, theme } from 'antd';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -11,56 +9,56 @@ import AdminPanelPage from './pages/AdminPanelPage';
 import EventInfoPage from './pages/EventInfoPage';
 import GeneratePassesPage from './pages/GeneratePassesPage';
 import SettingsPage from './pages/SettingsPage';
+import 'antd/dist/reset.css';
 
-// Indian Navy theme
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1D4E89',
-      dark: '#0D2E59',
-      light: '#2A5F9E',
-    },
-    secondary: {
-      main: '#FFD700',
-    },
-    background: {
-      default: '#F5F7FA',
-    },
-  },
-  typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-    h4: {
-      fontWeight: 700,
-    },
-    h6: {
-      fontWeight: 600,
-    },
+// Dark theme configuration for Ant Design
+const antTheme = {
+  algorithm: theme.darkAlgorithm, // Use built-in dark theme
+  token: {
+    colorPrimary: '#667eea',
+    colorSuccess: '#43e97b',
+    colorWarning: '#fbbf24',
+    colorError: '#f5576c',
+    colorInfo: '#4facfe',
+    colorBgBase: '#0f172a', // Deep blue-black background
+    colorBgContainer: '#1e293b', // Card/container background
+    colorBorder: 'rgba(255,255,255,0.1)', // Subtle borders
+    colorText: '#e2e8f0', // Light text for readability
+    colorTextSecondary: '#94a3b8', // Muted secondary text
+    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+    borderRadius: 12,
+    fontSize: 14,
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          borderRadius: 8,
-        },
-      },
+    Table: {
+      colorBgContainer: 'rgba(30, 41, 59, 0.5)',
+      colorText: '#e2e8f0',
+      colorTextHeading: '#e2e8f0',
+      borderColor: 'rgba(255,255,255,0.1)',
     },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-        },
-      },
+    Card: {
+      colorBgContainer: 'rgba(30, 41, 59, 0.5)',
+      colorBorderSecondary: 'rgba(255,255,255,0.1)',
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-        },
-      },
+    Input: {
+      colorBgContainer: 'rgba(15, 23, 42, 0.5)',
+      colorText: '#e2e8f0',
+      colorTextPlaceholder: 'rgba(148, 163, 184, 0.6)',
+      colorBorder: 'rgba(255,255,255,0.2)',
+    },
+    Select: {
+      colorBgContainer: 'rgba(15, 23, 42, 0.5)',
+      colorText: '#e2e8f0',
+      colorTextPlaceholder: 'rgba(148, 163, 184, 0.6)',
+      colorBorder: 'rgba(255,255,255,0.2)',
+    },
+    Button: {
+      colorPrimary: '#667eea',
+      colorPrimaryHover: '#764ba2',
+      colorText: '#e2e8f0',
     },
   },
-});
+};
 
 // Protected Route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -169,16 +167,13 @@ function AppRoutes() {
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ width: '100vw', overflowX: 'hidden' }}>
-        <BrowserRouter>
-          <AuthProvider>
-            <AppRoutes />
-          </AuthProvider>
-        </BrowserRouter>
-      </Box>
-    </ThemeProvider>
+    <ConfigProvider theme={antTheme}>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </BrowserRouter>
+    </ConfigProvider>
   );
 }
 

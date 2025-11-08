@@ -1,34 +1,24 @@
 import type { ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Layout as AntLayout, Menu, Button, Typography, Avatar } from 'antd';
 import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  Divider,
-  Button,
-} from '@mui/material';
-import {
-  Dashboard as DashboardIcon,
-  PersonAdd as PersonAddIcon,
-  List as ListIcon,
-  AdminPanelSettings as AdminIcon,
-  Info as InfoIcon,
-  Logout as LogoutIcon,
-  ConfirmationNumber as PassIcon,
-  Settings as SettingsIcon,
-} from '@mui/icons-material';
+  DashboardOutlined,
+  UserAddOutlined,
+  UnorderedListOutlined,
+  ControlOutlined,
+  InfoCircleOutlined,
+  LogoutOutlined,
+  MailOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import { useAuth } from '../hooks/useAuth';
+
+const { Sider, Content, Footer } = AntLayout;
+const { Text } = Typography;
 
 interface LayoutProps {
   children: ReactNode;
 }
-
-const DRAWER_WIDTH = 280;
 
 export default function Layout({ children }: LayoutProps) {
   const { user, logout } = useAuth();
@@ -40,134 +30,203 @@ export default function Layout({ children }: LayoutProps) {
     navigate('/login');
   };
 
-  const navItems = [
-    { label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
-    { label: 'Event Information', path: '/event-info', icon: <InfoIcon /> },
-    { label: 'My Entries', path: '/my-entries', icon: <ListIcon /> },
-    { label: 'Add Entry', path: '/add-entry', icon: <PersonAddIcon /> },
-    { label: 'Generate & Email Passes', path: '/generate-passes', icon: <PassIcon /> },
-    { label: 'Settings', path: '/settings', icon: <SettingsIcon /> },
+  const menuItems = [
+    {
+      key: '/dashboard',
+      icon: <DashboardOutlined />,
+      label: 'Dashboard',
+    },
+    {
+      key: '/event-info',
+      icon: <InfoCircleOutlined />,
+      label: 'Event Information',
+    },
+    {
+      key: '/my-entries',
+      icon: <UnorderedListOutlined />,
+      label: 'My Entries',
+    },
+    {
+      key: '/add-entry',
+      icon: <UserAddOutlined />,
+      label: 'Add Entry',
+    },
+    {
+      key: '/generate-passes',
+      icon: <MailOutlined />,
+      label: 'Generate & Email Passes',
+    },
+    {
+      key: '/settings',
+      icon: <SettingOutlined />,
+      label: 'Settings',
+    },
   ];
 
   if (user?.role === 'admin') {
-    navItems.push({ label: 'Admin Panel', path: '/admin', icon: <AdminIcon /> });
+    menuItems.push({
+      key: '/admin',
+      icon: <ControlOutlined />,
+      label: 'Admin Panel',
+    });
   }
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
-      {/* Sidebar */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: DRAWER_WIDTH,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: DRAWER_WIDTH,
-            boxSizing: 'border-box',
-            background: 'linear-gradient(180deg, #1D4E89 0%, #0D2E59 100%)',
-            color: 'white',
-          },
+    <AntLayout style={{ minHeight: '100vh' }}>
+      <Sider
+        width={280}
+        style={{
+          background: 'linear-gradient(180deg, #1e3a8a 0%, #1e293b 100%)',
+          boxShadow: '4px 0 24px rgba(0,0,0,0.3)',
         }}
       >
-        {/* User Info */}
-        <Box sx={{ p: 3, textAlign: 'center', bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 2, m: 2 }}>
-          <Typography variant="h6" sx={{ color: '#FFD700', fontWeight: 700, mb: 0.5 }}>
-            👤 {user?.organization}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem' }}>
+        {/* Logo */}
+        <div
+          style={{
+            padding: '24px 20px',
+            textAlign: 'center',
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+          }}
+        >
+          <img
+            src="/IN.png"
+            alt="Indian Navy Logo"
+            style={{
+              width: '80px',
+              height: '80px',
+              objectFit: 'contain',
+              marginBottom: 12,
+            }}
+          />
+          <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: 16, marginBottom: 4 }}>
+            Swavlamban 2025
+          </div>
+          <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>
+            Indian Navy
+          </Text>
+        </div>
+
+        {/* User Info Card */}
+        <div
+          style={{
+            padding: '20px',
+            textAlign: 'center',
+            background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(102, 126, 234, 0.15) 100%)',
+            borderRadius: 12,
+            margin: '20px 16px',
+            border: '1px solid rgba(251, 191, 36, 0.2)',
+          }}
+        >
+          <Avatar
+            size={56}
+            style={{
+              backgroundColor: '#fbbf24',
+              color: '#1e3a8a',
+              marginBottom: 12,
+              fontWeight: 700,
+              fontSize: 24,
+            }}
+          >
+            {user?.organization?.charAt(0) || 'U'}
+          </Avatar>
+          <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: 18, marginBottom: 6 }}>
+            {user?.organization}
+          </div>
+          <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13 }}>
             @{user?.username}
-          </Typography>
-          <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', mt: 0.5 }}>
-            Role: {user?.role.toUpperCase()}
-          </Typography>
-        </Box>
+          </Text>
+          <div
+            style={{
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: 11,
+              marginTop: 8,
+              padding: '4px 12px',
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: 12,
+              display: 'inline-block',
+            }}
+          >
+            {user?.role.toUpperCase()}
+          </div>
+        </div>
 
-        <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)', my: 1 }} />
-
-        {/* Navigation */}
-        <Typography variant="subtitle2" sx={{ px: 3, py: 1, color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+        {/* Navigation Label */}
+        <div
+          style={{
+            padding: '12px 24px 8px',
+            color: 'rgba(255,255,255,0.5)',
+            fontWeight: 600,
+            fontSize: 11,
+            letterSpacing: '0.5px',
+          }}
+        >
           📋 NAVIGATION
-        </Typography>
-        <List sx={{ px: 2 }}>
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
-                <ListItemButton
-                  onClick={() => navigate(item.path)}
-                  sx={{
-                    borderRadius: 2,
-                    bgcolor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-                    '&:hover': {
-                      bgcolor: 'rgba(255,255,255,0.1)',
-                    },
-                    py: 1.5,
-                  }}
-                >
-                  <ListItemIcon sx={{ color: isActive ? '#FFD700' : 'rgba(255,255,255,0.7)', minWidth: 40 }}>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.label}
-                    primaryTypographyProps={{
-                      fontSize: '0.95rem',
-                      fontWeight: isActive ? 600 : 400,
-                      color: isActive ? 'white' : 'rgba(255,255,255,0.85)',
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
+        </div>
 
-        <Box sx={{ flexGrow: 1 }} />
+        {/* Menu */}
+        <Menu
+          mode="inline"
+          selectedKeys={[location.pathname]}
+          onClick={({ key }) => navigate(key)}
+          items={menuItems}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            padding: '0 12px',
+          }}
+          theme="dark"
+        />
 
         {/* Logout Button */}
-        <Box sx={{ p: 2 }}>
+        <div style={{ padding: 16, position: 'absolute', bottom: 16, left: 0, right: 0 }}>
           <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<LogoutIcon />}
+            block
+            icon={<LogoutOutlined />}
             onClick={handleLogout}
-            sx={{
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.3)',
-              '&:hover': {
-                borderColor: 'white',
-                bgcolor: 'rgba(255,255,255,0.1)',
-              },
-              py: 1,
-              borderRadius: 2,
+            style={{
+              height: 44,
+              color: 'rgba(255,255,255,0.9)',
+              borderColor: 'rgba(255,255,255,0.2)',
+              background: 'rgba(255,255,255,0.05)',
+              borderRadius: 8,
+              fontWeight: 500,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
             }}
           >
             Logout
           </Button>
-        </Box>
-      </Drawer>
+        </div>
+      </Sider>
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          bgcolor: '#F5F7FA',
-          overflow: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <Box sx={{ flexGrow: 1, p: 4 }}>
+      <AntLayout>
+        <Content
+          style={{
+            padding: 32,
+            background: '#0f172a',
+            minHeight: 'calc(100vh - 48px)',
+          }}
+        >
           {children}
-        </Box>
+        </Content>
 
-        {/* Footer */}
-        <Box sx={{ py: 2, px: 4, bgcolor: '#0D2E59', color: 'white', textAlign: 'center' }}>
-          <Typography variant="body2">
-            Indian Navy - Swavlamban 2025 | Nov 25-26, 2025 | Manekshaw Centre
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+        <Footer
+          style={{
+            textAlign: 'center',
+            background: '#1e293b',
+            color: 'white',
+            padding: '16px 32px',
+          }}
+        >
+          Indian Navy - Swavlamban 2025 | Nov 25-26, 2025 | Manekshaw Centre
+        </Footer>
+      </AntLayout>
+    </AntLayout>
   );
 }
