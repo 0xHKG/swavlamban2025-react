@@ -62,7 +62,8 @@ export default function AdminPanelPage() {
         mockApiService.getAllEntries(),
       ]);
       setUsers(usersData);
-      setEntries(entriesData);
+      // Sort entries by ID descending (most recent first)
+      setEntries(entriesData.sort((a, b) => b.id - a.id));
     } catch (error) {
       console.error('Failed to load data:', error);
       message.error('Failed to load admin data');
@@ -956,6 +957,7 @@ export default function AdminPanelPage() {
                 dataIndex: 'id',
                 key: 'id',
                 width: 80,
+                defaultSortOrder: 'descend',
                 sorter: (a, b) => a.id - b.id,
               },
               {

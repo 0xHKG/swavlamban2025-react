@@ -58,9 +58,11 @@ export default function GeneratePassesPage() {
   const loadEntries = async () => {
     try {
       const data = await mockApiService.getMyEntries();
-      setEntries(data);
-      if (data.length > 0) {
-        setSelectedEntryId(data[0].id);
+      // Sort entries by ID descending (most recent first)
+      const sortedData = data.sort((a, b) => b.id - a.id);
+      setEntries(sortedData);
+      if (sortedData.length > 0) {
+        setSelectedEntryId(sortedData[0].id);
       }
     } catch (error) {
       console.error('Failed to load entries:', error);

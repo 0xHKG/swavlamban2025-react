@@ -49,7 +49,8 @@ export default function MyEntriesPage() {
         mockApiService.getMyEntries(),
         mockApiService.getDashboardStats(),
       ]);
-      setEntries(entriesData);
+      // Sort entries by ID descending (most recent first)
+      setEntries(entriesData.sort((a, b) => b.id - a.id));
       setStats(statsData);
     } catch (error) {
       message.error('Failed to load data');
