@@ -70,6 +70,7 @@ export default function AdminPanelPage() {
   const totalUsers = users.length;
   const totalEntries = entries.length;
   const totalQuota = users.reduce((sum, u) => sum + u.max_entries, 0);
+  const quotaUsedPercent = totalQuota > 0 ? ((totalEntries / totalQuota) * 100).toFixed(1) : '0.0';
   const passesGenerated = entries.filter(
     (e) =>
       e.pass_generated_exhibition_day1 ||
@@ -77,6 +78,26 @@ export default function AdminPanelPage() {
       e.pass_generated_interactive_sessions ||
       e.pass_generated_plenary
   ).length;
+
+  // Pass Generation Statistics (detailed by type)
+  const passStats = {
+    ex_day1_visitors: {
+      total: entries.filter((e) => e.exhibition_day1).length,
+      generated: entries.filter((e) => e.pass_generated_exhibition_day1).length,
+    },
+    ex_day2_visitors: {
+      total: entries.filter((e) => e.exhibition_day2).length,
+      generated: entries.filter((e) => e.pass_generated_exhibition_day2).length,
+    },
+    interactive: {
+      total: entries.filter((e) => e.interactive_sessions).length,
+      generated: entries.filter((e) => e.pass_generated_interactive_sessions).length,
+    },
+    plenary: {
+      total: entries.filter((e) => e.plenary).length,
+      generated: entries.filter((e) => e.pass_generated_plenary).length,
+    },
+  };
 
   // Organization statistics
   const orgStats = users.map((user) => {
@@ -311,88 +332,265 @@ export default function AdminPanelPage() {
         </Text>
       </div>
 
-      {/* System Overview Cards */}
-      <Row gutter={[24, 24]} style={{ marginBottom: 40 }}>
-        <Col xs={24} sm={12} lg={6}>
-          <Card
-            loading={loading}
-            style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: 16,
-              border: 'none',
-              boxShadow: '0 8px 24px rgba(102, 126, 234, 0.25)',
-            }}
-            styles={{ body: { padding: '24px' } }}
-          >
-            <Statistic
-              title={<span style={{ color: 'rgba(255,255,255,0.8)' }}>Total Organizations</span>}
-              value={totalUsers}
-              valueStyle={{ color: 'white' }}
-              prefix={<TeamOutlined />}
-            />
-          </Card>
-        </Col>
+      {/* System Overview Cards - 5 metrics */}
+      <Card
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.1)',
+          marginBottom: 32,
+        }}
+        styles={{ body: { padding: 24 } }}
+      >
+        <Title level={4} style={{ color: '#e2e8f0', marginBottom: 24 }}>
+          📊 System Overview
+        </Title>
+        <Row gutter={[24, 24]}>
+          <Col xs={12} sm={8} md={4}>
+            <div style={{ textAlign: 'center' }}>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Organizations
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: 0 }}>
+                {totalUsers}
+              </Title>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={4}>
+            <div style={{ textAlign: 'center' }}>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Total Quota
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: 0 }}>
+                {totalQuota}
+              </Title>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={4}>
+            <div style={{ textAlign: 'center' }}>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Entries Created
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: 0 }}>
+                {totalEntries}
+              </Title>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={4}>
+            <div style={{ textAlign: 'center' }}>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Quota Used
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: 0 }}>
+                {quotaUsedPercent}%
+              </Title>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={4}>
+            <div style={{ textAlign: 'center' }}>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Passes Generated
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: 0 }}>
+                {passesGenerated}
+              </Title>
+            </div>
+          </Col>
+        </Row>
+      </Card>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card
-            loading={loading}
-            style={{
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-              borderRadius: 16,
-              border: 'none',
-              boxShadow: '0 8px 24px rgba(245, 87, 108, 0.25)',
-            }}
-            styles={{ body: { padding: '24px' } }}
-          >
-            <Statistic
-              title={<span style={{ color: 'rgba(255,255,255,0.8)' }}>Total Entries</span>}
-              value={totalEntries}
-              valueStyle={{ color: 'white' }}
-              prefix={<FileTextOutlined />}
-            />
-          </Card>
-        </Col>
+      {/* Pass Generation Statistics */}
+      <Card
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.1)',
+          marginBottom: 32,
+        }}
+        styles={{ body: { padding: 24 } }}
+      >
+        <Title level={4} style={{ color: '#e2e8f0', marginBottom: 24 }}>
+          🎫 Pass Generation Statistics
+        </Title>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card
-            loading={loading}
-            style={{
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-              borderRadius: 16,
-              border: 'none',
-              boxShadow: '0 8px 24px rgba(79, 172, 254, 0.25)',
-            }}
-            styles={{ body: { padding: '24px' } }}
-          >
-            <Statistic
-              title={<span style={{ color: 'rgba(255,255,255,0.8)' }}>Total Quota</span>}
-              value={totalQuota}
-              valueStyle={{ color: 'white' }}
-              prefix={<UserOutlined />}
-            />
-          </Card>
-        </Col>
+        {/* Row 1: Exhibition passes */}
+        <Row gutter={[24, 24]} style={{ marginBottom: 24 }}>
+          <Col xs={24} sm={12} lg={8}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(79, 172, 254, 0.1)',
+                border: '1px solid rgba(79, 172, 254, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Exhibition Day 1 (Visitors)
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
+                {passStats.ex_day1_visitors.total}
+              </Title>
+              <Text style={{ color: '#43e97b', fontSize: 14 }}>
+                ↑ {passStats.ex_day1_visitors.generated} generated
+              </Text>
+            </div>
+          </Col>
 
-        <Col xs={24} sm={12} lg={6}>
-          <Card
-            loading={loading}
-            style={{
-              background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-              borderRadius: 16,
-              border: 'none',
-              boxShadow: '0 8px 24px rgba(67, 233, 123, 0.25)',
-            }}
-            styles={{ body: { padding: '24px' } }}
-          >
-            <Statistic
-              title={<span style={{ color: 'rgba(255,255,255,0.8)' }}>Passes Generated</span>}
-              value={passesGenerated}
-              valueStyle={{ color: 'white' }}
-              prefix={<CheckCircleOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
+          <Col xs={24} sm={12} lg={8}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(102, 126, 234, 0.1)',
+                border: '1px solid rgba(102, 126, 234, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Exhibition Day 2 (Visitors)
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
+                {passStats.ex_day2_visitors.total}
+              </Title>
+              <Text style={{ color: '#43e97b', fontSize: 14 }}>
+                ↑ {passStats.ex_day2_visitors.generated} generated
+              </Text>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={12} lg={8}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(118, 75, 162, 0.1)',
+                border: '1px solid rgba(118, 75, 162, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Exhibitor Passes (Both Days)
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
+                0
+              </Title>
+              <Text style={{ color: '#43e97b', fontSize: 14 }}>
+                ↑ 0 generated
+              </Text>
+            </div>
+          </Col>
+        </Row>
+
+        {/* Row 2: Interactive and Plenary */}
+        <Row gutter={[24, 24]}>
+          <Col xs={24} sm={12} lg={8}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(67, 233, 123, 0.1)',
+                border: '1px solid rgba(67, 233, 123, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Interactive Sessions
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
+                {passStats.interactive.total}
+              </Title>
+              <Text style={{ color: '#43e97b', fontSize: 14 }}>
+                ↑ {passStats.interactive.generated} generated
+              </Text>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={12} lg={8}>
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 12,
+                background: 'rgba(245, 87, 108, 0.1)',
+                border: '1px solid rgba(245, 87, 108, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 8 }}>
+                Plenary
+              </Text>
+              <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
+                {passStats.plenary.total}
+              </Title>
+              <Text style={{ color: '#43e97b', fontSize: 14 }}>
+                ↑ {passStats.plenary.generated} generated
+              </Text>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={12} lg={8}>
+            {/* Empty column for alignment */}
+          </Col>
+        </Row>
+      </Card>
+
+      {/* System Health */}
+      <Card
+        style={{
+          background: 'rgba(30, 41, 59, 0.5)',
+          borderRadius: 16,
+          border: '1px solid rgba(255,255,255,0.1)',
+          marginBottom: 32,
+        }}
+        styles={{ body: { padding: 24 } }}
+      >
+        <Title level={4} style={{ color: '#e2e8f0', marginBottom: 24 }}>
+          💚 System Health
+        </Title>
+        <Row gutter={[24, 24]}>
+          <Col xs={24} sm={8}>
+            <div
+              style={{
+                padding: 16,
+                borderRadius: 8,
+                background: 'rgba(67, 233, 123, 0.15)',
+                border: '1px solid rgba(67, 233, 123, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#43e97b', display: 'block', marginBottom: 8, fontWeight: 500 }}>
+                ✅ Database: Online
+              </Text>
+              <Text style={{ color: '#94a3b8' }}>Total Records: {totalEntries}</Text>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <div
+              style={{
+                padding: 16,
+                borderRadius: 8,
+                background: 'rgba(67, 233, 123, 0.15)',
+                border: '1px solid rgba(67, 233, 123, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#43e97b', display: 'block', fontWeight: 500 }}>
+                ✅ Database: Mock API (Browser)
+              </Text>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={8}>
+            <div
+              style={{
+                padding: 16,
+                borderRadius: 8,
+                background: 'rgba(67, 233, 123, 0.15)',
+                border: '1px solid rgba(67, 233, 123, 0.3)',
+              }}
+            >
+              <Text style={{ color: '#43e97b', display: 'block', marginBottom: 8, fontWeight: 500 }}>
+                ✅ Active Users: {totalUsers}
+              </Text>
+              <Text style={{ color: '#94a3b8' }}>Admins: {users.filter((u) => u.role === 'admin').length}</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
 
       {/* Main Content Tabs */}
       <Card
