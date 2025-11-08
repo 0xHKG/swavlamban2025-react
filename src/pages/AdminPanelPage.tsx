@@ -87,12 +87,16 @@ export default function AdminPanelPage() {
   // Pass Generation Statistics (detailed by type)
   const passStats = {
     ex_day1_visitors: {
-      total: entries.filter((e) => e.exhibition_day1).length,
-      generated: entries.filter((e) => e.pass_generated_exhibition_day1).length,
+      total: entries.filter((e) => e.exhibition_day1 && !e.is_exhibitor_pass).length,
+      generated: entries.filter((e) => e.pass_generated_exhibition_day1 && !e.is_exhibitor_pass).length,
     },
     ex_day2_visitors: {
-      total: entries.filter((e) => e.exhibition_day2).length,
-      generated: entries.filter((e) => e.pass_generated_exhibition_day2).length,
+      total: entries.filter((e) => e.exhibition_day2 && !e.is_exhibitor_pass).length,
+      generated: entries.filter((e) => e.pass_generated_exhibition_day2 && !e.is_exhibitor_pass).length,
+    },
+    exhibitor_passes: {
+      total: entries.filter((e) => e.is_exhibitor_pass).length,
+      generated: entries.filter((e) => e.is_exhibitor_pass && (e.pass_generated_exhibition_day1 || e.pass_generated_exhibition_day2)).length,
     },
     interactive: {
       total: entries.filter((e) => e.interactive_sessions).length,
@@ -227,7 +231,7 @@ export default function AdminPanelPage() {
           `"${entry.email}"`,
           `"${entry.phone}"`,
           `"${entry.id_type}"`,
-          '👤 Visitor',
+          entry.is_exhibitor_pass ? '🏢 Exhibitor' : '👤 Visitor',
           `"${passes.join(', ')}"`,
           new Date(entry.created_at).toLocaleDateString(),
         ];
@@ -694,10 +698,10 @@ export default function AdminPanelPage() {
                 Exhibitor Passes (Both Days)
               </Text>
               <Title level={2} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
-                0
+                {passStats.exhibitor_passes.total}
               </Title>
               <Text style={{ color: '#43e97b', fontSize: 14 }}>
-                ↑ 0 generated
+                ↑ {passStats.exhibitor_passes.generated} generated
               </Text>
             </div>
           </Col>
@@ -935,7 +939,7 @@ export default function AdminPanelPage() {
               {
                 title: 'Entry Type',
                 key: 'entry_type',
-                render: () => '👤 Visitor',
+                render: (_, record) => record.is_exhibitor_pass ? '🏢 Exhibitor' : '👤 Visitor',
               },
               {
                 title: 'Passes',
