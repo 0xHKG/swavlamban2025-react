@@ -28,6 +28,8 @@ import {
   DeleteOutlined,
   PlusOutlined,
   CheckCircleOutlined,
+  ReloadOutlined,
+  DownloadOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { mockApiService } from '../services/mockApi';
