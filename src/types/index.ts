@@ -29,6 +29,7 @@ export interface Entry {
   id_type: string;
   id_number: string;
   photo_url?: string;
+  is_exhibitor_pass: boolean; // Flag for bulk uploaded exhibitor passes
   exhibition_day1: boolean;
   exhibition_day2: boolean;
   interactive_sessions: boolean;
@@ -48,6 +49,7 @@ export interface CreateEntryRequest {
   id_type: string;
   id_number: string;
   photo_url?: string;
+  is_exhibitor_pass?: boolean; // Optional, defaults to false
   exhibition_day1: boolean;
   exhibition_day2: boolean;
   interactive_sessions: boolean;

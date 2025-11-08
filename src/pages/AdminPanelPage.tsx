@@ -18,6 +18,9 @@ import {
   Space,
   Tag,
   Popconfirm,
+  Upload,
+  Alert,
+  Progress,
 } from 'antd';
 import {
   TeamOutlined,
@@ -244,6 +247,170 @@ export default function AdminPanelPage() {
     link.click();
     document.body.removeChild(link);
     message.success('CSV file downloaded successfully!');
+  };
+
+  // Handle Exhibitor CSV Upload
+  const handleExhibitorCSVUpload = async (csvText: string) => {
+    try {
+      // Parse CSV
+      const lines = csvText.trim().split('\n');
+      if (lines.length < 2) {
+        message.error('CSV file is empty or invalid');
+        return;
+      }
+
+      // Skip header row
+      const dataRows = lines.slice(1);
+      const exhibitors: any[] = [];
+      const errors: string[] = [];
+
+      // Parse each row
+      for (let i = 0; i < dataRows.length; i++) {
+        const rowNum = i + 2; // +2 because we skipped header (row 1)
+        const columns = dataRows[i].split(',').map((col) => col.trim().replace(/^"|"$/g, ''));
+
+        if (columns.length < 5) {
+          errors.push(`Row ${rowNum}: Insufficient columns (need at least 5)`);
+          continue;
+        }
+
+        const firmName = columns[0];
+        const email = columns[1];
+        const mobile = columns[2];
+
+        // Validate email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+          errors.push(`Row ${rowNum}: Invalid email format: ${email}`);
+          continue;
+        }
+
+        // Validate mobile (10 digits)
+        const mobileClean = mobile.replace(/\D/g, '');
+        if (mobileClean.length !== 10) {
+          errors.push(`Row ${rowNum}: Invalid mobile number (need 10 digits): ${mobile}`);
+          continue;
+        }
+
+        // Extract attendees (alternating Name/Aadhar starting from column 4)
+        const attendees: { name: string; aadhar: string }[] = [];
+        let colIdx = 3; // Start at column 4 (index 3) - Attendee 1 Name
+
+        while (colIdx < columns.length) {
+          const attendeeName = columns[colIdx] || '';
+          const aadharNum = columns[colIdx + 1] || '';
+
+          if (attendeeName && aadharNum) {
+            const aadharClean = aadharNum.replace(/\D/g, '');
+            if (aadharClean.length === 12) {
+              attendees.push({
+                name: attendeeName,
+                aadhar: aadharClean,
+              });
+            } else {
+              errors.push(`Row ${rowNum}: Invalid Aadhar for ${attendeeName}: ${aadharNum}`);
+            }
+          }
+
+          colIdx += 2; // Move to next attendee
+        }
+
+        if (attendees.length === 0) {
+          errors.push(`Row ${rowNum}: No valid attendees found`);
+          continue;
+        }
+
+        exhibitors.push({
+          firmName,
+          email,
+          mobile: mobileClean,
+          attendees,
+        });
+      }
+
+      // Show validation results
+      if (errors.length > 0) {
+        Modal.warning({
+          title: 'CSV Validation Errors',
+          content: (
+            <div>
+              <p>
+                <strong>Valid Exhibitors:</strong> {exhibitors.length}
+              </p>
+              <p>
+                <strong>Errors:</strong> {errors.length}
+              </p>
+              <div style={{ maxHeight: 300, overflow: 'auto', marginTop: 16 }}>
+                {errors.map((err, idx) => (
+                  <div key={idx} style={{ color: '#ff4d4f', marginBottom: 4 }}>
+                    {err}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ),
+          width: 600,
+        });
+      }
+
+      if (exhibitors.length === 0) {
+        message.error('No valid exhibitors to process');
+        return;
+      }
+
+      // Confirm before processing
+      Modal.confirm({
+        title: 'Process Exhibitors',
+        content: `Ready to process ${exhibitors.length} exhibitor(s) with ${exhibitors.reduce((sum, ex) => sum + ex.attendees.length, 0)} total attendee(s). Continue?`,
+        okText: 'Yes, Process',
+        cancelText: 'Cancel',
+        onOk: async () => {
+          // Process exhibitors
+          const hide = message.loading('Processing exhibitors...', 0);
+          let successCount = 0;
+          let failedCount = 0;
+
+          try {
+            for (let i = 0; i < exhibitors.length; i++) {
+              const exhibitor = exhibitors[i];
+
+              // Create entries for each attendee
+              for (const attendee of exhibitor.attendees) {
+                try {
+                  await mockApiService.createEntry({
+                    name: attendee.name,
+                    email: exhibitor.email,
+                    phone: `+91-${exhibitor.mobile}`,
+                    id_type: 'Aadhaar',
+                    id_number: attendee.aadhar,
+                    is_exhibitor_pass: true,
+                    exhibition_day1: true,
+                    exhibition_day2: true,
+                    interactive_sessions: false,
+                    plenary: false,
+                  });
+                  successCount++;
+                } catch (error) {
+                  failedCount++;
+                  console.error(`Failed to create entry for ${attendee.name}:`, error);
+                }
+              }
+            }
+
+            hide();
+            message.success(`Processing complete! Success: ${successCount}, Failed: ${failedCount}`);
+            loadData(); // Reload data
+          } catch (error) {
+            hide();
+            message.error('Failed to process exhibitors');
+            console.error(error);
+          }
+        },
+      });
+    } catch (error) {
+      message.error('Failed to parse CSV file');
+      console.error(error);
+    }
   };
 
   // Organization Statistics Table Columns
@@ -873,21 +1040,74 @@ export default function AdminPanelPage() {
                 Send Passes to Multiple Attendees
               </Title>
               <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 24 }}>
-                This feature allows you to send passes to multiple attendees at once. Use the My Entries
-                page to select specific attendees for bulk email operations.
+                This feature allows you to send passes to multiple attendees at once. Use the Generate Passes
+                page which has bulk email mode for visitor passes.
               </Text>
               <Button
                 type="primary"
                 icon={<MailOutlined />}
                 size="large"
+                onClick={() => window.location.href = '/generate-passes'}
                 style={{
                   background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
                   border: 'none',
                 }}
               >
-                Go to My Entries for Bulk Email
+                Go to Generate Passes Page
               </Button>
             </Card>
+          </TabPane>
+
+          {/* Bulk Upload Exhibitors Tab */}
+          <TabPane tab="📤 Bulk Upload Exhibitors" key="4">
+            <Alert
+              message="CSV Format Required"
+              description={
+                <div>
+                  <p style={{ marginBottom: 12 }}>Upload a CSV file with exhibitor details to automatically create entries and generate passes.</p>
+                  <p style={{ marginBottom: 8, fontWeight: 'bold' }}>CSV Column Structure:</p>
+                  <ul style={{ paddingLeft: 20, marginBottom: 0 }}>
+                    <li><strong>Column 1:</strong> Firm Name</li>
+                    <li><strong>Column 2:</strong> Email Address</li>
+                    <li><strong>Column 3:</strong> Mobile Number (10 digits)</li>
+                    <li><strong>Column 4:</strong> Attendee 1 Name</li>
+                    <li><strong>Column 5:</strong> Attendee 1 Aadhar Number (12 digits)</li>
+                    <li><strong>Column 6:</strong> Attendee 2 Name</li>
+                    <li><strong>Column 7:</strong> Attendee 2 Aadhar Number (12 digits)</li>
+                    <li><strong>... and so on</strong> (alternating Name/Aadhar for additional attendees)</li>
+                  </ul>
+                </div>
+              }
+              type="info"
+              showIcon
+              style={{ marginBottom: 24 }}
+            />
+
+            <Upload.Dragger
+              name="file"
+              accept=".csv"
+              maxCount={1}
+              beforeUpload={(file) => {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                  const text = e.target?.result as string;
+                  await handleExhibitorCSVUpload(text);
+                };
+                reader.readAsText(file);
+                return false; // Prevent default upload
+              }}
+              showUploadList={false}
+            >
+              <p className="ant-upload-drag-icon">
+                <FileTextOutlined style={{ fontSize: 48, color: '#4facfe' }} />
+              </p>
+              <p className="ant-upload-text" style={{ color: '#e2e8f0', fontSize: 18 }}>
+                Click or drag CSV file to upload
+              </p>
+              <p className="ant-upload-hint" style={{ color: '#94a3b8' }}>
+                Upload exhibitors CSV file with firm details and attendees
+              </p>
+            </Upload.Dragger>
           </TabPane>
         </Tabs>
       </Card>
