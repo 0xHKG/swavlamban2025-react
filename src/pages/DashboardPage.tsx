@@ -14,7 +14,7 @@ import {
   CheckCircle as CheckCircleIcon,
   Event as EventIcon,
 } from '@mui/icons-material';
-import { apiService } from '../services/api';
+import { mockApiService } from '../services/mockApi';
 import { useAuth } from '../hooks/useAuth';
 import type { DashboardStats } from '../types';
 import Layout from '../components/Layout';
@@ -30,7 +30,7 @@ export default function DashboardPage() {
 
   const loadStats = async () => {
     try {
-      const data = await apiService.getDashboardStats();
+      const data = await mockApiService.getDashboardStats();
       setStats(data);
     } catch (error) {
       console.error('Failed to load stats:', error);

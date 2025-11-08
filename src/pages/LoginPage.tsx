@@ -39,14 +39,22 @@ export default function LoginPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #1D4E89 0%, #0D2E59 100%)',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
-      <Container maxWidth="sm">
-        <Paper elevation={10} sx={{ p: 4, borderRadius: 2 }}>
+      {/* Left Side - Login Form */}
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'linear-gradient(135deg, #1D4E89 0%, #0D2E59 100%)',
+          p: 4,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Paper elevation={10} sx={{ p: 4, borderRadius: 2 }}>
           <Box sx={{ mb: 4, textAlign: 'center' }}>
             <Typography variant="h3" gutterBottom sx={{ color: '#1D4E89', fontWeight: 700 }}>
               🇮🇳 Swavlamban 2025
@@ -117,8 +125,34 @@ export default function LoginPage() {
               Default: admin / admin123
             </Typography>
           </Box>
-        </Paper>
-      </Container>
+          </Paper>
+        </Container>
+      </Box>
+
+      {/* Right Side - Banner Image */}
+      <Box
+        sx={{
+          flex: 1,
+          display: { xs: 'none', md: 'flex' },
+          alignItems: 'center',
+          justifyContent: 'center',
+          bgcolor: '#F5F7FA',
+          p: 4,
+        }}
+      >
+        <Box
+          component="img"
+          src="/banner.png"
+          alt="Swavlamban 2025 Event"
+          sx={{
+            maxWidth: '100%',
+            maxHeight: '90vh',
+            objectFit: 'contain',
+            borderRadius: 2,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+          }}
+        />
+      </Box>
     </Box>
   );
 }
