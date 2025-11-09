@@ -140,12 +140,24 @@ export default function AddEntryPage() {
     name: 'file',
     accept: '.csv',
     beforeUpload: (file) => {
+      console.log('CSV file selected:', file.name);
       const reader = new FileReader();
       reader.onload = (e) => {
-        const text = e.target?.result as string;
-        const parsed = parseCSV(text);
-        setCsvData(parsed);
-        message.success(`Loaded ${parsed.length} entries from CSV`);
+        try {
+          const text = e.target?.result as string;
+          console.log('CSV file content length:', text.length);
+          const parsed = parseCSV(text);
+          console.log('Parsed CSV data:', parsed);
+          setCsvData(parsed);
+          message.success(`✅ Loaded ${parsed.length} entries from CSV`, 5);
+        } catch (error) {
+          console.error('CSV parsing error:', error);
+          message.error(`Failed to parse CSV: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+      };
+      reader.onerror = (error) => {
+        console.error('File reading error:', error);
+        message.error('Failed to read CSV file');
       };
       reader.readAsText(file);
       return false; // Prevent auto upload
@@ -155,6 +167,8 @@ export default function AddEntryPage() {
 
   // Process Bulk Upload with comprehensive validation
   const handleBulkUpload = async () => {
+    console.log('handleBulkUpload called, csvData length:', csvData.length);
+
     if (csvData.length === 0) {
       message.error('No CSV data to upload');
       return;
@@ -166,6 +180,8 @@ export default function AddEntryPage() {
       return;
     }
 
+    console.log('Quota check - CSV rows:', csvData.length, 'Remaining quota:', stats.remaining_quota);
+
     if (csvData.length > stats.remaining_quota) {
       message.error(`Cannot upload ${csvData.length} entries. You only have ${stats.remaining_quota} slots remaining.`);
       return;
@@ -175,6 +191,8 @@ export default function AddEntryPage() {
     let successCount = 0;
     let failedCount = 0;
     const failedRows: Array<{ row: number; reason: string }> = [];
+
+    console.log('Starting bulk upload of', csvData.length, 'entries');
 
     for (let i = 0; i < csvData.length; i++) {
       const row = csvData[i];
@@ -256,13 +274,19 @@ export default function AddEntryPage() {
           plenary,
         };
 
+        console.log(`Creating entry ${i + 1}/${csvData.length}:`, entry);
         await apiService.createEntry(entry);
         successCount++;
+        console.log(`✅ Entry ${i + 1} created successfully`);
       } catch (error: any) {
         failedCount++;
-        failedRows.push({ row: i + 2, reason: error.message || 'Unknown error' });
+        const errorMsg = error.response?.data?.detail || error.message || 'Unknown error';
+        console.error(`❌ Entry ${i + 1} failed:`, errorMsg);
+        failedRows.push({ row: i + 2, reason: errorMsg });
       }
     }
+
+    console.log('Bulk upload complete - Success:', successCount, 'Failed:', failedCount);
 
     setUploading(false);
     setUploadProgress(0);
