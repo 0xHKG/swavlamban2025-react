@@ -9,7 +9,7 @@ import {
   Button,
   Typography,
   Space,
-  message,
+  App,
   Row,
   Col,
   Upload,
@@ -39,6 +39,7 @@ const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 export default function AddEntryPage() {
+  const { message } = App.useApp(); // Use App hook for notifications
   const { user } = useAuth();
   const navigate = useNavigate();
   const [form] = Form.useForm();

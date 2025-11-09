@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Form, Input, Button, Typography, message, Row, Col, Statistic } from 'antd';
+import { Card, Form, Input, Button, Typography, App, Row, Col, Statistic } from 'antd';
 import {
   SettingOutlined,
   LockOutlined,
@@ -15,6 +15,7 @@ import Layout from '../components/Layout';
 const { Title, Text } = Typography;
 
 export default function SettingsPage() {
+  const { message } = App.useApp(); // Use App hook for notifications
   const { user } = useAuth();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
