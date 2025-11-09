@@ -86,14 +86,17 @@ export default function MyEntriesPage() {
 
   const handleGeneratePasses = async (entry: Entry) => {
     try {
+      console.log('Generating passes for entry:', entry.id);
       message.loading('Generating passes and sending email...', 0);
-      await apiService.generatePasses(entry.id, true);
+      const result = await apiService.generatePasses(entry.id, true);
+      console.log('Pass generation result:', result);
       message.destroy();
       message.success(`Passes generated and emailed to ${entry.email}!`);
       loadData();
     } catch (error) {
+      console.error('Pass generation error:', error);
       message.destroy();
-      message.error('Failed to generate passes');
+      message.error(`Failed to generate passes: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
