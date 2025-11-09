@@ -10,7 +10,13 @@ from passlib.context import CryptContext
 from .config import settings
 
 # Password hashing context (bcrypt with 12 rounds)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+# Disable wrap bug detection to avoid 72-byte error during initialization
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__rounds=12,
+    bcrypt__ident="2b"  # Use 2b variant to skip wrap bug detection
+)
 
 
 def hash_password(password: str) -> str:
