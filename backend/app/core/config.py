@@ -72,15 +72,30 @@ class Settings(BaseSettings):
     @classmethod
     def parse_cors_origins(cls, v: Any) -> List[str]:
         """Parse CORS origins from string, list, or None"""
+        import json
+
         # Handle None or empty - return default
         if v is None or v == '' or (isinstance(v, str) and v.strip() == ''):
             return ["http://localhost:8501", "http://localhost:3000"]
-        # Handle string (comma-separated)
+
+        # Handle string - could be JSON array or comma-separated
         if isinstance(v, str):
+            v = v.strip()
+            # Try parsing as JSON array first
+            if v.startswith('[') and v.endswith(']'):
+                try:
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        return parsed
+                except json.JSONDecodeError:
+                    pass
+            # Fallback to comma-separated
             return [origin.strip() for origin in v.split(',') if origin.strip()]
+
         # Handle list
         if isinstance(v, list):
             return v
+
         # Fallback to default
         return ["http://localhost:8501", "http://localhost:3000"]
 
