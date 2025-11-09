@@ -43,7 +43,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/me`, {
             headers: {
               'Authorization': `Bearer ${savedToken}`
-            }
+            },
+            credentials: 'include'
           });
 
           if (response.ok) {
