@@ -2,10 +2,12 @@
 Pass generation API endpoints
 """
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import List
 from pathlib import Path
+import os
 
 from ..core.database import get_db
 from ..api.auth import get_current_user
@@ -183,3 +185,51 @@ async def check_pass_status(
             entry.pass_generated_plenary if entry.plenary else True
         ])
     }
+
+
+@router.get("/download/{entry_id}/{filename}")
+async def download_pass(
+    entry_id: int,
+    filename: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Download a generated pass file
+
+    Returns the pass file as a downloadable attachment
+    """
+    # Get entry
+    entry = db.query(Entry).filter(Entry.id == entry_id).first()
+
+    if not entry:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Entry not found"
+        )
+
+    # Check access - users can only download their own passes (unless admin)
+    if entry.username != current_user.username and current_user.role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied"
+        )
+
+    # Get the generated_passes directory path
+    project_root = Path(__file__).parent.parent.parent.parent
+    passes_dir = project_root / "generated_passes"
+    file_path = passes_dir / filename
+
+    # Check if file exists
+    if not file_path.exists():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Pass file not found: {filename}"
+        )
+
+    # Return file as download
+    return FileResponse(
+        path=str(file_path),
+        filename=filename,
+        media_type="image/png"
+    )
