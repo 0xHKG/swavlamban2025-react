@@ -6,17 +6,8 @@ from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 import jwt
 from jwt.exceptions import PyJWTError
-from passlib.context import CryptContext
+import bcrypt
 from .config import settings
-
-# Password hashing context (bcrypt with 12 rounds)
-# Disable wrap bug detection to avoid 72-byte error during initialization
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-    deprecated="auto",
-    bcrypt__rounds=12,
-    bcrypt__ident="2b"  # Use 2b variant to skip wrap bug detection
-)
 
 
 def hash_password(password: str) -> str:
@@ -33,7 +24,10 @@ def hash_password(password: str) -> str:
     """
     # Truncate to 72 bytes (bcrypt limitation)
     password_bytes = password.encode('utf-8')[:72]
-    return pwd_context.hash(password_bytes.decode('utf-8', errors='ignore'))
+    # Generate salt and hash
+    salt = bcrypt.gensalt(rounds=12)
+    hashed = bcrypt.hashpw(password_bytes, salt)
+    return hashed.decode('utf-8')
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -51,8 +45,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     # Truncate to 72 bytes (bcrypt limitation)
     password_bytes = plain_password.encode('utf-8')[:72]
-    truncated_password = password_bytes.decode('utf-8', errors='ignore')
-    return pwd_context.verify(truncated_password, hashed_password)
+    hashed_bytes = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, hashed_bytes)
 
 
 def create_access_token(
