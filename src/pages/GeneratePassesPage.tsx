@@ -4,7 +4,7 @@ import {
   Button,
   Typography,
   Space,
-  message,
+  App,
   Select,
   Row,
   Col,
@@ -27,6 +27,7 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function GeneratePassesPage() {
+  const { message } = App.useApp(); // Use App hook for notifications
   const { user } = useAuth();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);

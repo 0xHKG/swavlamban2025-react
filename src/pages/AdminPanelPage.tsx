@@ -12,7 +12,7 @@ import {
   Input,
   Checkbox,
   InputNumber,
-  message,
+  App,
   Tabs,
   Select,
   Space,
@@ -44,6 +44,7 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 export default function AdminPanelPage() {
+  const { message } = App.useApp(); // Use App hook for notifications
   const [users, setUsers] = useState<User[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
