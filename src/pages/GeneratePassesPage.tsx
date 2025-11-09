@@ -200,11 +200,11 @@ export default function GeneratePassesPage() {
   const getEmailStageText = () => {
     switch (emailStage) {
       case 1:
-        return '🎫 Generating QR code passes...';
+        return '🎫 Generating passes...';
       case 2:
-        return '📎 Preparing email attachments...';
+        return '📎 Preparing attachments...';
       case 3:
-        return '📧 Sending email via Mailjet...';
+        return '📧 Sending email...';
       default:
         return '';
     }
