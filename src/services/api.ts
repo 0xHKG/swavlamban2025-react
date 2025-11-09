@@ -51,7 +51,7 @@ class ApiService {
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
 
-    const response = await this.api.post<LoginResponse>('/api/auth/login', formData, {
+    const response = await this.api.post<LoginResponse>('/api/v1/auth/login', formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -66,33 +66,33 @@ class ApiService {
 
   // Entries
   async getMyEntries(): Promise<Entry[]> {
-    const response = await this.api.get<Entry[]>('/api/entries/my');
+    const response = await this.api.get<Entry[]>('/api/v1/entries/my');
     return response.data;
   }
 
   async createEntry(entry: CreateEntryRequest): Promise<Entry> {
-    const response = await this.api.post<Entry>('/api/entries', entry);
+    const response = await this.api.post<Entry>('/api/v1/entries', entry);
     return response.data;
   }
 
   async updateEntry(id: number, entry: Partial<CreateEntryRequest>): Promise<Entry> {
-    const response = await this.api.put<Entry>(`/api/entries/${id}`, entry);
+    const response = await this.api.put<Entry>(`/api/v1/entries/${id}`, entry);
     return response.data;
   }
 
   async deleteEntry(id: number): Promise<void> {
-    await this.api.delete(`/api/entries/${id}`);
+    await this.api.delete(`/api/v1/entries/${id}`);
   }
 
   // Dashboard Stats
   async getDashboardStats(): Promise<DashboardStats> {
-    const response = await this.api.get<DashboardStats>('/api/entries/stats');
+    const response = await this.api.get<DashboardStats>('/api/v1/entries/stats');
     return response.data;
   }
 
   // Pass Generation
   async generatePasses(entryId: number, sendEmail: boolean = false): Promise<PassGenerationResponse> {
-    const response = await this.api.post<PassGenerationResponse>(`/api/passes/generate/${entryId}`, {
+    const response = await this.api.post<PassGenerationResponse>(`/api/v1/passes/generate/${entryId}`, {
       send_email: sendEmail
     });
     return response.data;
@@ -100,32 +100,32 @@ class ApiService {
 
   // Admin endpoints
   async getAllUsers(): Promise<User[]> {
-    const response = await this.api.get<User[]>('/api/admin/users');
+    const response = await this.api.get<User[]>('/api/v1/admin/users');
     return response.data;
   }
 
   async getAllEntries(): Promise<Entry[]> {
-    const response = await this.api.get<Entry[]>('/api/admin/entries');
+    const response = await this.api.get<Entry[]>('/api/v1/admin/entries');
     return response.data;
   }
 
   async createUser(user: Partial<User> & { password: string }): Promise<User> {
-    const response = await this.api.post<User>('/api/admin/users', user);
+    const response = await this.api.post<User>('/api/v1/admin/users', user);
     return response.data;
   }
 
   async updateUser(username: string, user: Partial<User>): Promise<User> {
-    const response = await this.api.put<User>(`/api/admin/users/${username}`, user);
+    const response = await this.api.put<User>(`/api/v1/admin/users/${username}`, user);
     return response.data;
   }
 
   async deleteUser(username: string): Promise<void> {
-    await this.api.delete(`/api/admin/users/${username}`);
+    await this.api.delete(`/api/v1/admin/users/${username}`);
   }
 
   // Bulk email
   async sendBulkEmail(entryIds: number[]): Promise<{ success: number; failed: number; }> {
-    const response = await this.api.post('/api/admin/bulk-email', { entry_ids: entryIds });
+    const response = await this.api.post('/api/v1/admin/bulk-email', { entry_ids: entryIds });
     return response.data;
   }
 }
