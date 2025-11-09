@@ -21,15 +21,24 @@ app = FastAPI(
 )
 
 # CORS middleware
-# Add Vercel preview URLs to allowed origins
 cors_origins = settings.BACKEND_CORS_ORIGINS.copy() if settings.BACKEND_CORS_ORIGINS else []
-# Add the specific preview deployment URL from the error
-if "https://swavlamban2025-react-3me5kuy02-0xhkgs-projects.vercel.app" not in cors_origins:
-    cors_origins.append("https://swavlamban2025-react-3me5kuy02-0xhkgs-projects.vercel.app")
 print(f"🌐 CORS Origins configured: {cors_origins}")
+
+# For Vercel preview deployments, we need to validate origins dynamically
+# since each preview gets a unique URL
+def verify_origin(origin: str) -> bool:
+    """Verify if origin is allowed"""
+    # Check exact matches first
+    if origin in cors_origins:
+        return True
+    # Allow Vercel preview deployments (*.vercel.app)
+    if origin and origin.startswith("https://") and origin.endswith(".vercel.app"):
+        return True
+    return False
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # Allow all Vercel deployments
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
