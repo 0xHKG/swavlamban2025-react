@@ -23,8 +23,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Clear old localStorage data if API version changed
       const currentVersion = '2.0'; // Updated for real API only
       const storedVersion = localStorage.getItem('apiVersion');
+      const savedToken = localStorage.getItem('token');
+      const savedUser = localStorage.getItem('user');
 
-      if (storedVersion !== currentVersion) {
+      // Only clear if version mismatch AND there's actual data to clear
+      if (storedVersion && storedVersion !== currentVersion && (savedToken || savedUser)) {
         // Clear old data
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -34,9 +37,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       // Check for existing auth on mount
-      const savedToken = localStorage.getItem('token');
-      const savedUser = localStorage.getItem('user');
-
       if (savedToken && savedUser) {
         try {
           // Verify token is still valid by making a test API call
