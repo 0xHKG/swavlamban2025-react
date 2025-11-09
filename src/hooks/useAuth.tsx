@@ -19,6 +19,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Clear old localStorage data if API version changed
+    const currentVersion = '2.0'; // Updated for real API only
+    const storedVersion = localStorage.getItem('apiVersion');
+
+    if (storedVersion !== currentVersion) {
+      // Clear old data
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.setItem('apiVersion', currentVersion);
+      setIsLoading(false);
+      return;
+    }
+
     // Check for existing auth on mount
     const savedToken = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
