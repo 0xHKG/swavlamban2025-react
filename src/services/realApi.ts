@@ -18,6 +18,14 @@ import type {
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+// Debug logging
+console.log('🔍 API Configuration:', {
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  API_URL: API_URL,
+  mode: import.meta.env.MODE,
+  env: import.meta.env
+});
+
 class RealApiService {
   private api: AxiosInstance;
 
