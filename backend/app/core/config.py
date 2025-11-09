@@ -3,9 +3,9 @@ Application Configuration
 Loads environment variables and provides settings
 Supports both .env file (local) and Streamlit secrets (cloud)
 """
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import field_validator
-from typing import List, Union
+from typing import List, Union, Any
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -65,20 +65,24 @@ class Settings(BaseSettings):
     NIC_EMAIL_PASSWORD: str = ""  # Your NIC email password (or app-specific password)
     USE_NIC_SMTP: bool = True  # Set to True to use NIC SMTP (Government Email)
 
-    # CORS
-    BACKEND_CORS_ORIGINS: List[str] = [
-        "http://localhost:8501",
-        "http://localhost:3000"
-    ]
+    # CORS - Using Any to avoid JSON parsing issues, validator handles conversion
+    BACKEND_CORS_ORIGINS: Any = None
 
     @field_validator('BACKEND_CORS_ORIGINS', mode='before')
     @classmethod
-    def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
-        """Parse CORS origins from string or list"""
+    def parse_cors_origins(cls, v: Any) -> List[str]:
+        """Parse CORS origins from string, list, or None"""
+        # Handle None or empty - return default
+        if v is None or v == '' or (isinstance(v, str) and v.strip() == ''):
+            return ["http://localhost:8501", "http://localhost:3000"]
+        # Handle string (comma-separated)
         if isinstance(v, str):
-            # Handle comma-separated string
             return [origin.strip() for origin in v.split(',') if origin.strip()]
-        return v
+        # Handle list
+        if isinstance(v, list):
+            return v
+        # Fallback to default
+        return ["http://localhost:8501", "http://localhost:3000"]
 
     # File Upload
     MAX_UPLOAD_SIZE: int = 5242880  # 5MB
