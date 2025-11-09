@@ -91,7 +91,14 @@ export default function MyEntriesPage() {
       const result = await apiService.generatePasses(entry.id, true);
       console.log('Pass generation result:', result);
       message.destroy();
-      message.success(`Passes generated and emailed to ${entry.email}!`);
+
+      // Check if email actually sent
+      if (result.email_sent) {
+        message.success(`✅ ${result.pass_files.length} passes generated and emailed to ${entry.email}!`);
+      } else {
+        message.warning(`⚠️ ${result.pass_files.length} passes generated but email failed. ${result.message}`);
+      }
+
       loadData();
     } catch (error) {
       console.error('Pass generation error:', error);
