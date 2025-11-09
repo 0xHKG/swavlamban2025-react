@@ -199,12 +199,15 @@ export default function AddEntryPage() {
       setUploadProgress(((i + 1) / csvData.length) * 100);
 
       try {
-        // Validate row data
-        const name = String(row.Name || '').trim();
-        const email = String(row.Email || '').trim();
-        const phone = String(row.Phone || '').trim();
-        const id_type = String(row.ID_Type || '').trim();
-        const id_number = String(row.ID_Number || '').trim();
+        // Log the row to see what keys are available
+        console.log('Processing row:', row);
+
+        // Validate row data - handle multiple header formats
+        const name = String(row.Name || row.name || '').trim();
+        const email = String(row.Email || row.email || '').trim();
+        const phone = String(row.Phone || row.phone || '').trim();
+        const id_type = String(row.ID_Type || row.id_type || row['ID Type'] || '').trim();
+        const id_number = String(row.ID_Number || row.id_number || row['ID Number'] || '').trim();
 
         // Validate required fields
         if (!name || name === 'nan') {
@@ -230,11 +233,19 @@ export default function AddEntryPage() {
           throw new Error('Missing ID number');
         }
 
-        // Parse pass selections
-        const exhibition_day1 = String(row.Exhibition_Day_1 || '').trim().toLowerCase() === 'yes';
-        const exhibition_day2 = String(row.Exhibition_Day_2 || '').trim().toLowerCase() === 'yes';
-        const interactive_sessions = String(row.Interactive_Sessions || '').trim().toLowerCase() === 'yes';
-        const plenary = String(row.Plenary || '').trim().toLowerCase() === 'yes';
+        // Parse pass selections - handle multiple header formats
+        const exhibition_day1 = String(
+          row.Exhibition_Day_1 || row['Exhibition Day 1'] || row.exhibition_day1 || ''
+        ).trim().toLowerCase() === 'yes';
+        const exhibition_day2 = String(
+          row.Exhibition_Day_2 || row['Exhibition Day 2'] || row.exhibition_day2 || ''
+        ).trim().toLowerCase() === 'yes';
+        const interactive_sessions = String(
+          row.Interactive_Sessions || row['Interactive Sessions'] || row.interactive_sessions || ''
+        ).trim().toLowerCase() === 'yes';
+        const plenary = String(
+          row.Plenary || row.plenary || ''
+        ).trim().toLowerCase() === 'yes';
 
         // Check if at least one pass is selected
         if (!exhibition_day1 && !exhibition_day2 && !interactive_sessions && !plenary) {
