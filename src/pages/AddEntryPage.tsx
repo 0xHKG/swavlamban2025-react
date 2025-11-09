@@ -146,8 +146,14 @@ export default function AddEntryPage() {
         try {
           const text = e.target?.result as string;
           console.log('CSV file content length:', text.length);
+          console.log('First 200 chars of CSV:', text.substring(0, 200));
           const parsed = parseCSV(text);
           console.log('Parsed CSV data:', parsed);
+          if (parsed.length > 0) {
+            console.log('First row keys:', Object.keys(parsed[0]));
+            console.log('First row values:', Object.values(parsed[0]));
+            console.log('First row object:', parsed[0]);
+          }
           setCsvData(parsed);
           message.success(`✅ Loaded ${parsed.length} entries from CSV`, 5);
         } catch (error) {
@@ -201,13 +207,17 @@ export default function AddEntryPage() {
       try {
         // Log the row to see what keys are available
         console.log('Processing row:', row);
+        console.log('Row keys:', Object.keys(row));
+        console.log('Row values:', Object.values(row));
 
-        // Validate row data - handle multiple header formats
-        const name = String(row.Name || row.name || '').trim();
-        const email = String(row.Email || row.email || '').trim();
-        const phone = String(row.Phone || row.phone || '').trim();
-        const id_type = String(row.ID_Type || row.id_type || row['ID Type'] || '').trim();
-        const id_number = String(row.ID_Number || row.id_number || row['ID Number'] || '').trim();
+        // Validate row data - handle multiple header formats (use bracket notation for all)
+        const name = String(row['Name'] || row['name'] || '').trim();
+        const email = String(row['Email'] || row['email'] || '').trim();
+        const phone = String(row['Phone'] || row['phone'] || '').trim();
+        const id_type = String(row['ID_Type'] || row['id_type'] || row['ID Type'] || '').trim();
+        const id_number = String(row['ID_Number'] || row['id_number'] || row['ID Number'] || '').trim();
+
+        console.log('Extracted values:', { name, email, phone, id_type, id_number });
 
         // Validate required fields
         if (!name || name === 'nan') {
@@ -233,19 +243,21 @@ export default function AddEntryPage() {
           throw new Error('Missing ID number');
         }
 
-        // Parse pass selections - handle multiple header formats
+        // Parse pass selections - handle multiple header formats (use bracket notation)
         const exhibition_day1 = String(
-          row.Exhibition_Day_1 || row['Exhibition Day 1'] || row.exhibition_day1 || ''
+          row['Exhibition_Day_1'] || row['Exhibition Day 1'] || row['exhibition_day1'] || ''
         ).trim().toLowerCase() === 'yes';
         const exhibition_day2 = String(
-          row.Exhibition_Day_2 || row['Exhibition Day 2'] || row.exhibition_day2 || ''
+          row['Exhibition_Day_2'] || row['Exhibition Day 2'] || row['exhibition_day2'] || ''
         ).trim().toLowerCase() === 'yes';
         const interactive_sessions = String(
-          row.Interactive_Sessions || row['Interactive Sessions'] || row.interactive_sessions || ''
+          row['Interactive_Sessions'] || row['Interactive Sessions'] || row['interactive_sessions'] || ''
         ).trim().toLowerCase() === 'yes';
         const plenary = String(
-          row.Plenary || row.plenary || ''
+          row['Plenary'] || row['plenary'] || ''
         ).trim().toLowerCase() === 'yes';
+
+        console.log('Extracted passes:', { exhibition_day1, exhibition_day2, interactive_sessions, plenary });
 
         // Check if at least one pass is selected
         if (!exhibition_day1 && !exhibition_day2 && !interactive_sessions && !plenary) {
