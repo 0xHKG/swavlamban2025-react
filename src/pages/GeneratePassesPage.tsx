@@ -204,7 +204,7 @@ export default function GeneratePassesPage() {
       case 2:
         return '📎 Preparing email attachments...';
       case 3:
-        return '📧 Sending email via Mailjet (this may take 15-20 seconds)...';
+        return '📧 Sending email via Mailjet...';
       default:
         return '';
     }
