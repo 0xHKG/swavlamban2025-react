@@ -136,12 +136,6 @@ export default function LoginPage() {
               📞 011-26771528 | 📧 niio-tdac@navy.gov.in
             </Typography>
           </Box>
-
-          <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Typography variant="caption" color="text.secondary">
-              Default: admin / admin123
-            </Typography>
-          </Box>
           </Paper>
         </Container>
       </Box>
