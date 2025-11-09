@@ -185,8 +185,8 @@ async def change_password(
         )
 
     # Hash and update password
-    from ..core.security import get_password_hash
-    current_user.password_hash = get_password_hash(request.new_password)
+    from ..core.security import hash_password
+    current_user.password_hash = hash_password(request.new_password)
     db.commit()
 
     return {"message": "Password updated successfully"}
