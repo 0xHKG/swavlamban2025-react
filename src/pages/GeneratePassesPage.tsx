@@ -127,16 +127,15 @@ export default function GeneratePassesPage() {
     try {
       setEmailProgress(true);
 
-      // Stage 1: Generating passes
+      // Stage 1: Generating passes (2-3 seconds)
       setEmailStage(1);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      await apiService.generatePasses(selectedEntry.id, false);
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      // Stage 2: Updating database
+      // Stage 2: Preparing email attachments (1-2 seconds)
       setEmailStage(2);
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      // Stage 3: Sending email
+      // Stage 3: Sending email via Mailjet (15-18 seconds)
       setEmailStage(3);
       await apiService.generatePasses(selectedEntry.id, true);
 
@@ -144,6 +143,7 @@ export default function GeneratePassesPage() {
       message.success(`✅ Email sent successfully to ${selectedEntry.email}!`, 10);
       loadEntries();
     } catch (error) {
+      console.error('Send email error:', error);
       message.error('Failed to send email');
       setEmailStage(0);
     } finally {
@@ -200,11 +200,11 @@ export default function GeneratePassesPage() {
   const getEmailStageText = () => {
     switch (emailStage) {
       case 1:
-        return '🎫 Generating passes...';
+        return '🎫 Generating QR code passes...';
       case 2:
-        return '💾 Updating database...';
+        return '📎 Preparing email attachments...';
       case 3:
-        return '📧 Sending email...';
+        return '📧 Sending email via Mailjet (this may take 15-20 seconds)...';
       default:
         return '';
     }
@@ -450,10 +450,17 @@ export default function GeneratePassesPage() {
 
             {emailProgress && emailStage > 0 && (
               <div style={{ marginBottom: 16 }}>
-                <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 8 }}>
+                <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 12 }}>
                   {getEmailStageText()}
                 </Text>
-                <Spin />
+                <Progress
+                  percent={emailStage === 1 ? 15 : emailStage === 2 ? 30 : 95}
+                  status="active"
+                  strokeColor={{
+                    '0%': '#43e97b',
+                    '100%': '#38f9d7',
+                  }}
+                />
               </div>
             )}
 
