@@ -4,7 +4,8 @@ Loads environment variables and provides settings
 Supports both .env file (local) and Streamlit secrets (cloud)
 """
 from pydantic_settings import BaseSettings
-from typing import List
+from pydantic import field_validator
+from typing import List, Union
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -69,6 +70,15 @@ class Settings(BaseSettings):
         "http://localhost:8501",
         "http://localhost:3000"
     ]
+
+    @field_validator('BACKEND_CORS_ORIGINS', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        """Parse CORS origins from string or list"""
+        if isinstance(v, str):
+            # Handle comma-separated string
+            return [origin.strip() for origin in v.split(',') if origin.strip()]
+        return v
 
     # File Upload
     MAX_UPLOAD_SIZE: int = 5242880  # 5MB
