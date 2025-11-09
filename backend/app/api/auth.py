@@ -154,3 +154,38 @@ async def refresh_token(
         refresh_token=new_refresh_token,
         user=UserResponse.from_orm(user)
     )
+
+
+class PasswordChangeRequest(BaseModel):
+    """Schema for password change request"""
+    current_password: str
+    new_password: str
+
+
+@router.post("/change-password")
+async def change_password(
+    request: PasswordChangeRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Change user password"""
+    # Verify current password
+    if not verify_password(request.current_password, current_user.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password is incorrect"
+        )
+
+    # Validate new password
+    if len(request.new_password) < 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be at least 8 characters long"
+        )
+
+    # Hash and update password
+    from ..core.security import get_password_hash
+    current_user.password_hash = get_password_hash(request.new_password)
+    db.commit()
+
+    return {"message": "Password updated successfully"}

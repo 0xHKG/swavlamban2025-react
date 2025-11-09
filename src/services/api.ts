@@ -64,6 +64,14 @@ class ApiService {
     localStorage.removeItem('user');
   }
 
+  async changePassword(currentPassword: string, newPassword: string): Promise<{ message: string }> {
+    const response = await this.api.post<{ message: string }>('/api/v1/auth/change-password', {
+      current_password: currentPassword,
+      new_password: newPassword
+    });
+    return response.data;
+  }
+
   // Entries
   async getMyEntries(): Promise<Entry[]> {
     const response = await this.api.get<Entry[]>('/api/v1/entries/my');

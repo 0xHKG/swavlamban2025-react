@@ -58,12 +58,12 @@ export default function SettingsPage() {
   const handlePasswordChange = async (values: any) => {
     setLoading(true);
     try {
-      // Simulate password change API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      message.success('Password updated successfully!');
+      await apiService.changePassword(values.currentPassword, values.newPassword);
+      message.success('✅ Password updated successfully!', 10);
       form.resetFields();
-    } catch (err) {
-      message.error('Failed to update password');
+    } catch (err: any) {
+      const errorMsg = err.response?.data?.detail || err.message || 'Failed to update password';
+      message.error(errorMsg);
     } finally {
       setLoading(false);
     }
