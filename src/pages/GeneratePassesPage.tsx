@@ -35,6 +35,7 @@ export default function GeneratePassesPage() {
   const [generatedPasses, setGeneratedPasses] = useState<string[]>([]);
   const [emailStage, setEmailStage] = useState<number>(0); // 0: idle, 1: generating, 2: updating, 3: sending
   const [emailProgress, setEmailProgress] = useState(false);
+  const [generateLoading, setGenerateLoading] = useState(false); // Separate loading for Generate Passes button
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedBulkIds, setSelectedBulkIds] = useState<number[]>([]);
   const [passFilters, setPassFilters] = useState({
@@ -79,15 +80,15 @@ export default function GeneratePassesPage() {
     if (!selectedEntry) return;
 
     try {
-      setEmailProgress(true);
+      setGenerateLoading(true);
       const passes = await apiService.generatePasses(selectedEntry.id, false);
       setGeneratedPasses(passes.map((p) => p.filename));
-      message.success(`✅ Generated ${passes.length} pass${passes.length === 1 ? '' : 'es'}!`);
+      message.success(`✅ Generated ${passes.length} pass${passes.length === 1 ? '' : 'es'}!`, 10);
       loadEntries();
     } catch (error) {
       message.error('Failed to generate passes');
     } finally {
-      setEmailProgress(false);
+      setGenerateLoading(false);
     }
   };
 
@@ -111,7 +112,7 @@ export default function GeneratePassesPage() {
       await apiService.generatePasses(selectedEntry.id, true);
 
       setEmailStage(0);
-      message.success(`✅ Email sent successfully to ${selectedEntry.email}!`);
+      message.success(`✅ Email sent successfully to ${selectedEntry.email}!`, 10);
       loadEntries();
     } catch (error) {
       message.error('Failed to send email');
@@ -343,7 +344,7 @@ export default function GeneratePassesPage() {
               block
               icon={<FileTextOutlined />}
               onClick={handleGeneratePasses}
-              loading={emailProgress && emailStage === 0}
+              loading={generateLoading}
               style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 border: 'none',
