@@ -62,7 +62,15 @@ export default function SettingsPage() {
       message.success('✅ Password updated successfully!', 10);
       form.resetFields();
     } catch (err: any) {
-      const errorMsg = err.response?.data?.detail || err.message || 'Failed to update password';
+      console.error('Password change error:', err);
+      let errorMsg = 'Failed to update password';
+      if (err.response?.data?.detail) {
+        errorMsg = typeof err.response.data.detail === 'string'
+          ? err.response.data.detail
+          : JSON.stringify(err.response.data.detail);
+      } else if (err.message) {
+        errorMsg = err.message;
+      }
       message.error(errorMsg);
     } finally {
       setLoading(false);
