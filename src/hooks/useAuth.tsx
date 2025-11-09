@@ -19,28 +19,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Clear old localStorage data if API version changed
-    const currentVersion = '2.0'; // Updated for real API only
-    const storedVersion = localStorage.getItem('apiVersion');
+    const validateSession = async () => {
+      // Clear old localStorage data if API version changed
+      const currentVersion = '2.0'; // Updated for real API only
+      const storedVersion = localStorage.getItem('apiVersion');
 
-    if (storedVersion !== currentVersion) {
-      // Clear old data
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.setItem('apiVersion', currentVersion);
+      if (storedVersion !== currentVersion) {
+        // Clear old data
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.setItem('apiVersion', currentVersion);
+        setIsLoading(false);
+        return;
+      }
+
+      // Check for existing auth on mount
+      const savedToken = localStorage.getItem('token');
+      const savedUser = localStorage.getItem('user');
+
+      if (savedToken && savedUser) {
+        try {
+          // Verify token is still valid by making a test API call
+          const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/me`, {
+            headers: {
+              'Authorization': `Bearer ${savedToken}`
+            }
+          });
+
+          if (response.ok) {
+            // Token is valid, restore session
+            setToken(savedToken);
+            setUser(JSON.parse(savedUser));
+          } else {
+            // Token invalid, clear localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+          }
+        } catch (error) {
+          // Network error or invalid token, clear localStorage
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        }
+      }
       setIsLoading(false);
-      return;
-    }
+    };
 
-    // Check for existing auth on mount
-    const savedToken = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-
-    if (savedToken && savedUser) {
-      setToken(savedToken);
-      setUser(JSON.parse(savedUser));
-    }
-    setIsLoading(false);
+    validateSession();
   }, []);
 
   const login = async (credentials: LoginRequest) => {
