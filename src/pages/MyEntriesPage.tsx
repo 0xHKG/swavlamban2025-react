@@ -4,7 +4,7 @@ import {
   Button,
   Typography,
   Space,
-  message,
+  App,
   Form,
   Input,
   Checkbox,
@@ -31,6 +31,7 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function MyEntriesPage() {
+  const { message } = App.useApp(); // Use App hook for notifications
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any>(null);
