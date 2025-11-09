@@ -49,6 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(response.user);
     localStorage.setItem('token', response.access_token);
     localStorage.setItem('user', JSON.stringify(response.user));
+    localStorage.setItem('apiVersion', '2.0'); // Set version on login
   };
 
   const logout = () => {
