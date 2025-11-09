@@ -81,11 +81,12 @@ export default function GeneratePassesPage() {
 
     try {
       setGenerateLoading(true);
-      const passes = await apiService.generatePasses(selectedEntry.id, false);
-      setGeneratedPasses(passes.map((p) => p.filename));
-      message.success(`✅ Generated ${passes.length} pass${passes.length === 1 ? '' : 'es'}!`, 10);
+      const result = await apiService.generatePasses(selectedEntry.id, false);
+      setGeneratedPasses(result.pass_files);
+      message.success(`✅ Generated ${result.pass_files.length} pass${result.pass_files.length === 1 ? '' : 'es'}!`, 10);
       loadEntries();
     } catch (error) {
+      console.error('Generate passes error:', error);
       message.error('Failed to generate passes');
     } finally {
       setGenerateLoading(false);
