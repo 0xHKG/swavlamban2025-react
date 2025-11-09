@@ -135,7 +135,7 @@ export default function GeneratePassesPage() {
       setEmailStage(2);
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      // Stage 3: Sending email via Mailjet (15-18 seconds)
+      // Stage 3: Sending email
       setEmailStage(3);
       await apiService.generatePasses(selectedEntry.id, true);
 
@@ -176,7 +176,7 @@ export default function GeneratePassesPage() {
         await apiService.generatePasses(entry.id, true);
       }
 
-      message.success(`✅ Sent emails to ${total} attendees!`);
+      message.success(`✅ Sent emails to ${total} attendees!`, 10);
       setSelectedBulkIds([]);
       setBulkProgress({ current: 0, total: 0 });
       loadEntries();
@@ -753,7 +753,7 @@ export default function GeneratePassesPage() {
             >
               <Text style={{ color: '#4facfe' }}>
                 ⏱️ Estimated time: ~{((selectedBulkIds.length * 10) / 60).toFixed(1)} minutes (
-                {selectedBulkIds.length * 10} seconds) via Mailjet API
+                {selectedBulkIds.length * 10} seconds)
               </Text>
             </div>
           )}
@@ -804,8 +804,7 @@ export default function GeneratePassesPage() {
                   >
                     <Text style={{ color: '#4facfe' }}>
                       ⏱️ Elapsed: {bulkStats.elapsed.toFixed(1)}s | Remaining: ~
-                      {bulkStats.remaining.toFixed(1)}s | Avg: {bulkStats.avgTime.toFixed(1)}s/email via
-                      Mailjet API
+                      {bulkStats.remaining.toFixed(1)}s | Avg: {bulkStats.avgTime.toFixed(1)}s/email
                     </Text>
                   </div>
                 </div>
