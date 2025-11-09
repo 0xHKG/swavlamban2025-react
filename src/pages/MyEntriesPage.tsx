@@ -87,16 +87,16 @@ export default function MyEntriesPage() {
   const handleGeneratePasses = async (entry: Entry) => {
     try {
       console.log('Generating passes for entry:', entry.id);
-      message.loading('Generating passes and sending email...', 0);
+      const hide = message.loading('Generating passes and sending email...', 0);
       const result = await apiService.generatePasses(entry.id, true);
       console.log('Pass generation result:', result);
-      message.destroy();
+      hide(); // Only destroy the loading message
 
-      // Check if email actually sent
+      // Check if email actually sent - show message for 10 seconds
       if (result.email_sent) {
-        message.success(`✅ ${result.pass_files.length} passes generated and emailed to ${entry.email}!`);
+        message.success(`✅ ${result.pass_files.length} passes generated and emailed to ${entry.email}!`, 10);
       } else {
-        message.warning(`⚠️ ${result.pass_files.length} passes generated but email failed. ${result.message}`);
+        message.warning(`⚠️ ${result.pass_files.length} passes generated but email failed. ${result.message}`, 10);
       }
 
       loadData();
