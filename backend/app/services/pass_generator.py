@@ -167,24 +167,40 @@ Valid for entry on specified date and session only."""
         """Determine which pass files are needed for this entry"""
         passes = []
 
+        # DEBUG: Log all entry properties
+        print(f"🔍 DEBUG determine_passes_needed for Entry {entry.id}:")
+        print(f"   - Name: {entry.name}")
+        print(f"   - is_exhibitor_pass: {entry.is_exhibitor_pass}")
+        print(f"   - is_exhibitor (property): {entry.is_exhibitor}")
+        print(f"   - exhibition_day1: {entry.exhibition_day1}")
+        print(f"   - exhibition_day2: {entry.exhibition_day2}")
+        print(f"   - interactive_sessions: {entry.interactive_sessions}")
+        print(f"   - plenary: {entry.plenary}")
+
         # Check if exhibitor (both exhibition days) - gets combined pass
         if entry.is_exhibitor:
+            print(f"   ✅ Adding exhibition_both_days pass (Exhibitor)")
             passes.append(("exhibition_both_days", self.PASS_TEMPLATES["exhibition_both_days_exhibitor"]))
         else:
             # Visitor - gets separate passes for each day
             if entry.exhibition_day1:
+                print(f"   ✅ Adding exhibition_day1 pass")
                 passes.append(("exhibition_day1", self.PASS_TEMPLATES["exhibition_day1_visitor"]))
             if entry.exhibition_day2:
+                print(f"   ✅ Adding exhibition_day2 pass")
                 passes.append(("exhibition_day2", self.PASS_TEMPLATES["exhibition_day2_visitor"]))
 
         # Interactive sessions
         if entry.interactive_sessions:
+            print(f"   ✅ Adding interactive_sessions pass")
             passes.append(("interactive_sessions", self.PASS_TEMPLATES["interactive_sessions"]))
 
         # Plenary session
         if entry.plenary:
+            print(f"   ✅ Adding plenary pass")
             passes.append(("plenary", self.PASS_TEMPLATES["plenary"]))
 
+        print(f"   📊 Total passes to generate: {len(passes)}")
         return passes
     
     def get_additional_attachments(self, entry: Entry) -> List[Path]:
@@ -244,6 +260,10 @@ Valid for entry on specified date and session only."""
         Generate all passes for an entry and include DND + Event Flow attachments
         Returns list of all files to be attached to email (QR passes + DNDs + Event Flows)
         """
+        print(f"🎫 Starting pass generation for Entry {entry.id} ({entry.name})")
+        print(f"   Passes directory: {self.passes_dir}")
+        print(f"   Output directory: {self.output_dir}")
+
         passes_needed = self.determine_passes_needed(entry)
         generated_passes = []
 
@@ -252,8 +272,11 @@ Valid for entry on specified date and session only."""
             # Get template path
             template_path = self.passes_dir / template_filename
 
+            print(f"   🔍 Checking template: {template_path}")
+            print(f"      Template exists: {template_path.exists()}")
+
             if not template_path.exists():
-                print(f"Warning: Template not found: {template_path}")
+                print(f"❌ Warning: Template not found: {template_path}")
                 continue
 
             # Generate QR data
