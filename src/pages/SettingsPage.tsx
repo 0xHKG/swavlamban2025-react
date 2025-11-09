@@ -58,7 +58,7 @@ export default function SettingsPage() {
   const handlePasswordChange = async (values: any) => {
     setLoading(true);
     try {
-      await apiService.changePassword(values.currentPassword, values.newPassword);
+      await apiService.changePassword(values.current_password, values.new_password);
       message.success('✅ Password updated successfully!', 10);
       form.resetFields();
     } catch (err: any) {
