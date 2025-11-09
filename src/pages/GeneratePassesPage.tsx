@@ -82,14 +82,42 @@ export default function GeneratePassesPage() {
     try {
       setGenerateLoading(true);
       const result = await apiService.generatePasses(selectedEntry.id, false);
-      setGeneratedPasses(result.pass_files);
-      message.success(`✅ Generated ${result.pass_files.length} pass${result.pass_files.length === 1 ? '' : 'es'}!`, 10);
+      // Filter out invitation files - only show QR pass files
+      const passFiles = result.pass_files.filter(f => !f.toLowerCase().includes('inv-'));
+      setGeneratedPasses(passFiles);
+      message.success(`✅ Generated ${passFiles.length} pass${passFiles.length === 1 ? '' : 'es'}!`, 10);
       loadEntries();
     } catch (error) {
       console.error('Generate passes error:', error);
       message.error('Failed to generate passes');
     } finally {
       setGenerateLoading(false);
+    }
+  };
+
+  const handleDownloadPass = async (filename: string) => {
+    if (!selectedEntry) return;
+
+    try {
+      // Download pass file from backend
+      const response = await apiService.api.get(`/api/v1/passes/download/${selectedEntry.id}/${filename}`, {
+        responseType: 'blob'
+      });
+
+      // Create download link
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+
+      message.success(`Downloaded ${filename}`);
+    } catch (error) {
+      console.error('Download error:', error);
+      message.error('Failed to download pass');
     }
   };
 
@@ -376,7 +404,11 @@ export default function GeneratePassesPage() {
                     style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                   >
                     <Text style={{ color: '#94a3b8' }}>📄 {filename}</Text>
-                    <Button icon={<DownloadOutlined />} size="small">
+                    <Button
+                      icon={<DownloadOutlined />}
+                      size="small"
+                      onClick={() => handleDownloadPass(filename)}
+                    >
                       Download
                     </Button>
                   </div>
