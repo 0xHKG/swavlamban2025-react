@@ -102,7 +102,9 @@ export default function AddEntryPage() {
   // Parse CSV File with better handling of quoted fields
   const parseCSV = (text: string) => {
     const lines = text.split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    // Strip quotes from headers - CSV has "Name","Email" etc.
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    console.log('CSV Headers after cleanup:', headers);
     const data = [];
 
     for (let i = 1; i < lines.length; i++) {
