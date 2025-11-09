@@ -20,7 +20,7 @@ class MailjetService:
         """Initialize Mailjet API service using official mailjet-rest library"""
         self.api_key = settings.MAILJET_API_KEY
         self.api_secret = settings.MAILJET_API_SECRET
-        self.sender_email = settings.GMAIL_ADDRESS  # Use Gmail as sender (validated in Mailjet)
+        self.sender_email = settings.EMAIL_SENDER  # Use configured sender email
         self.sender_name = "Swavlamban 2025"
 
     def send_email(self, to_email: str, subject: str, html_content: str,
