@@ -86,10 +86,12 @@ async def generate_passes(
         # Generate passes (includes QR passes + DND + Event Flow attachments)
         all_files = pass_generator.generate_passes_for_entry(entry, current_user.username)
 
-        # Filter to get only QR pass files (not DND/Event Flow)
+        # Filter to get only QR pass files (not DND/Event Flow/Invitations)
         qr_pass_files = [
             f for f in all_files
-            if not (f.name.startswith('DND_') or f.name.startswith('EF-'))
+            if not (f.name.startswith('DND_') or
+                   f.name.startswith('EF-') or
+                   f.name.startswith('Inv-'))
         ]
 
         # Update pass generation flags
