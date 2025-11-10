@@ -44,7 +44,7 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 export default function AdminPanelPage() {
-  const { message } = App.useApp(); // Use App hook for notifications
+  const { message, modal } = App.useApp(); // Use App hook for notifications and modals
   const [users, setUsers] = useState<User[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -406,7 +406,7 @@ export default function AdminPanelPage() {
       // Show validation results
       if (errors.length > 0) {
         console.log('⚠️ Showing validation errors modal');
-        Modal.warning({
+        modal.warning({
           title: 'CSV Validation Errors',
           content: (
             <div>
@@ -437,7 +437,7 @@ export default function AdminPanelPage() {
 
       console.log('🚀 Showing confirmation modal');
       // Confirm before processing
-      Modal.confirm({
+      modal.confirm({
         title: 'Process Exhibitors',
         content: `Ready to process ${exhibitors.length} exhibitor(s) with ${exhibitors.reduce((sum, ex) => sum + ex.attendees.length, 0)} total attendee(s). Continue?`,
         okText: 'Yes, Process',
