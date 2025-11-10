@@ -130,10 +130,16 @@ export default function AdminPanelPage() {
       max_entries: user.max_entries,
       total_entries: userEntries.length,
       remaining: user.max_entries - userEntries.length,
-      exhibition_day1: userEntries.filter((e) => e.exhibition_day1).length,
-      exhibition_day2: userEntries.filter((e) => e.exhibition_day2).length,
-      interactive_sessions: userEntries.filter((e) => e.interactive_sessions).length,
-      plenary: userEntries.filter((e) => e.plenary).length,
+      // Count of entries with each pass type
+      exhibition_day1_count: userEntries.filter((e) => e.exhibition_day1).length,
+      exhibition_day2_count: userEntries.filter((e) => e.exhibition_day2).length,
+      interactive_sessions_count: userEntries.filter((e) => e.interactive_sessions).length,
+      plenary_count: userEntries.filter((e) => e.plenary).length,
+      // Quota for each pass type
+      quota_ex_day1: user.quota_ex_day1 || 0,
+      quota_ex_day2: user.quota_ex_day2 || 0,
+      quota_interactive: user.quota_interactive || 0,
+      quota_plenary: user.quota_plenary || 0,
     };
   });
 
@@ -530,27 +536,39 @@ export default function AdminPanelPage() {
     },
     {
       title: 'Ex Day 1',
-      dataIndex: 'exhibition_day1',
       key: 'exhibition_day1',
-      render: (count) => <Tag color="blue">{count}</Tag>,
+      render: (_, record) => (
+        <Text style={{ color: '#e2e8f0' }}>
+          {record.exhibition_day1_count} / {record.quota_ex_day1}
+        </Text>
+      ),
     },
     {
       title: 'Ex Day 2',
-      dataIndex: 'exhibition_day2',
       key: 'exhibition_day2',
-      render: (count) => <Tag color="purple">{count}</Tag>,
+      render: (_, record) => (
+        <Text style={{ color: '#e2e8f0' }}>
+          {record.exhibition_day2_count} / {record.quota_ex_day2}
+        </Text>
+      ),
     },
     {
       title: 'Interactive',
-      dataIndex: 'interactive_sessions',
       key: 'interactive_sessions',
-      render: (count) => <Tag color="cyan">{count}</Tag>,
+      render: (_, record) => (
+        <Text style={{ color: '#e2e8f0' }}>
+          {record.interactive_sessions_count} / {record.quota_interactive}
+        </Text>
+      ),
     },
     {
       title: 'Plenary',
-      dataIndex: 'plenary',
       key: 'plenary',
-      render: (count) => <Tag color="green">{count}</Tag>,
+      render: (_, record) => (
+        <Text style={{ color: '#e2e8f0' }}>
+          {record.plenary_count} / {record.quota_plenary}
+        </Text>
+      ),
     },
   ];
 
