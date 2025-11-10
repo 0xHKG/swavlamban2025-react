@@ -11,7 +11,7 @@ class UserCreate(BaseModel):
     username: str = Field(..., min_length=3, max_length=100)
     password: str = Field(..., min_length=6)
     organization: str = Field(..., min_length=2, max_length=255)
-    max_entries: int = Field(default=0, ge=0)
+    max_entries: int = Field(..., ge=1)  # Required, minimum 1
     role: str = Field(default="user")
     allowed_passes: Dict[str, bool] = Field(default_factory=dict)
     
