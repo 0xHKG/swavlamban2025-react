@@ -319,9 +319,12 @@ export default function AdminPanelPage() {
 
   // Handle Exhibitor CSV Upload
   const handleExhibitorCSVUpload = async (csvText: string) => {
+    console.log('🔍 handleExhibitorCSVUpload called');
+    console.log('📄 CSV Text length:', csvText?.length);
     try {
       // Parse CSV
       const lines = csvText.trim().split('\n');
+      console.log('📊 Lines parsed:', lines.length);
       if (lines.length < 2) {
         message.error('CSV file is empty or invalid');
         return;
@@ -476,8 +479,8 @@ export default function AdminPanelPage() {
         },
       });
     } catch (error) {
-      message.error('Failed to parse CSV file');
-      console.error(error);
+      console.error('❌ CSV Upload Error:', error);
+      message.error(`Failed to parse CSV file: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
