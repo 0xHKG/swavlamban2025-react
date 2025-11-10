@@ -399,8 +399,13 @@ export default function AdminPanelPage() {
         });
       }
 
+      console.log('✅ Parsed exhibitors:', exhibitors.length);
+      console.log('❌ Errors:', errors.length);
+      console.log('📦 Exhibitors data:', exhibitors);
+
       // Show validation results
       if (errors.length > 0) {
+        console.log('⚠️ Showing validation errors modal');
         Modal.warning({
           title: 'CSV Validation Errors',
           content: (
@@ -425,10 +430,12 @@ export default function AdminPanelPage() {
       }
 
       if (exhibitors.length === 0) {
+        console.log('⛔ No valid exhibitors, exiting');
         message.error('No valid exhibitors to process');
         return;
       }
 
+      console.log('🚀 Showing confirmation modal');
       // Confirm before processing
       Modal.confirm({
         title: 'Process Exhibitors',
