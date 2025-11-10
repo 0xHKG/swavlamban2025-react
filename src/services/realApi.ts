@@ -168,8 +168,8 @@ class RealApiService {
   }
 
   // Health check
-  async healthCheck(): Promise<{ status: string; database: string; }> {
-    const response = await this.api.get<{ status: string; database: string; }>('/health');
+  async healthCheck(): Promise<{ status: string; app?: string; server_ip?: string; database?: string; }> {
+    const response = await this.api.get<{ status: string; app?: string; server_ip?: string; database?: string; }>('/health');
     return response.data;
   }
 }

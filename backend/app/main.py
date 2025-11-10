@@ -1,7 +1,7 @@
 """
 FastAPI main application
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -70,11 +70,25 @@ async def root():
 
 
 @app.get("/health")
-async def health_check():
-    """Health check endpoint"""
+async def health_check(request: Request):
+    """Health check endpoint with server IP"""
+    import socket
+
+    # Get server IP address
+    try:
+        # Try to get external IP from request headers (for proxied deployments)
+        server_ip = request.headers.get('X-Forwarded-For', '').split(',')[0].strip()
+        if not server_ip:
+            # Fallback to socket method
+            hostname = socket.gethostname()
+            server_ip = socket.gethostbyname(hostname)
+    except Exception:
+        server_ip = "Unable to detect"
+
     return {
         "status": "healthy",
-        "app": settings.APP_NAME
+        "app": settings.APP_NAME,
+        "server_ip": server_ip
     }
 
 

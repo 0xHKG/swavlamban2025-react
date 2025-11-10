@@ -51,6 +51,7 @@ export default function AdminPanelPage() {
   const [userModalVisible, setUserModalVisible] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [form] = Form.useForm();
+  const [serverIp, setServerIp] = useState<string>('Loading...');
 
   // Pagination state
   const [entriesPageSize, setEntriesPageSize] = useState(10);
@@ -63,16 +64,20 @@ export default function AdminPanelPage() {
 
   const loadData = async () => {
     try {
-      const [usersData, entriesData] = await Promise.all([
+      const [usersData, entriesData, healthData] = await Promise.all([
         apiService.getAllUsers(),
         apiService.getAllEntries(),
+        apiService.healthCheck(),
       ]);
       setUsers(usersData);
       // Sort entries by ID descending (most recent first)
       setEntries(entriesData.sort((a, b) => b.id - a.id));
+      // Set server IP from health check
+      setServerIp(healthData.server_ip || 'Unable to detect');
     } catch (error) {
       console.error('Failed to load data:', error);
       message.error('Failed to load admin data');
+      setServerIp('Unable to detect');
     } finally {
       setLoading(false);
     }
@@ -911,7 +916,7 @@ export default function AdminPanelPage() {
                     marginLeft: 8,
                   }}
                 >
-                  {window.location.hostname === 'localhost' ? '127.0.0.1 (Local)' : 'Check production deployment'}
+                  {serverIp}
                 </span>
               </Text>
             </div>
