@@ -104,12 +104,21 @@ async def generate_passes(
         # Send email if requested
         if request.send_email:
             try:
-                # Send email with all attachments (QR passes + DND + Event Flow)
-                email_sent = email_service.send_pass_email(
-                    recipient_email=entry.email,
-                    recipient_name=entry.name,
-                    pass_files=all_files  # Send all files including DND/Event Flow
-                )
+                # Check if exhibitor - use dedicated exhibitor email template
+                if entry.is_exhibitor:
+                    # EXHIBITOR: Use exhibitor-specific email template
+                    email_sent = email_service.send_exhibitor_bulk_email(
+                        recipient_email=entry.email,
+                        recipient_name=entry.name,
+                        pass_files=all_files
+                    )
+                else:
+                    # VISITOR: Use visitor email template
+                    email_sent = email_service.send_pass_email(
+                        recipient_email=entry.email,
+                        recipient_name=entry.name,
+                        pass_files=all_files  # Send all files including DND/Event Flow
+                    )
 
                 if email_sent:
                     message += f" and email sent to {entry.email}"
