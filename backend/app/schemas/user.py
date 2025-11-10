@@ -36,11 +36,15 @@ class UserResponse(BaseModel):
     organization: str
     max_entries: int
     role: str
+    quota_ex_day1: int
+    quota_ex_day2: int
+    quota_interactive: int
+    quota_plenary: int
     allowed_passes: Dict[str, bool]
     is_active: bool
     created_at: datetime
     last_login: Optional[datetime] = None
-    
+
     class Config:
         from_attributes = True
 
