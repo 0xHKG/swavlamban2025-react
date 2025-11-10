@@ -123,13 +123,19 @@ export default function AdminPanelPage() {
   // Organization statistics
   const orgStats = users.map((user) => {
     const userEntries = entries.filter((e) => e.username === user.username);
+
+    // Calculate total quota: use max_entries for exhibitors, sum of individual quotas for visitors
+    const individual_quota_sum = (user.quota_ex_day1 || 0) + (user.quota_ex_day2 || 0) +
+                                 (user.quota_interactive || 0) + (user.quota_plenary || 0);
+    const total_quota = Math.max(user.max_entries, individual_quota_sum);
+
     return {
       username: user.username,
       organization: user.organization,
       role: user.role,
-      max_entries: user.max_entries,
+      total_quota: total_quota,
       total_entries: userEntries.length,
-      remaining: user.max_entries - userEntries.length,
+      remaining: total_quota - userEntries.length,
       // Count of entries with each pass type
       exhibition_day1_count: userEntries.filter((e) => e.exhibition_day1).length,
       exhibition_day2_count: userEntries.filter((e) => e.exhibition_day2).length,
@@ -525,7 +531,7 @@ export default function AdminPanelPage() {
       render: (_, record) => (
         <div>
           <Text style={{ color: '#e2e8f0' }}>
-            {record.total_entries} / {record.max_entries}
+            {record.total_entries} / {record.total_quota}
           </Text>
           <br />
           <Text style={{ color: record.remaining < 10 ? '#f5576c' : '#43e97b', fontSize: 12 }}>
