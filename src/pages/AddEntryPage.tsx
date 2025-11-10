@@ -390,10 +390,10 @@ export default function AddEntryPage() {
                 Ex Day 1
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
-                {stats?.exhibition_day1_count || 0}/{stats?.max_entries || 0}
+                {stats?.exhibition_day1_count || 0}/{stats?.quota_ex_day1 || 0}
               </Title>
               <Text style={{ color: '#43e97b', fontSize: 14 }}>
-                ↑ {stats ? stats.max_entries - stats.exhibition_day1_count : 0} left
+                ↑ {stats ? stats.quota_ex_day1 - stats.exhibition_day1_count : 0} left
               </Text>
             </div>
           </Col>
@@ -412,10 +412,10 @@ export default function AddEntryPage() {
                 Ex Day 2
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
-                {stats?.exhibition_day2_count || 0}/{stats?.max_entries || 0}
+                {stats?.exhibition_day2_count || 0}/{stats?.quota_ex_day2 || 0}
               </Title>
               <Text style={{ color: '#43e97b', fontSize: 14 }}>
-                ↑ {stats ? stats.max_entries - stats.exhibition_day2_count : 0} left
+                ↑ {stats ? stats.quota_ex_day2 - stats.exhibition_day2_count : 0} left
               </Text>
             </div>
           </Col>
@@ -434,10 +434,10 @@ export default function AddEntryPage() {
                 Interactive
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
-                {stats?.interactive_sessions_count || 0}/{stats?.max_entries || 0}
+                {stats?.interactive_sessions_count || 0}/{stats?.quota_interactive || 0}
               </Title>
               <Text style={{ color: '#43e97b', fontSize: 14 }}>
-                ↑ {stats ? stats.max_entries - stats.interactive_sessions_count : 0} left
+                ↑ {stats ? stats.quota_interactive - stats.interactive_sessions_count : 0} left
               </Text>
             </div>
           </Col>
@@ -456,10 +456,10 @@ export default function AddEntryPage() {
                 Plenary
               </Text>
               <Title level={3} style={{ color: '#e2e8f0', margin: '0 0 8px 0' }}>
-                {stats?.plenary_count || 0}/{stats?.max_entries || 0}
+                {stats?.plenary_count || 0}/{stats?.quota_plenary || 0}
               </Title>
               <Text style={{ color: '#43e97b', fontSize: 14 }}>
-                ↑ {stats ? stats.max_entries - stats.plenary_count : 0} left
+                ↑ {stats ? stats.quota_plenary - stats.plenary_count : 0} left
               </Text>
             </div>
           </Col>

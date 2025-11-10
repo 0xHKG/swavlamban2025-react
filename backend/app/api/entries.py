@@ -26,6 +26,10 @@ class DashboardStats(BaseModel):
     exhibition_day2_count: int
     interactive_sessions_count: int
     plenary_count: int
+    quota_ex_day1: int
+    quota_ex_day2: int
+    quota_interactive: int
+    quota_plenary: int
 
 
 @router.get("/my", response_model=List[EntryResponse])
@@ -74,7 +78,11 @@ async def get_dashboard_stats(
         exhibition_day1_count=exhibition_day1_count,
         exhibition_day2_count=exhibition_day2_count,
         interactive_sessions_count=interactive_sessions_count,
-        plenary_count=plenary_count
+        plenary_count=plenary_count,
+        quota_ex_day1=current_user.quota_ex_day1,
+        quota_ex_day2=current_user.quota_ex_day2,
+        quota_interactive=current_user.quota_interactive,
+        quota_plenary=current_user.quota_plenary
     )
 
 
