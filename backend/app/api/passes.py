@@ -65,7 +65,15 @@ async def generate_passes(
         )
 
     # Check if entry has any passes allocated
-    if not any([entry.exhibition_day1, entry.exhibition_day2, entry.interactive_sessions, entry.plenary]):
+    # For exhibitors, check is_exhibitor_pass; for visitors, check individual passes
+    has_passes = entry.is_exhibitor_pass or any([
+        entry.exhibition_day1,
+        entry.exhibition_day2,
+        entry.interactive_sessions,
+        entry.plenary
+    ])
+
+    if not has_passes:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="No passes allocated for this entry"
