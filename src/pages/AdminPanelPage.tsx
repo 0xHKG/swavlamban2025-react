@@ -124,6 +124,18 @@ export default function AdminPanelPage() {
   const orgStats = users.map((user) => {
     const userEntries = entries.filter((e) => e.username === user.username);
 
+    // Count passes generated (entries with at least one pass generated)
+    const passesGenerated = userEntries.filter(
+      (e) =>
+        e.pass_generated_exhibition_day1 ||
+        e.pass_generated_exhibition_day2 ||
+        e.pass_generated_interactive_sessions ||
+        e.pass_generated_plenary
+    ).length;
+
+    // Calculate usage percentage
+    const usagePercent = user.max_entries > 0 ? (userEntries.length / user.max_entries) * 100 : 0;
+
     return {
       username: user.username,
       organization: user.organization,
@@ -131,6 +143,7 @@ export default function AdminPanelPage() {
       max_entries: user.max_entries,  // Total people this user can invite
       total_entries: userEntries.length,  // Total people invited so far
       remaining: user.max_entries - userEntries.length,
+      usagePercent: usagePercent,  // Usage percentage for CSV
       // Count of entries with each pass type
       exhibition_day1_count: userEntries.filter((e) => e.exhibition_day1).length,
       exhibition_day2_count: userEntries.filter((e) => e.exhibition_day2).length,
@@ -141,6 +154,10 @@ export default function AdminPanelPage() {
       quota_ex_day2: user.quota_ex_day2 || 0,
       quota_interactive: user.quota_interactive || 0,
       quota_plenary: user.quota_plenary || 0,
+      // Pass generation count
+      passesGenerated: passesGenerated,
+      // User active status
+      isActive: user.is_active !== false,  // Default to true if undefined
     };
   });
 
@@ -282,28 +299,28 @@ export default function AdminPanelPage() {
       [
         'Organization',
         'Username',
-        'Quota',
-        'Entries',
+        'Total Quota',
+        'Entries Created',
         'Remaining',
         'Usage %',
-        'Ex-1',
-        'Ex-2',
-        'Interactive',
-        'Plenary',
+        'Ex-1 Count',
+        'Ex-2 Count',
+        'Interactive Count',
+        'Plenary Count',
         'Passes Generated',
         'Status',
       ],
       ...orgStats.map((stat) => [
         `"${stat.organization}"`,
         stat.username,
-        stat.quota,
-        stat.entries,
+        stat.max_entries,
+        stat.total_entries,
         stat.remaining,
         `${stat.usagePercent.toFixed(1)}%`,
-        stat.ex1,
-        stat.ex2,
-        stat.interactive,
-        stat.plenary,
+        stat.exhibition_day1_count,
+        stat.exhibition_day2_count,
+        stat.interactive_sessions_count,
+        stat.plenary_count,
         stat.passesGenerated,
         stat.isActive ? 'Active' : 'Inactive',
       ]),
