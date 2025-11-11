@@ -170,7 +170,7 @@ export default function EventInfoPage() {
             {/* Day 1 */}
             <div style={{ marginBottom: 32 }}>
               <Title level={5} style={{ color: '#667eea', marginBottom: 16 }}>
-                Day 1 - Monday, 25 November 2025
+                Day 1 - Tuesday, 25 November 2025
               </Title>
               <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 16 }}>
                 <strong style={{ color: '#e2e8f0' }}>Venue:</strong> Exhibition Hall, Manekshaw Centre
@@ -242,7 +242,7 @@ export default function EventInfoPage() {
             {/* Day 2 */}
             <div>
               <Title level={5} style={{ color: '#f093fb', marginBottom: 16 }}>
-                Day 2 - Tuesday, 26 November 2025
+                Day 2 - Wednesday, 26 November 2025
               </Title>
 
               {/* Morning Sessions */}
@@ -685,8 +685,8 @@ export default function EventInfoPage() {
                     <div style={{ marginBottom: 12 }}>
                       <strong style={{ color: '#e2e8f0' }}>Dates:</strong>
                       <ul style={{ marginLeft: 20, marginTop: 4 }}>
-                        <li>Day 1: 25 November 2025 (Monday)</li>
-                        <li>Day 2: 26 November 2025 (Tuesday)</li>
+                        <li>Day 1: 25 November 2025 (Tuesday)</li>
+                        <li>Day 2: 26 November 2025 (Wednesday)</li>
                       </ul>
                     </div>
                     <div style={{ marginBottom: 12 }}>
