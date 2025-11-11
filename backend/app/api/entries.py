@@ -138,6 +138,51 @@ async def create_entry(
             detail="You do not have permission to allocate Plenary passes"
         )
 
+    # Validate per-pass quota limits (CRITICAL: Prevent exceeding individual pass quotas)
+    if entry.exhibition_day1:
+        ex_day1_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.exhibition_day1 == True
+        ).count()
+        if ex_day1_count >= current_user.quota_ex_day1:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Exhibition Day 1 quota exceeded. You have allocated {ex_day1_count} passes out of {current_user.quota_ex_day1} allowed."
+            )
+
+    if entry.exhibition_day2:
+        ex_day2_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.exhibition_day2 == True
+        ).count()
+        if ex_day2_count >= current_user.quota_ex_day2:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Exhibition Day 2 quota exceeded. You have allocated {ex_day2_count} passes out of {current_user.quota_ex_day2} allowed."
+            )
+
+    if entry.interactive_sessions:
+        interactive_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.interactive_sessions == True
+        ).count()
+        if interactive_count >= current_user.quota_interactive:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Interactive Sessions quota exceeded. You have allocated {interactive_count} passes out of {current_user.quota_interactive} allowed."
+            )
+
+    if entry.plenary:
+        plenary_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.plenary == True
+        ).count()
+        if plenary_count >= current_user.quota_plenary:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Plenary quota exceeded. You have allocated {plenary_count} passes out of {current_user.quota_plenary} allowed."
+            )
+
     # Create new entry
     db_entry = Entry(
         username=current_user.username,
@@ -234,6 +279,52 @@ async def update_entry(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You do not have permission to allocate Plenary passes"
         )
+
+    # Validate per-pass quota limits when adding passes (not when removing)
+    # Only check if pass is being ADDED (was False, now True)
+    if entry_update.exhibition_day1 is not None and entry_update.exhibition_day1 and not entry.exhibition_day1:
+        ex_day1_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.exhibition_day1 == True
+        ).count()
+        if ex_day1_count >= current_user.quota_ex_day1:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Exhibition Day 1 quota exceeded. You have allocated {ex_day1_count} passes out of {current_user.quota_ex_day1} allowed."
+            )
+
+    if entry_update.exhibition_day2 is not None and entry_update.exhibition_day2 and not entry.exhibition_day2:
+        ex_day2_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.exhibition_day2 == True
+        ).count()
+        if ex_day2_count >= current_user.quota_ex_day2:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Exhibition Day 2 quota exceeded. You have allocated {ex_day2_count} passes out of {current_user.quota_ex_day2} allowed."
+            )
+
+    if entry_update.interactive_sessions is not None and entry_update.interactive_sessions and not entry.interactive_sessions:
+        interactive_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.interactive_sessions == True
+        ).count()
+        if interactive_count >= current_user.quota_interactive:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Interactive Sessions quota exceeded. You have allocated {interactive_count} passes out of {current_user.quota_interactive} allowed."
+            )
+
+    if entry_update.plenary is not None and entry_update.plenary and not entry.plenary:
+        plenary_count = db.query(Entry).filter(
+            Entry.username == current_user.username,
+            Entry.plenary == True
+        ).count()
+        if plenary_count >= current_user.quota_plenary:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Plenary quota exceeded. You have allocated {plenary_count} passes out of {current_user.quota_plenary} allowed."
+            )
 
     # Update fields
     update_data = entry_update.model_dump(exclude_unset=True)
