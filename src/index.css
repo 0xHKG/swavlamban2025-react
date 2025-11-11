@@ -162,3 +162,38 @@ textarea,
 span, div, p, h1, h2, h3, h4, h5, h6 {
   color: inherit;
 }
+
+/* ===================================
+   MOBILE RESPONSIVE LAYOUT
+   =================================== */
+
+/* Desktop (>= 768px): Sidebar visible, header hidden, content has left margin */
+@media (min-width: 768px) {
+  .mobile-header {
+    display: none !important;
+  }
+}
+
+/* Mobile (< 768px): Sidebar hidden, header visible, content full width */
+@media (max-width: 767px) {
+  /* Show mobile header */
+  .mobile-header {
+    display: flex !important;
+  }
+
+  /* Remove left margin from content on mobile */
+  .ant-layout {
+    margin-left: 0 !important;
+  }
+
+  /* Reduce padding on mobile for more space */
+  .ant-layout-content {
+    padding: 16px !important;
+  }
+
+  /* Footer smaller padding on mobile */
+  .ant-layout-footer {
+    padding: 12px 16px !important;
+    font-size: 12px !important;
+  }
+}
