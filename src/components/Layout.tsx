@@ -80,7 +80,7 @@ export default function Layout({ children }: LayoutProps) {
 
   // Sidebar content (reusable for both desktop Sider and mobile Drawer)
   const sidebarContent = (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* Logo */}
       <div
         style={{
@@ -151,35 +151,38 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </div>
 
-      {/* Navigation Label */}
-      <div
-        style={{
-          padding: '12px 24px 8px',
-          color: 'rgba(255,255,255,0.5)',
-          fontWeight: 600,
-          fontSize: 11,
-          letterSpacing: '0.5px',
-        }}
-      >
-        📋 NAVIGATION
+      {/* Scrollable navigation section */}
+      <div style={{ flex: 1, overflow: 'auto', paddingBottom: 16 }}>
+        {/* Navigation Label */}
+        <div
+          style={{
+            padding: '12px 24px 8px',
+            color: 'rgba(255,255,255,0.5)',
+            fontWeight: 600,
+            fontSize: 11,
+            letterSpacing: '0.5px',
+          }}
+        >
+          📋 NAVIGATION
+        </div>
+
+        {/* Menu */}
+        <Menu
+          mode="inline"
+          selectedKeys={[location.pathname]}
+          onClick={handleMenuClick}
+          items={menuItems}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            padding: '0 12px',
+          }}
+          theme="dark"
+        />
       </div>
 
-      {/* Menu */}
-      <Menu
-        mode="inline"
-        selectedKeys={[location.pathname]}
-        onClick={handleMenuClick}
-        items={menuItems}
-        style={{
-          background: 'transparent',
-          border: 'none',
-          padding: '0 12px',
-        }}
-        theme="dark"
-      />
-
-      {/* Logout Button */}
-      <div style={{ padding: 16, position: 'absolute', bottom: 16, left: 0, right: 0 }}>
+      {/* Logout Button - Fixed at bottom */}
+      <div style={{ padding: 16, marginTop: 'auto' }}>
         <Button
           block
           icon={<LogoutOutlined />}
@@ -204,7 +207,7 @@ export default function Layout({ children }: LayoutProps) {
           Logout
         </Button>
       </div>
-    </>
+    </div>
   );
 
   return (
