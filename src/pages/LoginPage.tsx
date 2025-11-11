@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -21,8 +22,26 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [backendWarming, setBackendWarming] = useState(true);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // Warm up backend on component mount to prevent cold start delays
+  useEffect(() => {
+    const warmUpBackend = async () => {
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL || 'https://swavlamban2025-backend.onrender.com';
+        await axios.get(`${backendUrl}/health`, { timeout: 60000 }); // 60s timeout for cold starts
+        console.log('✅ Backend is ready');
+      } catch (err) {
+        console.log('⚠️ Backend warm-up failed (may still work):', err);
+      } finally {
+        setBackendWarming(false);
+      }
+    };
+
+    warmUpBackend();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,6 +90,12 @@ export default function LoginPage() {
             </Typography>
           </Box>
 
+          {backendWarming && (
+            <Alert severity="info" sx={{ mb: 3 }} icon={<CircularProgress size={20} />}>
+              Connecting to server... (this may take 30-60 seconds on first load)
+            </Alert>
+          )}
+
           {error && (
             <Alert severity="error" sx={{ mb: 3 }}>
               {error}
@@ -118,7 +143,7 @@ export default function LoginPage() {
               type="submit"
               variant="contained"
               size="large"
-              disabled={loading}
+              disabled={loading || backendWarming}
               sx={{
                 py: 1.5,
                 background: 'linear-gradient(135deg, #1D4E89 0%, #0D2E59 100%)',
@@ -127,7 +152,13 @@ export default function LoginPage() {
                 },
               }}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : backendWarming ? (
+                'Connecting to server...'
+              ) : (
+                'Login'
+              )}
             </Button>
           </form>
 
