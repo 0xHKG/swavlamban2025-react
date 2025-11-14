@@ -172,11 +172,16 @@ export default function EventInfoPage() {
               <Title level={5} style={{ color: '#667eea', marginBottom: 16 }}>
                 Day 1 - Tuesday, 25 November 2025
               </Title>
+
+              {/* Morning Session */}
+              <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 12, fontWeight: 500, fontSize: 15 }}>
+                🌅 Morning Session
+              </Text>
               <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 16 }}>
                 <strong style={{ color: '#e2e8f0' }}>Venue:</strong> Exhibition Hall, Manekshaw Centre
               </Text>
 
-              <div style={{ marginBottom: 12 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -185,18 +190,18 @@ export default function EventInfoPage() {
                     background: 'rgba(102, 126, 234, 0.1)',
                     borderRadius: 8,
                     border: '1px solid rgba(102, 126, 234, 0.2)',
-                    marginBottom: 8,
                   }}
                 >
                   <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
-                  <div>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1100 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Gates Open</Text>
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1000 - 1045 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Exhibition Inauguration & CNS Walkaround</Text>
                     <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Entry begins for registered attendees
+                      Exhibition Hall
                     </Text>
                   </div>
                 </div>
+
                 <div
                   style={{
                     display: 'flex',
@@ -208,21 +213,58 @@ export default function EventInfoPage() {
                   }}
                 >
                   <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
-                  <div>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1100 - 1730 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Exhibition Open</Text>
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1045 - 1115 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Tea & Refreshments</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1100 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Exhibition Open to All</Text>
                     <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Industry booths, innovation displays, networking
+                      Exhibition Hall
+                    </Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1115 - 1145 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Presentation to NAs & DAs</Text>
+                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
+                      Exhibition Hall
                     </Text>
                   </div>
                 </div>
               </div>
 
-              {/* Day 1 Event Flow Image */}
+              {/* Day 1 Morning Event Flow Image */}
               <div style={{ marginTop: 24, textAlign: 'center' }}>
                 <img
                   src="/EF/EF-25.png"
-                  alt="Day 1 Event Flow Schedule"
+                  alt="Day 1 Morning Event Flow Schedule"
                   style={{
                     width: '100%',
                     maxWidth: '700px',
@@ -232,7 +274,205 @@ export default function EventInfoPage() {
                   }}
                 />
                 <Text style={{ color: '#94a3b8', display: 'block', marginTop: 8, fontSize: 13 }}>
-                  📅 Detailed schedule for November 25, 2025
+                  📅 Morning schedule for November 25, 2025
+                </Text>
+              </div>
+
+              {/* Afternoon/Evening Session */}
+              <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 12, fontWeight: 500, fontSize: 15, marginTop: 32 }}>
+                🌆 Afternoon & Plenary Session
+              </Text>
+              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 16 }}>
+                <strong style={{ color: '#e2e8f0' }}>Venue:</strong> Zorawar Hall & Exhibition Hall, Manekshaw Centre
+              </Text>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1500 - 1515 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Inaugural Address by VCNS & Special Address by President, SIDM</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1515 - 1610 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Session on 'Innovation & Self-Reliance'</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1600 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Chief Guest Arrives at Exhibition Hall</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1600 - 1615 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Chief Guest Visits Exhibition</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1620 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Chief Guest Arrives at Zorawar Hall</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1620 - 1625 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Welcome Address by CNS</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1625 - 1642 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Felicitations, Release of Documents & MoUs</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1642 - 1657 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Address by Chief Guest</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1657 - 1700 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Vote of Thanks by VCNS</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(102, 126, 234, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(102, 126, 234, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1700 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Tea & Departure</Text>
+                  </div>
+                </div>
+              </div>
+
+              {/* Day 1 Afternoon Event Flow Image */}
+              <div style={{ marginTop: 24, textAlign: 'center' }}>
+                <img
+                  src="/EF/EF-PM25.png"
+                  alt="Day 1 Afternoon/Plenary Event Flow Schedule"
+                  style={{
+                    width: '100%',
+                    maxWidth: '700px',
+                    borderRadius: 12,
+                    border: '1px solid rgba(102, 126, 234, 0.3)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                  }}
+                />
+                <Text style={{ color: '#94a3b8', display: 'block', marginTop: 8, fontSize: 13 }}>
+                  📅 Afternoon/Plenary schedule for November 25, 2025
                 </Text>
               </div>
             </div>
@@ -266,31 +506,8 @@ export default function EventInfoPage() {
                 >
                   <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
                   <div style={{ flex: 1 }}>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1000 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Gates Open</Text>
-                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Exhibition Hall - Entry begins
-                    </Text>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 16px',
-                    background: 'rgba(240, 147, 251, 0.1)',
-                    borderRadius: 8,
-                    border: '1px solid rgba(240, 147, 251, 0.2)',
-                  }}
-                >
-                  <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
-                  <div style={{ flex: 1 }}>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1000 - 1730 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Exhibition Open (Day 2)</Text>
-                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Exhibition Hall - Continued exhibition
-                    </Text>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>0930 - 1015 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Registration</Text>
                   </div>
                 </div>
 
@@ -326,20 +543,74 @@ export default function EventInfoPage() {
                 >
                   <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
                   <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1130 - 1200 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Tea Break</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(240, 147, 251, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(240, 147, 251, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
                     <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1200 - 1330 hrs - </Text>
                     <Text style={{ color: '#e2e8f0' }}>Interactive Session II</Text>
                     <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Zorawar Hall - Boosting iDEX Ecosystem
+                      Zorawar Hall - Boosting the iDEX Ecosystem
+                    </Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(240, 147, 251, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(240, 147, 251, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1330 - 1500 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Lunch Break & Exhibition Visit</Text>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 16px',
+                    background: 'rgba(240, 147, 251, 0.1)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(240, 147, 251, 0.2)',
+                  }}
+                >
+                  <ClockCircleOutlined style={{ color: '#f093fb', marginRight: 12, fontSize: 18 }} />
+                  <div style={{ flex: 1 }}>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1500 - 1600 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0' }}>Interaction of Industry of VCs</Text>
+                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
+                      Exhibition Hall
                     </Text>
                   </div>
                 </div>
               </div>
 
-              {/* Day 2 Morning Event Flow Image */}
+              {/* Day 2 Event Flow Image */}
               <div style={{ marginTop: 24, textAlign: 'center' }}>
                 <img
-                  src="/EF/EF-AM26.png"
-                  alt="Day 2 Morning Event Flow Schedule"
+                  src="/EF/EF26.png"
+                  alt="Day 2 Event Flow Schedule"
                   style={{
                     width: '100%',
                     maxWidth: '700px',
@@ -349,75 +620,7 @@ export default function EventInfoPage() {
                   }}
                 />
                 <Text style={{ color: '#94a3b8', display: 'block', marginTop: 8, fontSize: 13 }}>
-                  📅 Detailed morning schedule for November 26, 2025
-                </Text>
-              </div>
-
-              {/* Afternoon Session */}
-              <Text style={{ color: '#e2e8f0', display: 'block', marginBottom: 12, fontWeight: 500, fontSize: 15, marginTop: 32 }}>
-                🌆 Afternoon Session
-              </Text>
-              <Text style={{ color: '#94a3b8', display: 'block', marginBottom: 16 }}>
-                <strong style={{ color: '#e2e8f0' }}>Venue:</strong> Zorawar Hall, Manekshaw Centre
-              </Text>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 16px',
-                    background: 'rgba(67, 233, 123, 0.1)',
-                    borderRadius: 8,
-                    border: '1px solid rgba(67, 233, 123, 0.2)',
-                  }}
-                >
-                  <ClockCircleOutlined style={{ color: '#43e97b', marginRight: 12, fontSize: 18 }} />
-                  <div style={{ flex: 1 }}>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1500 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Gates Open</Text>
-                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      Entry for Plenary Session
-                    </Text>
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px 16px',
-                    background: 'rgba(67, 233, 123, 0.1)',
-                    borderRadius: 8,
-                    border: '1px solid rgba(67, 233, 123, 0.2)',
-                  }}
-                >
-                  <ClockCircleOutlined style={{ color: '#43e97b', marginRight: 12, fontSize: 18 }} />
-                  <div style={{ flex: 1 }}>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1530 - 1615 hrs - </Text>
-                    <Text style={{ color: '#e2e8f0' }}>Plenary Session</Text>
-                    <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
-                      CNS Welcome Address | Address by Chief Guest | Release of Books/Documents/MoUs | Discussions on Innovation & Self-reliance
-                    </Text>
-                  </div>
-                </div>
-              </div>
-
-              {/* Day 2 Afternoon Event Flow Image */}
-              <div style={{ marginTop: 24, textAlign: 'center' }}>
-                <img
-                  src="/EF/EF-PM26.png"
-                  alt="Day 2 Afternoon Event Flow Schedule"
-                  style={{
-                    width: '100%',
-                    maxWidth: '700px',
-                    borderRadius: 12,
-                    border: '1px solid rgba(67, 233, 123, 0.3)',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-                  }}
-                />
-                <Text style={{ color: '#94a3b8', display: 'block', marginTop: 8, fontSize: 13 }}>
-                  📅 Detailed afternoon schedule for November 26, 2025
+                  📅 Detailed schedule for November 26, 2025
                 </Text>
               </div>
             </div>
@@ -719,9 +922,9 @@ export default function EventInfoPage() {
                     <div style={{ marginBottom: 12 }}>
                       <strong style={{ color: '#e2e8f0' }}>Timings:</strong>
                       <ul style={{ marginLeft: 20, marginTop: 4 }}>
-                        <li>Exhibition: 1100-1730 hrs (Day 1), 1000-1730 hrs (Day 2)</li>
-                        <li>Interactive Sessions: 1030-1130, 1200-1330 hrs (Day 2)</li>
-                        <li>Plenary: 1530-1615 hrs (Day 2)</li>
+                        <li>Day 1: 1000-1700 hrs (Exhibition + Plenary)</li>
+                        <li>Day 2: 0930-1600 hrs (Interactive Sessions + Exhibition)</li>
+                        <li>Be seated by 0945 hrs (Interactive) / 1430 hrs (Plenary)</li>
                       </ul>
                     </div>
                     <div>

@@ -205,53 +205,101 @@ Valid for entry on specified date and session only."""
     
     def get_additional_attachments(self, entry: Entry) -> List[Path]:
         """
-        Get Invitation images based on passes allocated
-        Returns list of Path objects for invitation attachments
+        Get Invitations and Event Flow images based on passes allocated
+        Returns list of Path objects for email attachments
+
+        EMAIL ATTACHMENTS:
+        - Invitations (Invitation/)
+        - Event Flow schedules (EF/)
+
+        NOT sent via email (only for web apps):
+        - DND guidelines (DND/)
 
         Invitation images from images/Invitation/:
-        - Inv-25.png - Exhibition Day 1 (Visitors)
-        - Inv-26-Exhibition.png - Exhibition Day 2 (Visitors)
-        - Inv-Exhibitors.png - Exhibitors (both days 25-26)
-        - Inv-Interactive.png - Interactive Sessions
-        - Inv-Plenary.png - Plenary Session
+        - Inv-25.png - Exhibition Day 1 (0930 Hrs)
+        - Inv-26-Exhibition.png - Exhibition Day 2 ONLY (1000 Hrs)
+        - Inv-Exhibitors.png - Exhibitors (both days 0930 Hrs)
+        - Inv-Interactive.png - Interactive Sessions Day 2 (0930 Hrs)
+        - Inv-Plenary.png - Plenary Session Day 1 (1430 Hrs)
 
-        INVITATION LOGIC:
-        - Exhibitors (both days) → send ONLY Inv-Exhibitors.png
-        - Visitors → send day-specific invitations
-        - Interactive/Plenary → send session-specific invitations
+        Event Flow images from images/EF/:
+        - EF-25.png - Day 1 complete schedule (AM Exhibition + PM Plenary)
+        - EF-PM25.png - Day 1 Plenary session only
+        - EF26.png - Day 2 complete schedule (Interactive Sessions)
         """
         attachments = []
         invitation_dir = self.images_dir / "Invitation"
+        ef_dir = self.images_dir / "EF"
 
-        # EXHIBITORS (both days 25-26) - Gets special exhibitor invitation
+        # =============================================
+        # INVITATION LOGIC
+        # =============================================
+
         if entry.is_exhibitor:
+            # Exhibitors (both days 25-26)
             inv_file = invitation_dir / "Inv-Exhibitors.png"
             if inv_file.exists():
                 attachments.append(inv_file)
+                print(f"   📨 Added invitation: Inv-Exhibitors.png")
         else:
-            # VISITORS - Day-specific invitations
-            # DAY 1 (25 Nov)
-            if entry.exhibition_day1:
-                inv_file = invitation_dir / "Inv-25.png"
-                if inv_file.exists():
-                    attachments.append(inv_file)
+            # VISITORS - Day and session-specific invitations
 
-            # DAY 2 (26 Nov) - PRIORITY ORDER (only ONE invitation for the day)
+            # DAY 1 (25 Nov) - Morning or Afternoon
+            if entry.exhibition_day1 or entry.plenary:
+                if entry.exhibition_day1:
+                    # Morning arrival (0930 Hrs) - covers Exhibition AM + Plenary PM if both selected
+                    inv_file = invitation_dir / "Inv-25.png"
+                    if inv_file.exists():
+                        attachments.append(inv_file)
+                        print(f"   📨 Added invitation: Inv-25.png (Day 1 morning)")
+                elif entry.plenary:
+                    # Afternoon arrival ONLY (1430 Hrs) - Plenary session only
+                    inv_file = invitation_dir / "Inv-Plenary.png"
+                    if inv_file.exists():
+                        attachments.append(inv_file)
+                        print(f"   📨 Added invitation: Inv-Plenary.png (Day 1 afternoon)")
+
+            # DAY 2 (26 Nov) - PRIORITY ORDER (only ONE invitation for Day 2)
             if entry.interactive_sessions:
-                # Priority 1: Interactive Sessions
+                # Interactive Sessions (0930 Hrs) - covers Exhibition Day 2 access too
                 inv_file = invitation_dir / "Inv-Interactive.png"
                 if inv_file.exists():
                     attachments.append(inv_file)
-            elif entry.plenary:
-                # Priority 2: Plenary Session
-                inv_file = invitation_dir / "Inv-Plenary.png"
-                if inv_file.exists():
-                    attachments.append(inv_file)
+                    print(f"   📨 Added invitation: Inv-Interactive.png (Day 2 morning)")
             elif entry.exhibition_day2:
-                # Priority 3: Exhibition Day 2
+                # Exhibition Day 2 ONLY (1000 Hrs)
                 inv_file = invitation_dir / "Inv-26-Exhibition.png"
                 if inv_file.exists():
                     attachments.append(inv_file)
+                    print(f"   📨 Added invitation: Inv-26-Exhibition.png (Day 2 exhibition only)")
+
+        # =============================================
+        # EVENT FLOW LOGIC - Send only relevant schedules
+        # =============================================
+
+        # Skip Event Flows for exhibitors (they know the schedule)
+        if not entry.is_exhibitor:
+            # DAY 1 Event Flow - Send appropriate EF based on what user is attending
+            if entry.exhibition_day1 or entry.plenary:
+                if entry.exhibition_day1:
+                    # Complete Day 1 (AM Exhibition + PM Plenary)
+                    ef_file = ef_dir / "EF-25.png"
+                    if ef_file.exists():
+                        attachments.append(ef_file)
+                        print(f"   📅 Added Event Flow: EF-25.png (Day 1 complete)")
+                elif entry.plenary:
+                    # Plenary only (PM)
+                    ef_file = ef_dir / "EF-PM25.png"
+                    if ef_file.exists():
+                        attachments.append(ef_file)
+                        print(f"   📅 Added Event Flow: EF-PM25.png (Day 1 plenary only)")
+
+            # DAY 2 Event Flow - Send if user has ANY Day 2 access
+            if entry.exhibition_day2 or entry.interactive_sessions:
+                ef_file = ef_dir / "EF26.png"
+                if ef_file.exists():
+                    attachments.append(ef_file)
+                    print(f"   📅 Added Event Flow: EF26.png (Day 2)")
 
         return attachments
 
