@@ -497,16 +497,6 @@ Indian Navy | Innovation & Self-Reliance"""
 View change in programme of chief guest, the plenary session of 26 Nov 25 has been advanced to 1500 Hr on 25 Nov 25. All personnel are required to be seated by 1430 hr.
 
 {'='*60}
-UPDATED PLENARY SESSION SCHEDULE:
-{'='*60}
-
-🎤 PLENARY SESSION - NEW TIMING
-• Date: 25 November 2025 (Tuesday) [CHANGED FROM 26 NOV]
-• Time: 1500 - 1700 hrs
-• Venue: Zorawar Hall, Manekshaw Centre
-• IMPORTANT: Please be seated by 1430 hrs
-
-{'='*60}
 YOUR EXHIBITOR PASSES:
 {'='*60}
 
@@ -532,7 +522,7 @@ IMPORTANT REMINDERS:
 
 🎫 Bring your QR pass (printed or on mobile)
 🪪 Valid Government ID required
-👔 Formal dress code for Plenary Session
+👔 Formal dress code
 ⏰ Arrive early to avoid entry delays
 📱 Mobile phones on silent during sessions
 
