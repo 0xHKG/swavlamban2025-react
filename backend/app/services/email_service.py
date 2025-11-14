@@ -510,57 +510,41 @@ UPDATED PLENARY SESSION SCHEDULE:
 YOUR EXHIBITOR PASSES:
 {'='*60}
 
-Your exhibitor {pass_word} for Swavlamban 2025 {'has' if num_attendees == 1 else 'have'} been generated.
-
-{'='*60}
-EVENT DETAILS:
-{'='*60}
-
-• Dates: 25-26 November 2025
-• Time: Day 1: 0930-1730 hrs | Day 2: 1000-1730 hrs
+🏛️ EXHIBITION PASS (Both Days)
+• Day 1: 25 November 2025 (Tuesday) - 1000-1700 hrs
+• Day 2: 26 November 2025 (Wednesday) - 1000-1600 hrs
 • Venue: Exhibition Hall, Manekshaw Centre
-• Note: Please arrive by 0930 hrs on Day 1 for inauguration at 1000 hrs
 
-{'='*60}
 STALL SETUP:
-{'='*60}
-
-• Venue will be available for stall setup on AM 24 Nov 25
-• Dimensions of stalls: 3m X 2.5m
-
-{'='*60}
-EXHIBITOR ACCESS:
-{'='*60}
-
-• Full access to Exhibition Hall on both days
-• Booth setup and operations
-• Industry interactions
+• Venue available for stall setup on AM 24 Nov 25
+• Dimensions: 3m X 2.5m
 
 {'='*60}
 ATTACHMENTS:
 {'='*60}
 
-✅ Event {pass_word.title()} with QR Code (for entry gate scanning){f"{chr(10)}✅ Invitation Card" if has_invitation else ""}
+✅ Your Exhibitor Passes (with QR codes)
+✅ Invitation Cards
 
 {'='*60}
-IMPORTANT INFORMATION:
+IMPORTANT REMINDERS:
 {'='*60}
 
-• PRINT or SHOW the QR code {pass_word} at entry gates
-• Valid Aadhar Card required for entry
-• Security clearance mandatory for all attendees
+🎫 Bring your QR pass (printed or on mobile)
+🪪 Valid Government ID required
+👔 Formal dress code for Plenary Session
+⏰ Arrive early to avoid entry delays
+📱 Mobile phones on silent during sessions
 
-📍 VENUE LOCATION & NAVIGATION:
-Manekshaw Centre
-Address: H4QW+2MW, Khyber Lines, Delhi Cantonment, New Delhi, Delhi 110010
-🗺️ Open in Google Maps: https://www.google.com/maps/dir/?api=1&destination=28.586103304500742,77.14529897550334
+{'='*60}
+CONTACT SUPPORT:
+{'='*60}
 
-📲 EVENT INFORMATION:
-For complete event details, visit https://swavlamban2025-info.streamlit.app
+📞 Phone: 011-26771528
+📧 Email: niio-tdac@navy.gov.in
+🕐 Hours: 0900-1730 hrs (Mon-Fri)
 
-For support or queries, contact:
-📞 011-26771528
-📧 niio-tdac@navy.gov.in
+We apologize for any inconvenience caused by this schedule change.
 
 Best regards,
 Team Swavlamban 2025
