@@ -177,10 +177,11 @@ Valid for entry on specified date and session only."""
         print(f"   - interactive_sessions: {entry.interactive_sessions}")
         print(f"   - plenary: {entry.plenary}")
 
-        # Check if exhibitor (both exhibition days) - gets combined pass
+        # Check if exhibitor (both exhibition days) - gets combined pass ONLY
         if entry.is_exhibitor:
             print(f"   ✅ Adding exhibition_both_days pass (Exhibitor)")
             passes.append(("exhibition_both_days", self.PASS_TEMPLATES["exhibition_both_days_exhibitor"]))
+            # Exhibitors ONLY get exhibition passes - no interactive/plenary
         else:
             # Visitor - gets separate passes for each day
             if entry.exhibition_day1:
@@ -190,15 +191,15 @@ Valid for entry on specified date and session only."""
                 print(f"   ✅ Adding exhibition_day2 pass")
                 passes.append(("exhibition_day2", self.PASS_TEMPLATES["exhibition_day2_visitor"]))
 
-        # Interactive sessions
-        if entry.interactive_sessions:
-            print(f"   ✅ Adding interactive_sessions pass")
-            passes.append(("interactive_sessions", self.PASS_TEMPLATES["interactive_sessions"]))
+            # Interactive sessions (VISITORS ONLY)
+            if entry.interactive_sessions:
+                print(f"   ✅ Adding interactive_sessions pass")
+                passes.append(("interactive_sessions", self.PASS_TEMPLATES["interactive_sessions"]))
 
-        # Plenary session
-        if entry.plenary:
-            print(f"   ✅ Adding plenary pass")
-            passes.append(("plenary", self.PASS_TEMPLATES["plenary"]))
+            # Plenary session (VISITORS ONLY)
+            if entry.plenary:
+                print(f"   ✅ Adding plenary pass")
+                passes.append(("plenary", self.PASS_TEMPLATES["plenary"]))
 
         print(f"   📊 Total passes to generate: {len(passes)}")
         return passes
