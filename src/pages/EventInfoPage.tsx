@@ -670,29 +670,6 @@ export default function EventInfoPage() {
 
             <Divider style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '24px 0' }} />
 
-            {/* Interactive Sessions Guidelines */}
-            <Title level={5} style={{ color: '#e2e8f0', marginBottom: 16 }}>
-              🎤 Interactive Sessions Guidelines (Zorawar Hall)
-            </Title>
-            <Paragraph style={{ color: '#94a3b8', marginBottom: 16 }}>
-              Please follow these guidelines during Interactive Sessions in Zorawar Hall.
-            </Paragraph>
-            <div style={{ textAlign: 'center', marginBottom: 32 }}>
-              <img
-                src="/DND/DND_Interactive.png"
-                alt="Interactive Sessions Guidelines - DOs and DONTs"
-                style={{
-                  width: '100%',
-                  maxWidth: '800px',
-                  borderRadius: 12,
-                  border: '1px solid rgba(240, 147, 251, 0.3)',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-                }}
-              />
-            </div>
-
-            <Divider style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '24px 0' }} />
-
             {/* Plenary Session Guidelines */}
             <Title level={5} style={{ color: '#e2e8f0', marginBottom: 16 }}>
               🏛️ Plenary Session Guidelines (Zorawar Hall)
@@ -709,6 +686,29 @@ export default function EventInfoPage() {
                   maxWidth: '800px',
                   borderRadius: 12,
                   border: '1px solid rgba(67, 233, 123, 0.3)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
+              />
+            </div>
+
+            <Divider style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '24px 0' }} />
+
+            {/* Interactive Sessions Guidelines */}
+            <Title level={5} style={{ color: '#e2e8f0', marginBottom: 16 }}>
+              🎤 Interactive Sessions Guidelines (Zorawar Hall)
+            </Title>
+            <Paragraph style={{ color: '#94a3b8', marginBottom: 16 }}>
+              Please follow these guidelines during Interactive Sessions in Zorawar Hall.
+            </Paragraph>
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <img
+                src="/DND/DND_Interactive.png"
+                alt="Interactive Sessions Guidelines - DOs and DONTs"
+                style={{
+                  width: '100%',
+                  maxWidth: '800px',
+                  borderRadius: 12,
+                  border: '1px solid rgba(240, 147, 251, 0.3)',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                 }}
               />
@@ -923,8 +923,8 @@ export default function EventInfoPage() {
                       <strong style={{ color: '#e2e8f0' }}>Timings:</strong>
                       <ul style={{ marginLeft: 20, marginTop: 4 }}>
                         <li>Day 1: 1000-1700 hrs (Exhibition + Plenary)</li>
-                        <li>Day 2: 0930-1600 hrs (Interactive Sessions + Exhibition)</li>
-                        <li>Be seated by 0945 hrs (Interactive) / 1430 hrs (Plenary)</li>
+                        <li>Day 2: 0930-1600 hrs (Exhibition + Interactive Sessions)</li>
+                        <li>Be seated by 1430 hrs (Plenary) / 0945 hrs (Interactive)</li>
                       </ul>
                     </div>
                     <div>
