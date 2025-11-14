@@ -66,6 +66,12 @@ Indian Navy | Innovation & Self-Reliance"""
             "subject": "Swavlamban 2025 - Exhibitor Passes (25-26 November)",
             "body": """Dear {name},
 
+IMPORTANT SCHEDULE UPDATE
+
+View change in programme of chief guest, the plenary session of 26 Nov 25 has been advanced to 1500 Hr on 25 Nov 25. All personnel are required to be seated by 1430 hr.
+
+{'='*60}
+
 Your exhibitor passes for Swavlamban 2025 have been generated.
 
 EVENT DETAILS:
