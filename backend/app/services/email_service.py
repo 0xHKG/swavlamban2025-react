@@ -267,18 +267,18 @@ Indian Navy | Innovation & Self-Reliance"""
 - Access: Exhibition viewing, Industry booths
 """)
 
-        if "interactive_sessions" in pass_types_detected:
-            pass_details.append("""💡 INTERACTIVE SESSIONS (26 November 2025)
-- Session I: Future & Emerging Technologies (1030-1130 hrs)
-- Session II: Boosting iDEX Ecosystem (1200-1330 hrs)
-- Venue: Zorawar Hall, Manekshaw Centre
-""")
-
         if "plenary" in pass_types_detected:
             pass_details.append("""🎤 PLENARY SESSION (25 November 2025)
 - Time: 1500 - 1700 hrs
 - Venue: Zorawar Hall, Manekshaw Centre
 - Highlights: Chief Guest Address, Book/MoU Releases
+""")
+
+        if "interactive_sessions" in pass_types_detected:
+            pass_details.append("""💡 INTERACTIVE SESSIONS (26 November 2025)
+- Session I: Future & Emerging Technologies (1030-1130 hrs)
+- Session II: Boosting iDEX Ecosystem (1200-1330 hrs)
+- Venue: Zorawar Hall, Manekshaw Centre
 """)
 
         # Check if user has Plenary but NOT Exhibition Day 1
@@ -488,9 +488,27 @@ Indian Navy | Innovation & Self-Reliance"""
         formatted_name = recipient_name.title()
 
         # Create exhibitor-specific email
-        subject = f"Swavlamban 2025 - Exhibitor {pass_word.title()} (25-26 November)"
+        subject = f"IMPORTANT: Schedule Change - Swavlamban 2025 Exhibitor {pass_word.title()}"
 
         body = f"""Dear {formatted_name},
+
+⚠️  IMPORTANT SCHEDULE UPDATE ⚠️
+
+View change in programme of chief guest, the plenary session of 26 Nov 25 has been advanced to 1500 Hr on 25 Nov 25. All personnel are required to be seated by 1430 hr.
+
+{'='*60}
+UPDATED PLENARY SESSION SCHEDULE:
+{'='*60}
+
+🎤 PLENARY SESSION - NEW TIMING
+• Date: 25 November 2025 (Tuesday) [CHANGED FROM 26 NOV]
+• Time: 1500 - 1700 hrs
+• Venue: Zorawar Hall, Manekshaw Centre
+• IMPORTANT: Please be seated by 1430 hrs
+
+{'='*60}
+YOUR EXHIBITOR PASSES:
+{'='*60}
 
 Your exhibitor {pass_word} for Swavlamban 2025 {'has' if num_attendees == 1 else 'have'} been generated.
 
