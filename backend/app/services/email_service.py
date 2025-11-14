@@ -21,8 +21,8 @@ class EmailService:
 Your exhibition pass for Swavlamban 2025 - Day 1 has been generated.
 
 EVENT DETAILS:
-- Date: 25 November 2025 (Monday)
-- Time: 1100 - 1730 hrs
+- Date: 25 November 2025 (Tuesday)
+- Time: 1000 - 1700 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 ACCESS:
@@ -45,8 +45,8 @@ Indian Navy | Innovation & Self-Reliance"""
 Your exhibition pass for Swavlamban 2025 - Day 2 has been generated.
 
 EVENT DETAILS:
-- Date: 26 November 2025 (Tuesday)
-- Time: 1000 - 1730 hrs
+- Date: 26 November 2025 (Wednesday)
+- Time: 1000 - 1600 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 ACCESS:
@@ -69,8 +69,8 @@ Indian Navy | Innovation & Self-Reliance"""
 Your exhibitor passes for Swavlamban 2025 have been generated.
 
 EVENT DETAILS:
-- Dates: 25-26 November 2025
-- Time: Day 1: 1100-1730 hrs | Day 2: 1000-1730 hrs
+- Dates: 25-26 November 2025 (Tuesday-Wednesday)
+- Time: Day 1: 1000-1700 hrs | Day 2: 1000-1600 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 STALL SETUP:
@@ -91,21 +91,21 @@ Team Swavlamban 2025
 Indian Navy | Innovation & Self-Reliance"""
         },
         "interactive_sessions": {
-            "subject": "Swavlamban 2025 - Panel Discussions Pass (26 November)",
+            "subject": "Swavlamban 2025 - Interactive Sessions Pass (26 November)",
             "body": """Dear {name},
 
-Your pass for Panel Discussions at Swavlamban 2025 has been generated.
+Your pass for Interactive Sessions at Swavlamban 2025 has been generated.
 
 SESSIONS:
-• Panel Discussion I: Future & Emerging Technologies (1030-1130 hrs)
-• Panel Discussion II: Boosting iDEX Ecosystem (1200-1330 hrs)
+• Interactive Session I: Future & Emerging Technologies (1030-1130 hrs)
+• Interactive Session II: Boosting iDEX Ecosystem (1200-1330 hrs)
 
 EVENT DETAILS:
-- Date: 26 November 2025 (Tuesday)
+- Date: 26 November 2025 (Wednesday)
 - Venue: Zorawar Hall, Manekshaw Centre
 
 IMPORTANT:
-• Please arrive by 1020 hrs for Panel I
+• Please be seated by 0945 hrs
 • Seating is limited
 • Late entry may not be permitted
 
@@ -118,14 +118,14 @@ Team Swavlamban 2025
 Indian Navy | Innovation & Self-Reliance"""
         },
         "plenary": {
-            "subject": "Swavlamban 2025 - Plenary Session Pass (26 November)",
+            "subject": "Swavlamban 2025 - Plenary Session Pass (25 November)",
             "body": """Dear {name},
 
 Your pass for the Plenary Session at Swavlamban 2025 has been generated.
 
 SESSION DETAILS:
-- Date: 26 November 2025 (Tuesday)
-- Time: 1530 - 1615 hrs
+- Date: 25 November 2025 (Tuesday)
+- Time: 1500 - 1700 hrs
 - Venue: Zorawar Hall, Manekshaw Centre
 
 HIGHLIGHTS:
@@ -135,7 +135,7 @@ HIGHLIGHTS:
 • Discussions on 'Innovation & Self-reliance'
 
 SPECIAL NOTES:
-• Please be seated by 1620 hrs
+• Please be seated by 1430 hrs
 • Formal dress code mandatory
 • Security clearance required
 
@@ -275,23 +275,32 @@ Indian Navy | Innovation & Self-Reliance"""
 """)
 
         if "plenary" in pass_types_detected:
-            pass_details.append("""🎤 PLENARY SESSION (26 November 2025)
-- Time: 1530 - 1615 hrs
+            pass_details.append("""🎤 PLENARY SESSION (25 November 2025)
+- Time: 1500 - 1700 hrs
 - Venue: Zorawar Hall, Manekshaw Centre
 - Highlights: Chief Guest Address, Book/MoU Releases
 """)
 
-        # Check if user has Interactive or Plenary but NOT Exhibition Day 2
-        # Add special note about Exhibition Day 2 access
-        has_interactive_or_plenary = ("interactive_sessions" in pass_types_detected or
-                                      "plenary" in pass_types_detected)
+        # Check if user has Plenary but NOT Exhibition Day 1
+        # Add special note about Exhibition Day 1 access
+        has_plenary = "plenary" in pass_types_detected
+        has_exhibition_day1 = "exhibition_day1" in pass_types_detected
+
+        # Check if user has Interactive but NOT Exhibition Day 2
+        has_interactive = "interactive_sessions" in pass_types_detected
         has_exhibition_day2 = "exhibition_day2" in pass_types_detected
 
-        exhibition_day2_bonus_note = ""
-        if has_interactive_or_plenary and not has_exhibition_day2:
-            exhibition_day2_bonus_note = """
+        exhibition_bonus_note = ""
+        if has_plenary and not has_exhibition_day1:
+            exhibition_bonus_note += """
+📝 BONUS ACCESS - EXHIBITION DAY 1:
+Your Plenary pass also grants you access to the Exhibition Hall on 25 November 2025 (1000-1700 hrs). Feel free to explore the industry booths and innovation displays!
+
+"""
+        if has_interactive and not has_exhibition_day2:
+            exhibition_bonus_note += """
 📝 BONUS ACCESS - EXHIBITION DAY 2:
-Your Interactive/Plenary pass also grants you access to the Exhibition Hall on 26 November 2025 (1000-1730 hrs). Feel free to explore the industry booths and innovation displays!
+Your Interactive Sessions pass also grants you access to the Exhibition Hall on 26 November 2025 (1000-1600 hrs). Feel free to explore the industry booths and innovation displays!
 
 """
 
@@ -308,7 +317,7 @@ YOUR {'PASS' if pass_count == 1 else 'PASSES'}:
 {'='*60}
 
 {chr(10).join(pass_details)}
-{exhibition_day2_bonus_note}{'='*60}
+{exhibition_bonus_note}{'='*60}
 ATTACHMENTS:
 {'='*60}
 
