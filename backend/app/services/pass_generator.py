@@ -63,9 +63,9 @@ class PassGenerator:
             "venue": "Zorawar Hall, Manekshaw Centre"
         },
         "plenary": {
-            "name": "Plenary Session - 26 Nov",
-            "date": "2025-11-26",
-            "time_start": "1530",
+            "name": "Plenary Session - 25 Nov",
+            "date": "2025-11-25",
+            "time_start": "1500",
             "time_end": "1615",
             "venue": "Zorawar Hall, Manekshaw Centre"
         }
