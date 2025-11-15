@@ -497,8 +497,8 @@ YOUR EXHIBITOR PASSES:
 {'='*60}
 
 🏛️ EXHIBITOR PASS (Both Days)
-• Day 1: 25 November 2025 (Tuesday) - 1000-1700 hrs
-• Day 2: 26 November 2025 (Wednesday) - 1000-1600 hrs
+• Day 1: 25 November 2025 (Tuesday) - 1000-1730 hrs
+• Day 2: 26 November 2025 (Wednesday) - 1000-1730 hrs
 • Venue: Exhibition Hall, Manekshaw Centre
 
 STALL SETUP:
