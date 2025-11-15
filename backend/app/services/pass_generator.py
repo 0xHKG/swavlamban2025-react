@@ -31,28 +31,28 @@ class PassGenerator:
             "name": "Exhibition - 25 Nov",
             "date": "2025-11-25",
             "time_start": "1000",
-            "time_end": "1700",
+            "time_end": "1730",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_day2": {
             "name": "Exhibition - 26 Nov",
             "date": "2025-11-26",
             "time_start": "1000",
-            "time_end": "1600",
+            "time_end": "1730",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_both_days": {
             "name": "Exhibition - 25 & 26 Nov",
             "date": "2025-11-25 to 2025-11-26",
             "time_start": "1000",
-            "time_end": "1700",
+            "time_end": "1730",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_both_days_exhibitor": {
             "name": "Exhibition - 25 & 26 Nov",
             "date": "2025-11-25 to 2025-11-26",
             "time_start": "1000",
-            "time_end": "1600",
+            "time_end": "1730",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "interactive_sessions": {
