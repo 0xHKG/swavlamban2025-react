@@ -164,19 +164,29 @@ export default function GeneratePassesPage() {
       setBulkProgress({ current: 0, total });
       const startTime = Date.now();
 
-      for (let i = 0; i < selectedEntries.length; i++) {
-        const entry = selectedEntries[i];
-        const elapsed = (Date.now() - startTime) / 1000;
-        const avgTime = i > 0 ? elapsed / (i + 1) : 10;
-        const remaining = (total - (i + 1)) * avgTime;
+      // Send all requests without awaiting - let them run in parallel in the background
+      const promises = selectedEntries.map((entry, i) => {
+        return apiService.generatePasses(entry.id, true)
+          .then(() => {
+            // Update progress as each request completes
+            const elapsed = (Date.now() - startTime) / 1000;
+            const completed = i + 1;
+            const avgTime = elapsed / completed;
+            const remaining = (total - completed) * avgTime;
 
-        setBulkProgress({ current: i + 1, total });
-        setBulkStats({ elapsed, avgTime, remaining });
+            setBulkProgress(prev => ({ ...prev, current: completed }));
+            setBulkStats({ elapsed, avgTime, remaining });
+          })
+          .catch((error) => {
+            console.error(`Failed to send email to ${entry.email}:`, error);
+            // Continue with other emails even if one fails
+          });
+      });
 
-        await apiService.generatePasses(entry.id, true);
-      }
+      // Wait for all to complete
+      await Promise.all(promises);
 
-      message.success(`✅ Sent emails to ${total} attendees!`, 10);
+      message.success(`✅ Bulk email process initiated for ${total} attendees! Emails are being sent in the background.`, 10);
       setSelectedBulkIds([]);
       setBulkProgress({ current: 0, total: 0 });
       loadEntries();
