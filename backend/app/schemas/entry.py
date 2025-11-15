@@ -62,6 +62,19 @@ class EntryUpdate(BaseModel):
     # Exhibitor flag
     is_exhibitor_pass: Optional[bool] = None
 
+    @field_validator('phone')
+    @classmethod
+    def validate_phone(cls, v):
+        if v is None:
+            return v
+        # Remove spaces and dashes
+        cleaned = v.replace(' ', '').replace('-', '').replace('+', '')
+        if not cleaned.isdigit():
+            raise ValueError("Phone must contain only digits, spaces, dashes, or + sign")
+        if len(cleaned) < 10:
+            raise ValueError("Phone must have at least 10 digits")
+        return v
+
     @field_validator('id_type')
     @classmethod
     def validate_id_type(cls, v):
