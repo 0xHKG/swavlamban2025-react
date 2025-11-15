@@ -488,19 +488,15 @@ Indian Navy | Innovation & Self-Reliance"""
         formatted_name = recipient_name.title()
 
         # Create exhibitor-specific email
-        subject = f"IMPORTANT: Schedule Change - Swavlamban 2025 Exhibitor {pass_word.title()}"
+        subject = f"Your Exhibitor {pass_word.title()} for Swavlamban 2025"
 
         body = f"""Dear {formatted_name},
-
-⚠️  IMPORTANT SCHEDULE UPDATE ⚠️
-
-View change in programme of chief guest, the plenary session of 26 Nov 25 has been advanced to 1500 Hr on 25 Nov 25. All personnel are required to be seated by 1430 hr.
 
 {'='*60}
 YOUR EXHIBITOR PASSES:
 {'='*60}
 
-🏛️ EXHIBITION PASS (Both Days)
+🏛️ EXHIBITOR PASS (Both Days)
 • Day 1: 25 November 2025 (Tuesday) - 1000-1700 hrs
 • Day 2: 26 November 2025 (Wednesday) - 1000-1600 hrs
 • Venue: Exhibition Hall, Manekshaw Centre
@@ -524,7 +520,6 @@ IMPORTANT REMINDERS:
 🪪 Valid Government ID required
 👔 Formal dress code
 ⏰ Arrive early to avoid entry delays
-📱 Mobile phones on silent during sessions
 
 {'='*60}
 CONTACT SUPPORT:
@@ -533,8 +528,6 @@ CONTACT SUPPORT:
 📞 Phone: 011-26771528
 📧 Email: niio-tdac@navy.gov.in
 🕐 Hours: 0900-1730 hrs (Mon-Fri)
-
-We apologize for any inconvenience caused by this schedule change.
 
 Best regards,
 Team Swavlamban 2025
