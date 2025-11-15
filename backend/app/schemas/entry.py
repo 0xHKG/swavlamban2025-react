@@ -27,7 +27,8 @@ class EntryCreate(BaseModel):
     @field_validator('id_type')
     @classmethod
     def validate_id_type(cls, v):
-        allowed_types = ['Aadhar Card', 'PAN', 'Passport', 'Driving License', 'Voter ID']
+        # Accept both variations: 'Aadhaar' (CSV template) and 'Aadhar Card' (database)
+        allowed_types = ['Aadhaar', 'Aadhar Card', 'PAN', 'Passport', 'Driving License', 'Voter ID']
         if v not in allowed_types:
             raise ValueError(f"ID type must be one of {allowed_types}")
         return v
@@ -67,7 +68,8 @@ class EntryUpdate(BaseModel):
     def validate_id_type(cls, v):
         if v is None:
             return v
-        allowed_types = ['Aadhar Card', 'PAN', 'Passport', 'Driving License', 'Voter ID']
+        # Accept both variations: 'Aadhaar' (CSV template) and 'Aadhar Card' (database)
+        allowed_types = ['Aadhaar', 'Aadhar Card', 'PAN', 'Passport', 'Driving License', 'Voter ID']
         if v not in allowed_types:
             raise ValueError(f"ID type must be one of {allowed_types}")
         return v
