@@ -160,29 +160,21 @@ export default function GeneratePassesPage() {
     const selectedEntries = entries.filter((e) => selectedBulkIds.includes(e.id));
     const total = selectedEntries.length;
 
-    try {
-      setBulkProgress({ current: 0, total });
-      const startTime = Date.now();
+    // Fire-and-forget: Send all API calls without waiting
+    // Emails will continue sending in background even if UI closes
+    selectedEntries.forEach((entry) => {
+      apiService.generatePasses(entry.id, true).catch((error) => {
+        console.error(`Failed to send email to ${entry.email}:`, error);
+      });
+    });
 
-      for (let i = 0; i < selectedEntries.length; i++) {
-        const entry = selectedEntries[i];
-        const elapsed = (Date.now() - startTime) / 1000;
-        const avgTime = i > 0 ? elapsed / (i + 1) : 10;
-        const remaining = (total - (i + 1)) * avgTime;
-
-        setBulkProgress({ current: i + 1, total });
-        setBulkStats({ elapsed, avgTime, remaining });
-
-        await apiService.generatePasses(entry.id, true);
-      }
-
-      message.success(`✅ Sent emails to ${total} attendees!`, 10);
-      setSelectedBulkIds([]);
-      setBulkProgress({ current: 0, total: 0 });
-      loadEntries();
-    } catch (error) {
-      message.error('Failed to send bulk emails');
-    }
+    // Show immediate success - emails continue in background
+    message.success(
+      `✅ Started sending emails to ${total} attendees! Emails will continue sending in the background. You can close this page.`,
+      10
+    );
+    setSelectedBulkIds([]);
+    setBulkProgress({ current: 0, total: 0 });
   };
 
   const filteredEntries = entries.filter((entry) => {
