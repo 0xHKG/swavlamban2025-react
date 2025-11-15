@@ -22,7 +22,7 @@ Your exhibition pass for Swavlamban 2025 - Day 1 has been generated.
 
 EVENT DETAILS:
 - Date: 25 November 2025 (Tuesday)
-- Time: 1000 - 1700 hrs
+- Time: 1100 - 1730 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 ACCESS:
@@ -46,7 +46,7 @@ Your exhibition pass for Swavlamban 2025 - Day 2 has been generated.
 
 EVENT DETAILS:
 - Date: 26 November 2025 (Wednesday)
-- Time: 1000 - 1600 hrs
+- Time: 1000 - 1730 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 ACCESS:
@@ -70,7 +70,7 @@ Your exhibitor passes for Swavlamban 2025 have been generated.
 
 EVENT DETAILS:
 - Dates: 25-26 November 2025 (Tuesday-Wednesday)
-- Time: Day 1: 1000-1700 hrs | Day 2: 1000-1600 hrs
+- Time: Day 1: 1000-1730 hrs | Day 2: 1000-1730 hrs
 - Venue: Exhibition Hall, Manekshaw Centre
 
 STALL SETUP:
@@ -294,13 +294,13 @@ Indian Navy | Innovation & Self-Reliance"""
         if has_plenary and not has_exhibition_day1:
             exhibition_bonus_note += """
 📝 BONUS ACCESS - EXHIBITION DAY 1:
-Your Plenary pass also grants you access to the Exhibition Hall on 25 November 2025 (1000-1700 hrs). Feel free to explore the industry booths and innovation displays!
+Your Plenary pass also grants you access to the Exhibition Hall on 25 November 2025 (1430-1730 hrs). Feel free to explore the industry booths and innovation displays!
 
 """
         if has_interactive and not has_exhibition_day2:
             exhibition_bonus_note += """
 📝 BONUS ACCESS - EXHIBITION DAY 2:
-Your Interactive Sessions pass also grants you access to the Exhibition Hall on 26 November 2025 (1000-1600 hrs). Feel free to explore the industry booths and innovation displays!
+Your Interactive Sessions pass also grants you access to the Exhibition Hall on 26 November 2025 (1000-1730 hrs). Feel free to explore the industry booths and innovation displays!
 
 """
 
