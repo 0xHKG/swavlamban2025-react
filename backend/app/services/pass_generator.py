@@ -30,29 +30,29 @@ class PassGenerator:
         "exhibition_day1": {
             "name": "Exhibition - 25 Nov",
             "date": "2025-11-25",
-            "time_start": "1100",
-            "time_end": "1730",
+            "time_start": "1000",
+            "time_end": "1700",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_day2": {
             "name": "Exhibition - 26 Nov",
             "date": "2025-11-26",
             "time_start": "1000",
-            "time_end": "1730",
+            "time_end": "1600",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_both_days": {
             "name": "Exhibition - 25 & 26 Nov",
             "date": "2025-11-25 to 2025-11-26",
-            "time_start": "0930",
-            "time_end": "1730",
+            "time_start": "1000",
+            "time_end": "1700",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "exhibition_both_days_exhibitor": {
             "name": "Exhibition - 25 & 26 Nov",
             "date": "2025-11-25 to 2025-11-26",
-            "time_start": "0930",
-            "time_end": "1730",
+            "time_start": "1000",
+            "time_end": "1600",
             "venue": "Exhibition Hall, Manekshaw Centre"
         },
         "interactive_sessions": {
@@ -66,7 +66,7 @@ class PassGenerator:
             "name": "Plenary Session - 25 Nov",
             "date": "2025-11-25",
             "time_start": "1500",
-            "time_end": "1615",
+            "time_end": "1700",
             "venue": "Zorawar Hall, Manekshaw Centre"
         }
     }
