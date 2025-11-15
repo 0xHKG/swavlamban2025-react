@@ -67,7 +67,7 @@ class EntryUpdate(BaseModel):
     def validate_id_type(cls, v):
         if v is None:
             return v
-        allowed_types = ['Aadhaar', 'PAN', 'Passport', 'Driving License', 'Voter ID']
+        allowed_types = ['Aadhar Card', 'PAN', 'Passport', 'Driving License', 'Voter ID']
         if v not in allowed_types:
             raise ValueError(f"ID type must be one of {allowed_types}")
         return v
