@@ -47,10 +47,10 @@ class EntryCreate(BaseModel):
 class EntryUpdate(BaseModel):
     """Schema for updating an existing entry"""
     name: Optional[str] = Field(None, min_length=2, max_length=255)
-    phone: Optional[str] = Field(None, min_length=10, max_length=20)
+    phone: Optional[str] = None
     email: Optional[EmailStr] = None
     id_type: Optional[str] = None
-    id_number: Optional[str] = Field(None, min_length=5, max_length=100)
+    id_number: Optional[str] = None
     photo_url: Optional[str] = None
 
     # Pass selections (4 types)
