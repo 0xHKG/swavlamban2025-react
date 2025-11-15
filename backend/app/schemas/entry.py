@@ -49,8 +49,10 @@ class EntryUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=2, max_length=255)
     phone: Optional[str] = Field(None, min_length=10, max_length=20)
     email: Optional[EmailStr] = None
+    id_type: Optional[str] = None
+    id_number: Optional[str] = Field(None, min_length=5, max_length=100)
     photo_url: Optional[str] = None
-    
+
     # Pass selections (4 types)
     exhibition_day1: Optional[bool] = None
     exhibition_day2: Optional[bool] = None
@@ -59,6 +61,16 @@ class EntryUpdate(BaseModel):
 
     # Exhibitor flag
     is_exhibitor_pass: Optional[bool] = None
+
+    @field_validator('id_type')
+    @classmethod
+    def validate_id_type(cls, v):
+        if v is None:
+            return v
+        allowed_types = ['Aadhaar', 'PAN', 'Passport', 'Driving License', 'Voter ID']
+        if v not in allowed_types:
+            raise ValueError(f"ID type must be one of {allowed_types}")
+        return v
 
 
 class EntryResponse(BaseModel):
