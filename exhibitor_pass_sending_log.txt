@@ -1,0 +1,794 @@
+⚠️ Streamlit secrets not available: No secrets found. Valid paths for a secrets.toml file or secret directories are: /home/gogi/.streamlit/secrets.toml, /home/gogi/Desktop/swavlamban2025-react/.streamlit/secrets.toml
+Using .env configuration
+🗄️  Using PostgreSQL database: aws-1-ap-south-1.pooler.supabase.com
+================================================================================
+SEND EXHIBITOR PASSES TO ALL REGISTERED EXHIBITORS
+================================================================================
+
+🔐 Step 1: Logging in as admin...
+✅ Login successful!
+
+📊 Step 2: Getting all exhibitors from database...
+2025-11-14 23:37:13,576 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2025-11-14 23:37:13,576 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-11-14 23:37:13,633 INFO sqlalchemy.engine.Engine select current_schema()
+2025-11-14 23:37:13,633 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-11-14 23:37:13,693 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2025-11-14 23:37:13,693 INFO sqlalchemy.engine.Engine [raw sql] {}
+2025-11-14 23:37:13,750 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-11-14 23:37:13,753 INFO sqlalchemy.engine.Engine SELECT entries.id AS entries_id, entries.username AS entries_username, entries.name AS entries_name, entries.phone AS entries_phone, entries.email AS entries_email, entries.id_type AS entries_id_type, entries.id_number AS entries_id_number, entries.photo_url AS entries_photo_url, entries.exhibition_day1 AS entries_exhibition_day1, entries.exhibition_day2 AS entries_exhibition_day2, entries.interactive_sessions AS entries_interactive_sessions, entries.plenary AS entries_plenary, entries.is_exhibitor_pass AS entries_is_exhibitor_pass, entries.pass_generated_exhibition_day1 AS entries_pass_generated_exhibition_day1, entries.pass_generated_exhibition_day2 AS entries_pass_generated_exhibition_day2, entries.pass_generated_interactive_sessions AS entries_pass_generated_interactive_sessions, entries.pass_generated_plenary AS entries_pass_generated_plenary, entries.created_at AS entries_created_at, entries.updated_at AS entries_updated_at 
+FROM entries 
+WHERE entries.is_exhibitor_pass = true
+2025-11-14 23:37:13,753 INFO sqlalchemy.engine.Engine [generated in 0.00008s] {}
+✅ Found 151 exhibitors
+
+================================================================================
+📧 Step 3: Sending passes to 151 exhibitors...
+================================================================================
+
+[1/151] Processing: Pravin Mahendra Shendre
+   Email: mahesh.bhalavi@guardinger.in
+   ID: 89
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mahesh.bhalavi@guardinger.in
+
+[2/151] Processing: Prakharnandi Srivastava
+   Email: ashwinw@aethroneaerospace.com
+   ID: 81
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashwinw@aethroneaerospace.com
+
+[3/151] Processing: Ashwin Wankhede
+   Email: ashwinw@aethroneaerospace.com
+   ID: 80
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashwinw@aethroneaerospace.com
+
+[4/151] Processing: Mr. Rovin Sharma
+   Email: rovin.sharma@azistaindustries.com
+   ID: 76
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rovin.sharma@azistaindustries.com
+
+[5/151] Processing: Mr. Brig Adarsh Bharadwaj (Rtrd)
+   Email: rovin.sharma@azistaindustries.com
+   ID: 77
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rovin.sharma@azistaindustries.com
+
+[6/151] Processing: Debendra Pradhan
+   Email: debpradhan@coratia.com
+   ID: 86
+   ✅ Success! Generated 1 pass(es) successfully and email sent to debpradhan@coratia.com
+
+[7/151] Processing: Biswajit Swain
+   Email: debpradhan@coratia.com
+   ID: 87
+   ✅ Success! Generated 1 pass(es) successfully and email sent to debpradhan@coratia.com
+
+[8/151] Processing: Mrinal Tayal
+   Email: mrinaltayal@gmail.com
+   ID: 46
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mrinaltayal@gmail.com
+
+[9/151] Processing: Himanshu Bhusan
+   Email: mrinaltayal@gmail.com
+   ID: 47
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mrinaltayal@gmail.com
+
+[10/151] Processing: Manish Srivastava
+   Email: manish@pineautomation.com
+   ID: 44
+   ✅ Success! Generated 1 pass(es) successfully and email sent to manish@pineautomation.com
+
+[11/151] Processing: Ajay Bandhu Saksena
+   Email: manish@pineautomation.com
+   ID: 45
+   ✅ Success! Generated 1 pass(es) successfully and email sent to manish@pineautomation.com
+
+[12/151] Processing: Rahul Tayal
+   Email: rahultayal@whizbeetech.com
+   ID: 40
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rahultayal@whizbeetech.com
+
+[13/151] Processing: Gp Capt Manjit Singh Sidhu
+   Email: sonam.saroha@botlabdynamics.com
+   ID: 24
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sonam.saroha@botlabdynamics.com
+
+[14/151] Processing: Mr Nagendra Prasad Kumble
+   Email: sales@radometech.com
+   ID: 22
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sales@radometech.com
+
+[15/151] Processing: Rajesh Raveendran Nair
+   Email: sprashantme119@gmail.com
+   ID: 79
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sprashantme119@gmail.com
+
+[16/151] Processing: Arunkumar H R
+   Email: sprashantme119@gmail.com
+   ID: 78
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sprashantme119@gmail.com
+
+[17/151] Processing: Sonam Saroha
+   Email: sonam.saroha@botlabdynamics.com
+   ID: 25
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sonam.saroha@botlabdynamics.com
+
+[18/151] Processing: Mr Swathy Nair G S
+   Email: snair@callp.co.in
+   ID: 26
+   ✅ Success! Generated 1 pass(es) successfully and email sent to snair@callp.co.in
+
+[19/151] Processing: Arathi Sai Padma
+   Email: snair@callp.co.in
+   ID: 27
+   ✅ Success! Generated 1 pass(es) successfully and email sent to snair@callp.co.in
+
+[20/151] Processing: RAVINDRA METKAR
+   Email: team5@pujaseals.com
+   ID: 206
+   ✅ Success! Generated 1 pass(es) successfully and email sent to team5@pujaseals.com
+
+[21/151] Processing: Chandan Singh
+   Email: sales@radometech.com
+   ID: 23
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sales@radometech.com
+
+[22/151] Processing: Punit Badeka
+   Email: abhishekvardhan86@gmail.com
+   ID: 94
+   ✅ Success! Generated 1 pass(es) successfully and email sent to abhishekvardhan86@gmail.com
+
+[23/151] Processing: Sanjay Kumar
+   Email: punit@eonspacelabs.com
+   ID: 95
+   ✅ Success! Generated 1 pass(es) successfully and email sent to punit@eonspacelabs.com
+
+[24/151] Processing: Mahesh Chandrakant Bhalavi
+   Email: mahesh.bhalavi@guardinger.in
+   ID: 88
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mahesh.bhalavi@guardinger.in
+
+[25/151] Processing: Mr Anil Anand
+   Email: indrani.bhave@altair.in
+   ID: 28
+   ✅ Success! Generated 1 pass(es) successfully and email sent to indrani.bhave@altair.in
+
+[26/151] Processing: Capt Anshuman Chatterjee (Retd)
+   Email: indrani.bhave@altair.in
+   ID: 29
+   ✅ Success! Generated 1 pass(es) successfully and email sent to indrani.bhave@altair.in
+
+[27/151] Processing: Anupam Prasad
+   Email: idex@nitrodynamics.in
+   ID: 30
+   ✅ Success! Generated 1 pass(es) successfully and email sent to idex@nitrodynamics.in
+
+[28/151] Processing: Mr. Harsha Varthan
+   Email: admin@tractrix.in
+   ID: 65
+   ✅ Success! Generated 1 pass(es) successfully and email sent to admin@tractrix.in
+
+[29/151] Processing: Saurabh Ghule
+   Email: info@artemoninfra.com
+   ID: 66
+   ✅ Success! Generated 1 pass(es) successfully and email sent to info@artemoninfra.com
+
+[30/151] Processing: Cdr Sonal Saxena (Retd.)
+   Email: info@artemoninfra.com
+   ID: 67
+   ✅ Success! Generated 1 pass(es) successfully and email sent to info@artemoninfra.com
+
+[31/151] Processing: Sushil Ghule
+   Email: sushil@siliconiatech.com
+   ID: 68
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sushil@siliconiatech.com
+
+[32/151] Processing: Dr Prutha Kulkarni
+   Email: sushil@siliconiatech.com
+   ID: 69
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sushil@siliconiatech.com
+
+[33/151] Processing: Utkarsh Pachauri
+   Email: info@innovus-engineers.com
+   ID: 268
+   ✅ Success! Generated 1 pass(es) successfully and email sent to info@innovus-engineers.com
+
+[34/151] Processing: Sharad Jain
+   Email: info@innovus-engineers.com
+   ID: 267
+   ✅ Success! Generated 1 pass(es) successfully and email sent to info@innovus-engineers.com
+
+[35/151] Processing: ROSHAN PAWAR
+   Email: team5@pujaseals.com
+   ID: 266
+   ✅ Success! Generated 1 pass(es) successfully and email sent to team5@pujaseals.com
+
+[36/151] Processing: Ramu T. S.
+   Email: rahul.dubey@lekhawireless.com
+   ID: 265
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rahul.dubey@lekhawireless.com
+
+[37/151] Processing: Rahul Dubey
+   Email: rahul.dubey@lekhawireless.com
+   ID: 264
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rahul.dubey@lekhawireless.com
+
+[38/151] Processing: Dhruv Goyal
+   Email: ankush@technicafiber.com
+   ID: 308
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ankush@technicafiber.com
+
+[39/151] Processing: Manoj singh
+   Email: ankush@technicafiber.com
+   ID: 309
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ankush@technicafiber.com
+
+[40/151] Processing: Lt Cdr Pushpdeep Singh Gosal (Retd.)
+   Email: psgosal@crimsonenergy.in
+   ID: 310
+   ✅ Success! Generated 1 pass(es) successfully and email sent to psgosal@crimsonenergy.in
+
+[41/151] Processing: Steve Jacob Thomas
+   Email: psgosal@crimsonenergy.in
+   ID: 311
+   ✅ Success! Generated 1 pass(es) successfully and email sent to psgosal@crimsonenergy.in
+
+[42/151] Processing: Abhishek Singh
+   Email: abhishek.singh@qnulabs.com
+   ID: 312
+   ✅ Success! Generated 1 pass(es) successfully and email sent to abhishek.singh@qnulabs.com
+
+[43/151] Processing: Capt Sunil Sud (Retd)
+   Email: abhishek.singh@qnulabs.com
+   ID: 313
+   ✅ Success! Generated 1 pass(es) successfully and email sent to abhishek.singh@qnulabs.com
+
+[44/151] Processing: Anant Arun Bhalotia
+   Email: himanshi@anadrone.com
+   ID: 314
+   ✅ Success! Generated 1 pass(es) successfully and email sent to himanshi@anadrone.com
+
+[45/151] Processing: Himanshi Mehlawat
+   Email: himanshi@anadrone.com
+   ID: 315
+   ✅ Success! Generated 1 pass(es) successfully and email sent to himanshi@anadrone.com
+
+[46/151] Processing: Gouthami T S
+   Email: gouthami.ts@aquaairx.com
+   ID: 316
+   ✅ Success! Generated 1 pass(es) successfully and email sent to gouthami.ts@aquaairx.com
+
+[47/151] Processing: Jitendra Kumar Purnmal Saini
+   Email: gouthami.ts@aquaairx.com
+   ID: 317
+   ✅ Success! Generated 1 pass(es) successfully and email sent to gouthami.ts@aquaairx.com
+
+[48/151] Processing: KUMAR GAUTAM
+   Email: director@egreenquanta.com
+   ID: 318
+   ✅ Success! Generated 1 pass(es) successfully and email sent to director@egreenquanta.com
+
+[49/151] Processing: V Siddarth
+   Email: idex@nitrodynamics.in
+   ID: 31
+   ✅ Success! Generated 1 pass(es) successfully and email sent to idex@nitrodynamics.in
+
+[50/151] Processing: Sandeep Sharma
+   Email: sandeep@jangoo.us
+   ID: 18
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sandeep@jangoo.us
+
+[51/151] Processing: Munish Mahajan
+   Email: sandeep@jangoo.us
+   ID: 19
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sandeep@jangoo.us
+
+[52/151] Processing: Vinayak Tsalla
+   Email: vinayak@tsallaaerospace.com
+   ID: 20
+   ✅ Success! Generated 1 pass(es) successfully and email sent to vinayak@tsallaaerospace.com
+
+[53/151] Processing: Sharath Chandra GV
+   Email: vinayak@tsallaaerospace.com
+   ID: 21
+   ✅ Success! Generated 1 pass(es) successfully and email sent to vinayak@tsallaaerospace.com
+
+[54/151] Processing: KUMAR SHUBHAM
+   Email: director@egreenquanta.com
+   ID: 319
+   ✅ Success! Generated 1 pass(es) successfully and email sent to director@egreenquanta.com
+
+[55/151] Processing: M. Manohar Rao
+   Email: mr_as9100d@nucleonix.com
+   ID: 320
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mr_as9100d@nucleonix.com
+
+[56/151] Processing: Rekha Prasad
+   Email: project6@ancorlabs.org
+   ID: 32
+   ✅ Success! Generated 1 pass(es) successfully and email sent to project6@ancorlabs.org
+
+[57/151] Processing: Chitra Kadam
+   Email: project6@ancorlabs.org
+   ID: 33
+   ✅ Success! Generated 1 pass(es) successfully and email sent to project6@ancorlabs.org
+
+[58/151] Processing: Col. George Jacob
+   Email: george@nextdefence.com
+   ID: 34
+   ✅ Success! Generated 1 pass(es) successfully and email sent to george@nextdefence.com
+
+[59/151] Processing: Amrutha VL
+   Email: george@nextdefence.com
+   ID: 35
+   ✅ Success! Generated 1 pass(es) successfully and email sent to george@nextdefence.com
+
+[60/151] Processing: Bala Aditya
+   Email: mr_as9100d@nucleonix.com
+   ID: 321
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mr_as9100d@nucleonix.com
+
+[61/151] Processing: Vrinda Kapoor
+   Email: aakritis@3rditech.in
+   ID: 38
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aakritis@3rditech.in
+
+[62/151] Processing: Kushal Sakthivel
+   Email: marketing@chipspirit.com
+   ID: 322
+   ✅ Success! Generated 1 pass(es) successfully and email sent to marketing@chipspirit.com
+
+[63/151] Processing: Mohan Jindal
+   Email: marketing@chipspirit.com
+   ID: 323
+   ✅ Success! Generated 1 pass(es) successfully and email sent to marketing@chipspirit.com
+
+[64/151] Processing: Aditya Vikram Singh Bhadoria
+   Email: aditya.b@pinacagroup.com
+   ID: 324
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aditya.b@pinacagroup.com
+
+[65/151] Processing: Shubham Sinha
+   Email: aditya.b@pinacagroup.com
+   ID: 325
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aditya.b@pinacagroup.com
+
+[66/151] Processing: Abhishek Modi
+   Email: coordinator@swadeshi.io
+   ID: 326
+   ✅ Success! Generated 1 pass(es) successfully and email sent to coordinator@swadeshi.io
+
+[67/151] Processing: Vinayak Dalmia
+   Email: aakritis@3rditech.in
+   ID: 39
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aakritis@3rditech.in
+
+[68/151] Processing: Rishabh Sati
+   Email: rahultayal@whizbeetech.com
+   ID: 41
+   ✅ Success! Generated 1 pass(es) successfully and email sent to rahultayal@whizbeetech.com
+
+[69/151] Processing: Nitin Bhonge
+   Email: nitinbhonge@cyronics.com
+   ID: 42
+   ✅ Success! Generated 1 pass(es) successfully and email sent to nitinbhonge@cyronics.com
+
+[70/151] Processing: Anandhu Nair
+   Email: nitinbhonge@cyronics.com
+   ID: 43
+   ✅ Success! Generated 1 pass(es) successfully and email sent to nitinbhonge@cyronics.com
+
+[71/151] Processing: Falgun Doshi
+   Email: boks1401@gmail.com
+   ID: 82
+   ✅ Success! Generated 1 pass(es) successfully and email sent to boks1401@gmail.com
+
+[72/151] Processing: Maxwel Basil Raj
+   Email: admin@scytaleindia.com
+   ID: 50
+   ✅ Success! Generated 1 pass(es) successfully and email sent to admin@scytaleindia.com
+
+[73/151] Processing: Satyam Kushwaha
+   Email: admin@scytaleindia.com
+   ID: 51
+   ✅ Success! Generated 1 pass(es) successfully and email sent to admin@scytaleindia.com
+
+[74/151] Processing: Gaurav Rajani
+   Email: aprakash@breatheindia.net
+   ID: 52
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aprakash@breatheindia.net
+
+[75/151] Processing: Cdr. Amit Prakash
+   Email: aprakash@breatheindia.net
+   ID: 53
+   ✅ Success! Generated 1 pass(es) successfully and email sent to aprakash@breatheindia.net
+
+[76/151] Processing: Sakshi Jain
+   Email: sakshi.jain@assisto.tech
+   ID: 56
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sakshi.jain@assisto.tech
+
+[77/151] Processing: V. Ramakrishnan
+   Email: sakshi.jain@assisto.tech
+   ID: 57
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sakshi.jain@assisto.tech
+
+[78/151] Processing: Rear Admiral Shekhar Mital (Retd)
+   Email: shekhar@rekise.com
+   ID: 58
+   ✅ Success! Generated 1 pass(es) successfully and email sent to shekhar@rekise.com
+
+[79/151] Processing: Maitrai Makka
+   Email: shekhar@rekise.com
+   ID: 59
+   ✅ Success! Generated 1 pass(es) successfully and email sent to shekhar@rekise.com
+
+[80/151] Processing: Amit Parasmal Borundiya
+   Email: amit@vasbeam.com
+   ID: 60
+   ✅ Success! Generated 1 pass(es) successfully and email sent to amit@vasbeam.com
+
+[81/151] Processing: Vipul Sharma
+   Email: amit@vasbeam.com
+   ID: 61
+   ✅ Success! Generated 1 pass(es) successfully and email sent to amit@vasbeam.com
+
+[82/151] Processing: Ms. Yogita Jadhav
+   Email: admin@tractrix.in
+   ID: 64
+   ✅ Success! Generated 1 pass(es) successfully and email sent to admin@tractrix.in
+
+[83/151] Processing: Sameer Joshi
+   Email: ashwin.shastry@newspace.co.in
+   ID: 70
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashwin.shastry@newspace.co.in
+
+[84/151] Processing: Ashwin Janardhan Shastry
+   Email: ashwin.shastry@newspace.co.in
+   ID: 71
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashwin.shastry@newspace.co.in
+
+[85/151] Processing: Nikunj Parashar
+   Email: babbarmridul29@gmail.com
+   ID: 72
+   ✅ Success! Generated 1 pass(es) successfully and email sent to babbarmridul29@gmail.com
+
+[86/151] Processing: Mridul Babbar
+   Email: babbarmridul29@gmail.com
+   ID: 73
+   ✅ Success! Generated 1 pass(es) successfully and email sent to babbarmridul29@gmail.com
+
+[87/151] Processing: Sanketh Huddar
+   Email: sh@ci4.com
+   ID: 74
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sh@ci4.com
+
+[88/151] Processing: Anirudh Dube
+   Email: sh@ci4.com
+   ID: 75
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sh@ci4.com
+
+[89/151] Processing: Mr. Suresh Rajani
+   Email: cmdeaseemanand@gmail.com
+   ID: 54
+   ✅ Success! Generated 1 pass(es) successfully and email sent to cmdeaseemanand@gmail.com
+
+[90/151] Processing: Cmde Aseem Anand
+   Email: abhishekvardhan86@gmail.com
+   ID: 55
+   ✅ Success! Generated 1 pass(es) successfully and email sent to abhishekvardhan86@gmail.com
+
+[91/151] Processing: Sheltan TT
+   Email: ceo@xiotz.com
+   ID: 84
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ceo@xiotz.com
+
+[92/151] Processing: Vaishnavi Kulal
+   Email: ceo@xiotz.com
+   ID: 85
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ceo@xiotz.com
+
+[93/151] Processing: Ganesh Pandit Suryawanshi
+   Email: gps@combatrobotics.in
+   ID: 90
+   ✅ Success! Generated 1 pass(es) successfully and email sent to gps@combatrobotics.in
+
+[94/151] Processing: Sanjana Kumari
+   Email: gps@combatrobotics.in
+   ID: 91
+   ✅ Success! Generated 1 pass(es) successfully and email sent to gps@combatrobotics.in
+
+[95/151] Processing: Sarang Bora
+   Email: sarang@gofloat.tech
+   ID: 92
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sarang@gofloat.tech
+
+[96/151] Processing: Pratiksha Bora
+   Email: sarang@gofloat.tech
+   ID: 93
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sarang@gofloat.tech
+
+[97/151] Processing: Sumit Hirawat
+   Email: coordinator@swadeshi.io
+   ID: 327
+   ✅ Success! Generated 1 pass(es) successfully and email sent to coordinator@swadeshi.io
+
+[98/151] Processing: Sashakt Tripathi
+   Email: harshit@elixarsystems.com
+   ID: 328
+   ✅ Success! Generated 1 pass(es) successfully and email sent to harshit@elixarsystems.com
+
+[99/151] Processing: Niladri Dutta
+   Email: uphar.s@tardidtech.com
+   ID: 96
+   ✅ Success! Generated 1 pass(es) successfully and email sent to uphar.s@tardidtech.com
+
+[100/151] Processing: Aastha Verma
+   Email: uphar.s@tardidtech.com
+   ID: 97
+   ✅ Success! Generated 1 pass(es) successfully and email sent to uphar.s@tardidtech.com
+
+[101/151] Processing: Cdr Naveen Kundra (Retd)
+   Email: naveenkundra@medjaytechnologies.in
+   ID: 98
+   ✅ Success! Generated 1 pass(es) successfully and email sent to naveenkundra@medjaytechnologies.in
+
+[102/151] Processing: Aparajita Acharya
+   Email: naveenkundra@medjaytechnologies.in
+   ID: 99
+   ✅ Success! Generated 1 pass(es) successfully and email sent to naveenkundra@medjaytechnologies.in
+
+[103/151] Processing: Sandeep Sharma
+   Email: boks1401@gmail.com
+   ID: 83
+   ✅ Success! Generated 1 pass(es) successfully and email sent to boks1401@gmail.com
+
+[104/151] Processing: Ahmad Faraaz
+   Email: harshit@elixarsystems.com
+   ID: 329
+   ✅ Success! Generated 1 pass(es) successfully and email sent to harshit@elixarsystems.com
+
+[105/151] Processing: Arpit Agarwal
+   Email: arpit@carbonlight.co.in
+   ID: 330
+   ✅ Success! Generated 1 pass(es) successfully and email sent to arpit@carbonlight.co.in
+
+[106/151] Processing: Rini Bansal
+   Email: arpit@carbonlight.co.in
+   ID: 331
+   ✅ Success! Generated 1 pass(es) successfully and email sent to arpit@carbonlight.co.in
+
+[107/151] Processing: J.K. Dudani
+   Email: manishamadan@samtelgroup.com
+   ID: 332
+   ✅ Success! Generated 1 pass(es) successfully and email sent to manishamadan@samtelgroup.com
+
+[108/151] Processing: Manisha Madan
+   Email: manishamadan@samtelgroup.com
+   ID: 333
+   ✅ Success! Generated 1 pass(es) successfully and email sent to manishamadan@samtelgroup.com
+
+[109/151] Processing: Paramjit Singh
+   Email: jayanth@tonboimaging.com
+   ID: 102
+   ✅ Success! Generated 1 pass(es) successfully and email sent to jayanth@tonboimaging.com
+
+[110/151] Processing: Jayanth BP
+   Email: jayanth@tonboimaging.com
+   ID: 103
+   ✅ Success! Generated 1 pass(es) successfully and email sent to jayanth@tonboimaging.com
+
+[111/151] Processing: Thalansh Batra
+   Email: thalansh@paretotree.com
+   ID: 104
+   ✅ Success! Generated 1 pass(es) successfully and email sent to thalansh@paretotree.com
+
+[112/151] Processing: Anurag Kumar
+   Email: thalansh@paretotree.com
+   ID: 105
+   ✅ Success! Generated 1 pass(es) successfully and email sent to thalansh@paretotree.com
+
+[113/151] Processing: Esha Sharma
+   Email: adisansystemsllp@gmail.com
+   ID: 109
+   ✅ Success! Generated 1 pass(es) successfully and email sent to adisansystemsllp@gmail.com
+
+[114/151] Processing: Ashish Chandhere
+   Email: ashish@kalbhorz.com
+   ID: 110
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashish@kalbhorz.com
+
+[115/151] Processing: Nishant Kalbhor
+   Email: ashish@kalbhorz.com
+   ID: 111
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashish@kalbhorz.com
+
+[116/151] Processing: Vasantha Raghavan
+   Email: Vasanth.n@planystech.com
+   ID: 114
+   ✅ Success! Generated 1 pass(es) successfully and email sent to Vasanth.n@planystech.com
+
+[117/151] Processing: Vignesh Karthikeyan
+   Email: Vasanth.n@planystech.com
+   ID: 115
+   ✅ Success! Generated 1 pass(es) successfully and email sent to Vasanth.n@planystech.com
+
+[118/151] Processing: Taher Calcuttawala
+   Email: saif.automations@gmail.com
+   ID: 117
+   ✅ Success! Generated 1 pass(es) successfully and email sent to saif.automations@gmail.com
+
+[119/151] Processing: Aliasgar Calcuttawala
+   Email: saif.automations@gmail.com
+   ID: 118
+   ✅ Success! Generated 1 pass(es) successfully and email sent to saif.automations@gmail.com
+
+[120/151] Processing: Ashish Kumar
+   Email: ashish@m2rtechnomations.com
+   ID: 119
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashish@m2rtechnomations.com
+
+[121/151] Processing: Shubham Aggarwal
+   Email: ashish@m2rtechnomations.com
+   ID: 120
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashish@m2rtechnomations.com
+
+[122/151] Processing: Shashank Kulshrestha
+   Email: pranav@dfy-graviti.com
+   ID: 121
+   ✅ Success! Generated 1 pass(es) successfully and email sent to pranav@dfy-graviti.com
+
+[123/151] Processing: Vinay Simha
+   Email: pranav@dfy-graviti.com
+   ID: 122
+   ✅ Success! Generated 1 pass(es) successfully and email sent to pranav@dfy-graviti.com
+
+[124/151] Processing: Cdr Anand Mohan Chitta (retd)
+   Email: anand.chitta@gmail.com
+   ID: 125
+   ✅ Success! Generated 1 pass(es) successfully and email sent to anand.chitta@gmail.com
+
+[125/151] Processing: Ms Lakshmi Ratnaparkhe
+   Email: anand.chitta@gmail.com
+   ID: 126
+   ✅ Success! Generated 1 pass(es) successfully and email sent to anand.chitta@gmail.com
+
+[126/151] Processing: Juhi Srivastava
+   Email: Juhis0411@gmail.com
+   ID: 127
+   ✅ Success! Generated 1 pass(es) successfully and email sent to Juhis0411@gmail.com
+
+[127/151] Processing: Shashank Jha
+   Email: sj@x-infiniti.com
+   ID: 129
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sj@x-infiniti.com
+
+[128/151] Processing: Chetan Kumar Sharma
+   Email: sj@x-infiniti.com
+   ID: 130
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sj@x-infiniti.com
+
+[129/151] Processing: Dr Rashi Mehrotra
+   Email: mkuls2018@gmail.com
+   ID: 123
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mkuls2018@gmail.com
+
+[130/151] Processing: Cdr Milind Kulshreshtha (Retd)
+   Email: mkuls2018@gmail.com
+   ID: 124
+   ✅ Success! Generated 1 pass(es) successfully and email sent to mkuls2018@gmail.com
+
+[131/151] Processing: Capt Javed Hasan
+   Email: adisansystemsllp@gmail.com
+   ID: 108
+   ✅ Success! Generated 1 pass(es) successfully and email sent to adisansystemsllp@gmail.com
+
+[132/151] Processing: Johns T Mathai
+   Email: sales@eyerov.com
+   ID: 112
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sales@eyerov.com
+
+[133/151] Processing: Akhil Manisery
+   Email: sales@eyerov.com
+   ID: 113
+   ✅ Success! Generated 1 pass(es) successfully and email sent to sales@eyerov.com
+
+[134/151] Processing: Avinash Manerahimatpurkar
+   Email: avinashm@resonatingmindz.com
+   ID: 116
+   ✅ Success! Generated 1 pass(es) successfully and email sent to avinashm@resonatingmindz.com
+
+[135/151] Processing: Sanyukta
+   Email: Juhis0411@gmail.com
+   ID: 128
+   ✅ Success! Generated 1 pass(es) successfully and email sent to Juhis0411@gmail.com
+
+[136/151] Processing: Rohan Sharma
+   Email: dinakar@securweave.com
+   ID: 261
+   ✅ Success! Generated 1 pass(es) successfully and email sent to dinakar@securweave.com
+
+[137/151] Processing: vaibhav bharadwaj
+   Email: dinakar@securweave.com
+   ID: 260
+   ✅ Success! Generated 1 pass(es) successfully and email sent to dinakar@securweave.com
+
+[138/151] Processing: Gaurav Sharma
+   Email: annesha.t@bigbangboom.com
+   ID: 259
+   ✅ Success! Generated 1 pass(es) successfully and email sent to annesha.t@bigbangboom.com
+
+[139/151] Processing: Annesha Talukdar
+   Email: annesha.t@bigbangboom.com
+   ID: 258
+   ✅ Success! Generated 1 pass(es) successfully and email sent to annesha.t@bigbangboom.com
+
+[140/151] Processing: Air Cmde Dr. Devender Sharma (Retd.)
+   Email: nehru@launchtrax.com
+   ID: 257
+   ✅ Success! Generated 1 pass(es) successfully and email sent to nehru@launchtrax.com
+
+[141/151] Processing: Nehruji S
+   Email: nehru@launchtrax.com
+   ID: 256
+   ✅ Success! Generated 1 pass(es) successfully and email sent to nehru@launchtrax.com
+
+[142/151] Processing: Col Prashant Thotapalli (Retd)
+   Email: dileep.v@hcrobo.com
+   ID: 252
+   ✅ Success! Generated 1 pass(es) successfully and email sent to dileep.v@hcrobo.com
+
+[143/151] Processing: Dr.Dileep
+   Email: dileep.v@hcrobo.com
+   ID: 251
+   ✅ Success! Generated 1 pass(es) successfully and email sent to dileep.v@hcrobo.com
+
+[144/151] Processing: Sanjay Nair
+   Email: bd@astrome.co
+   ID: 250
+   ✅ Success! Generated 1 pass(es) successfully and email sent to bd@astrome.co
+
+[145/151] Processing: Col Varun Singh Tanwar (VSM)
+   Email: bd@astrome.co
+   ID: 249
+   ✅ Success! Generated 1 pass(es) successfully and email sent to bd@astrome.co
+
+[146/151] Processing: Pooja Mishra
+   Email: j.aarnav@mphibr.com
+   ID: 248
+   ✅ Success! Generated 1 pass(es) successfully and email sent to j.aarnav@mphibr.com
+
+[147/151] Processing: Aarnav Jain
+   Email: j.aarnav@mphibr.com
+   ID: 247
+   ✅ Success! Generated 1 pass(es) successfully and email sent to j.aarnav@mphibr.com
+
+[148/151] Processing: Ayush Tiwary
+   Email: ashutosh@unistring.com
+   ID: 246
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashutosh@unistring.com
+
+[149/151] Processing: Dr Ashutosh Chaturvedi
+   Email: ashutosh@unistring.com
+   ID: 245
+   ✅ Success! Generated 1 pass(es) successfully and email sent to ashutosh@unistring.com
+
+[150/151] Processing: SAHASRANSU PUROHIT
+   Email: masook@spacefields.in
+   ID: 244
+   ✅ Success! Generated 1 pass(es) successfully and email sent to masook@spacefields.in
+
+[151/151] Processing: Apurwa Masook
+   Email: masook@spacefields.in
+   ID: 243
+   ✅ Success! Generated 1 pass(es) successfully and email sent to masook@spacefields.in
+
+
+================================================================================
+SUMMARY
+================================================================================
+✅ Success: 151
+❌ Failed: 0
+📊 Total: 151
+
+================================================================================
+DONE!
+================================================================================

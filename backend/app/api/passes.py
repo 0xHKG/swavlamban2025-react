@@ -114,16 +114,21 @@ async def generate_passes(
         # Send email if requested
         if request.send_email:
             try:
-                # Check if exhibitor - use dedicated exhibitor email template
-                if entry.is_exhibitor:
-                    # EXHIBITOR: Use exhibitor-specific email template
+                # Determine which email template to use:
+                # - Exhibitors with ONLY exhibition passes -> exhibitor-specific template
+                # - Exhibitors with Interactive/Plenary -> comprehensive template (lists all passes)
+                # - Visitors -> comprehensive template
+                has_interactive_or_plenary = entry.interactive_sessions or entry.plenary
+
+                if entry.is_exhibitor and not has_interactive_or_plenary:
+                    # EXHIBITOR with ONLY exhibition passes: Use exhibitor-specific email template
                     email_sent = email_service.send_exhibitor_bulk_email(
                         recipient_email=entry.email,
                         recipient_name=entry.name,
                         pass_files=all_files
                     )
                 else:
-                    # VISITOR: Use visitor email template
+                    # VISITOR or EXHIBITOR with Interactive/Plenary: Use comprehensive email template
                     email_sent = email_service.send_pass_email(
                         recipient_email=entry.email,
                         recipient_name=entry.name,

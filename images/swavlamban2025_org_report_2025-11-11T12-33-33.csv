@@ -1,0 +1,51 @@
+Organization,Username,Total Quota,Entries Created,Remaining,Usage %,Ex-1 Count,Ex-2 Count,Interactive Count,Plenary Count,Passes Generated,Status
+"DIO",DIO,100,0,100,0.0%,0,0,0,0,0,Active
+"FICCI",FICCI,100,5,95,5.0%,5,4,5,5,2,Active
+"SIDM",SIDM,100,0,100,0.0%,0,0,0,0,0,Active
+"TDAC",admin,999,186,813,18.6%,109,109,87,85,186,Active
+"SB 2",SB2,150,0,150,0.0%,0,0,0,0,0,Active
+"VISTAR",VISTAR,16,0,16,0.0%,0,0,0,0,0,Active
+"CAPS",CAPS,2,0,2,0.0%,0,0,0,0,0,Active
+"SB 1",SB1,150,0,150,0.0%,0,0,0,0,0,Active
+"PBR",PBR,150,0,150,0.0%,0,0,0,0,0,Active
+"MBR",MBR,150,0,150,0.0%,0,0,0,0,0,Active
+"DRDO",DRDO,20,0,20,0.0%,0,0,0,0,0,Active
+"IAF",IAF,150,0,150,0.0%,0,0,0,0,0,Active
+"Media-2",Media2,55,0,55,0.0%,0,0,0,0,0,Active
+"SEC-BM",SECBM,5,0,5,0.0%,0,0,0,0,0,Active
+"PRO",PRO,4,0,4,0.0%,0,0,0,0,0,Active
+"Media-1",Media1,25,0,25,0.0%,0,0,0,0,0,Active
+"Colleges",Colleges,150,0,150,0.0%,0,0,0,0,0,Active
+"ICG",ICG,10,0,10,0.0%,0,0,0,0,0,Active
+"CLAWS",CLAWS,2,0,2,0.0%,0,0,0,0,0,Active
+"HAL",HAL,4,0,4,0.0%,0,0,0,0,0,Active
+"BEL",BEL,4,0,4,0.0%,0,0,0,0,0,Active
+"HSL",HSL,4,0,4,0.0%,0,0,0,0,0,Active
+"GSL",GSL,4,0,4,0.0%,0,0,0,0,0,Active
+"GRSE",GRSE,4,0,4,0.0%,0,0,0,0,0,Active
+"MDL",MDL,4,0,4,0.0%,0,0,0,0,0,Active
+"BDL",BDL,4,0,4,0.0%,0,0,0,0,0,Active
+"BEML",BEML,4,0,4,0.0%,0,0,0,0,0,Active
+"NDC",NDC,10,0,10,0.0%,0,0,0,0,0,Active
+"WNC",WNC,10,0,10,0.0%,0,0,0,0,0,Active
+"SNC",SNC,10,0,10,0.0%,0,0,0,0,0,Active
+"ENC",ENC,10,0,10,0.0%,0,0,0,0,0,Active
+"ANC",ANC,10,0,10,0.0%,0,0,0,0,0,Active
+"NMF",NMF,2,0,2,0.0%,0,0,0,0,0,Active
+"IDSA",IDSA,2,0,2,0.0%,0,0,0,0,0,Active
+"Indian Army",IndianArmy,200,0,200,0.0%,0,0,0,0,0,Active
+"USI",USI,2,0,2,0.0%,0,0,0,0,0,Active
+"AAC",AAC,2,0,2,0.0%,0,0,0,0,0,Active
+"India Foundation",IndiaFoundation,2,0,2,0.0%,0,0,0,0,0,Active
+"SPS",SPS,2,0,2,0.0%,0,0,0,0,0,Active
+"VIF",VIF,2,0,2,0.0%,0,0,0,0,0,Active
+"Bharat Shakti",BharatShakti,2,0,2,0.0%,0,0,0,0,0,Active
+"ORF",ORF,2,0,2,0.0%,0,0,0,0,0,Active
+"SAMDeS",SAMDeS,2,0,2,0.0%,0,0,0,0,0,Active
+"Delhi Policy Group",DelhiPolicyGroup,2,0,2,0.0%,0,0,0,0,0,Active
+"NCS",NCS,100,0,100,0.0%,0,0,0,0,0,Active
+"AFBBS",AFBBS,100,0,100,0.0%,0,0,0,0,0,Active
+"APS - DK",APSDK,100,0,100,0.0%,0,0,0,0,0,Active
+"APS - SV",APSSV,100,0,100,0.0%,0,0,0,0,0,Active
+"APS - DC",APSDC,100,0,100,0.0%,0,0,0,0,0,Active
+"Sanskriti",Sanskriti,100,0,100,0.0%,0,0,0,0,0,Active
