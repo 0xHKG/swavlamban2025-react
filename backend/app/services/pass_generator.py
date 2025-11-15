@@ -281,19 +281,19 @@ Valid for entry on specified date and session only."""
         # Skip Event Flows for exhibitors (they know the schedule)
         if not entry.is_exhibitor:
             # DAY 1 Event Flow - Send appropriate EF based on what user is attending
-            if entry.exhibition_day1 or entry.plenary:
-                if entry.exhibition_day1:
-                    # Complete Day 1 (AM Exhibition + PM Plenary)
-                    ef_file = ef_dir / "EF-25.png"
-                    if ef_file.exists():
-                        attachments.append(ef_file)
-                        print(f"   📅 Added Event Flow: EF-25.png (Day 1 complete)")
-                elif entry.plenary:
-                    # Plenary only (PM)
-                    ef_file = ef_dir / "EF-PM25.png"
-                    if ef_file.exists():
-                        attachments.append(ef_file)
-                        print(f"   📅 Added Event Flow: EF-PM25.png (Day 1 plenary only)")
+            if entry.exhibition_day1:
+                # Exhibition Day 1 (morning schedule)
+                ef_file = ef_dir / "EF-25.png"
+                if ef_file.exists():
+                    attachments.append(ef_file)
+                    print(f"   📅 Added Event Flow: EF-25.png (Day 1 morning)")
+
+            if entry.plenary:
+                # Plenary session (afternoon schedule) - send to EVERYONE with plenary
+                ef_file = ef_dir / "EF-PM25.png"
+                if ef_file.exists():
+                    attachments.append(ef_file)
+                    print(f"   📅 Added Event Flow: EF-PM25.png (Day 1 plenary)")
 
             # DAY 2 Event Flow - Send if user has ANY Day 2 access
             if entry.exhibition_day2 or entry.interactive_sessions:
