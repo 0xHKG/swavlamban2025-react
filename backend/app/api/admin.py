@@ -24,6 +24,10 @@ class UserUpdate(BaseModel):
     role: str | None = None
     allowed_passes: dict[str, bool] | None = None
     is_active: bool | None = None
+    quota_ex_day1: int | None = None
+    quota_ex_day2: int | None = None
+    quota_interactive: int | None = None
+    quota_plenary: int | None = None
 
 
 class BulkEmailRequest(BaseModel):
