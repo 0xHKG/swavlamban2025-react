@@ -664,6 +664,24 @@ export default function AddEntryPage() {
                     </Col>
                   )}
 
+                  {user?.allowed_passes.plenary && (
+                    <Col xs={24} sm={12} md={6}>
+                      <Form.Item name="plenary" valuePropName="checked" style={{ marginBottom: 0 }}>
+                        <Checkbox
+                          style={{
+                            color: '#e2e8f0',
+                            fontSize: 15,
+                          }}
+                        >
+                          <div>
+                            <div style={{ fontWeight: 500 }}>Plenary Session</div>
+                            <div style={{ fontSize: 13, color: '#94a3b8' }}>25 Nov 2025 (PM)</div>
+                          </div>
+                        </Checkbox>
+                      </Form.Item>
+                    </Col>
+                  )}
+
                   {user?.allowed_passes.interactive_sessions && (
                     <Col xs={24} sm={12} md={6}>
                       <Form.Item name="interactive_sessions" valuePropName="checked" style={{ marginBottom: 0 }}>
@@ -676,24 +694,6 @@ export default function AddEntryPage() {
                           <div>
                             <div style={{ fontWeight: 500 }}>Interactive Sessions</div>
                             <div style={{ fontSize: 13, color: '#94a3b8' }}>26 Nov 2025 (AM)</div>
-                          </div>
-                        </Checkbox>
-                      </Form.Item>
-                    </Col>
-                  )}
-
-                  {user?.allowed_passes.plenary && (
-                    <Col xs={24} sm={12} md={6}>
-                      <Form.Item name="plenary" valuePropName="checked" style={{ marginBottom: 0 }}>
-                        <Checkbox
-                          style={{
-                            color: '#e2e8f0',
-                            fontSize: 15,
-                          }}
-                        >
-                          <div>
-                            <div style={{ fontWeight: 500 }}>Plenary Session</div>
-                            <div style={{ fontSize: 13, color: '#94a3b8' }}>26 Nov 2025 (PM)</div>
                           </div>
                         </Checkbox>
                       </Form.Item>

@@ -1429,15 +1429,15 @@ export default function AdminPanelPage() {
               </Checkbox>
             </Form.Item>
 
-            <Form.Item name="interactive_sessions" valuePropName="checked" style={{ marginBottom: 8 }}>
+            <Form.Item name="plenary" valuePropName="checked" style={{ marginBottom: 8 }}>
               <Checkbox>
-                <Tag color="cyan">Interactive Sessions (26 Nov AM)</Tag>
+                <Tag color="green">Plenary Session (25 Nov PM)</Tag>
               </Checkbox>
             </Form.Item>
 
-            <Form.Item name="plenary" valuePropName="checked" style={{ marginBottom: 0 }}>
+            <Form.Item name="interactive_sessions" valuePropName="checked" style={{ marginBottom: 0 }}>
               <Checkbox>
-                <Tag color="green">Plenary Session (26 Nov PM)</Tag>
+                <Tag color="cyan">Interactive Sessions (26 Nov AM)</Tag>
               </Checkbox>
             </Form.Item>
           </Space>
