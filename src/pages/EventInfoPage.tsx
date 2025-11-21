@@ -194,7 +194,7 @@ export default function EventInfoPage() {
                 >
                   <ClockCircleOutlined style={{ color: '#667eea', marginRight: 12, fontSize: 18 }} />
                   <div style={{ flex: 1 }}>
-                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>1000 - 1045 hrs - </Text>
+                    <Text style={{ color: '#e2e8f0', fontWeight: 500 }}>0950 - 1030 hrs - </Text>
                     <Text style={{ color: '#e2e8f0' }}>Exhibition Inauguration & CNS Walkaround</Text>
                     <Text style={{ color: '#94a3b8', display: 'block', fontSize: 13 }}>
                       Exhibition Hall
